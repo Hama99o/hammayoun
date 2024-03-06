@@ -1,3 +1,4 @@
+const MyPortfolio = () => import('@/pages/website/MyPortfolio.vue');
 const Index = () => import('@/pages/website/IndexPage.vue');
 const About = () => import('@/pages/website/AboutPage.vue');
 const Login = () => import('@/pages/website/LoginPage.vue');
@@ -6,6 +7,13 @@ const Signup = () => import('@/pages/website/SignupPage.vue');
 const routes = [
   {
     path: '/',
+    name: 'portfolio',
+    components: {
+      default: MyPortfolio,
+    },
+  },
+  {
+    path: '/app',
     name: 'index',
     components: {
       default: Index,
