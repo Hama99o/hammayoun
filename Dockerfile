@@ -12,8 +12,8 @@ RUN apk add --update \
   git \
   postgresql-dev \
   tzdata \
-  nodejs=$NODE_VERSION \
-  yarn=$YARN_VERSION
+  nodejs \
+  yarn
 
 # Upgrade RubyGems and install the latest Bundler version
 RUN gem update --system && \

@@ -45,7 +45,7 @@ jobs:
       POSTGRES_HOST: localhost
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: baseapp
+      POSTGRES_DB: hama99o
     services:
       postgres:
         image: postgres:latest

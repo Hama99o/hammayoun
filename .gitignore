@@ -38,8 +38,23 @@ yarn-error.log*
 node_modules
 # Vite uses dotenv and suggests to ignore local-only env files. See
 # https://vitejs.dev/guide/env-and-mode.html#env-files
-.env*
-!.env
+
+
+# dotenv environment variable files
+.env
+.env.*
 
 # Ignore uncategorized files
 .DS_Store
+
+.idea/
+
+/config/credentials/development.key
+
+/config/credentials/production.key
+
+/config/credentials/staging.key
+
+/vendor/bundle/
+
+*.dump
