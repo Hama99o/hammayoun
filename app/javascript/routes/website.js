@@ -1,8 +1,10 @@
+import { createRouter, createWebHistory } from "vue-router";
 const MyPortfolio = () => import('@/pages/website/MyPortfolio.vue');
 const Index = () => import('@/pages/website/IndexPage.vue');
 const About = () => import('@/pages/website/AboutPage.vue');
 const Login = () => import('@/pages/website/LoginPage.vue');
 const Signup = () => import('@/pages/website/SignupPage.vue');
+// import PersonalProfile from '@/components/portfolio/PersonalProfile.vue'
 
 const routes = [
   {
@@ -15,9 +17,14 @@ const routes = [
   {
     path: '/app',
     name: 'index',
-    components: {
-      default: Index,
-    },
+    component: Index,
+    children: [
+      {
+        path: '',
+        name: 'PersonalProfile',
+        // component: PersonalProfile
+      },
+    ],
   },
   {
     path: '/about',
@@ -42,4 +49,9 @@ const routes = [
   },
 ];
 
-export default routes;
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+});
+
+export default router;

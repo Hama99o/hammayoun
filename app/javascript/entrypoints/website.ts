@@ -1,6 +1,9 @@
-import { setupEntryPoint } from './setupEntryPoint';
+import {createApp} from "vue";
 import App from '@/layouts/website/MainLayout.vue';
-import router from '@/routers/website';
-import '@/assets/css/style.scss';
+import {registerPlugins} from "@/plugins/index.js";
 
-setupEntryPoint(App, router);
+const app = createApp(App);
+
+// plugins
+registerPlugins(app)
+app.mount("#app");
