@@ -12,6 +12,10 @@ RUN apk add --update \
   git \
   postgresql-dev \
   tzdata \
+  build-base \
+  libffi-dev \
+  vips-dev \
+  vim \
   nodejs \
   yarn
 
@@ -39,21 +43,21 @@ ENV RAILS_ENV="${RAILS_ENV}" \
     NODE_ENV="development"
 
 # Install gems
-RUN bundle config set --local frozen 'true' \
+RUN bundle config set --local frozen 'false' \
     && bundle install --no-cache --jobs "$(nproc)" --retry "$(nproc)" \
     && rm -rf /usr/local/bundle/config \
     && rm -rf /usr/local/bundle/cache/*.gem \
     && find /usr/local/bundle/gems/ -name "*.c" -delete \
     && find /usr/local/bundle/gems/ -name "*.o" -delete
 
-COPY package.json yarn.lock ./
+COPY package.json ./
 
 # Install npm packages
-RUN yarn install --frozen-lockfile
+RUN yarn install
 
 COPY . ./
 
-RUN SECRET_KEY_BASE=irrelevant DEVISE_JWT_SECRET_KEY=irrelevant bundle exec rails assets:precompile
+RUN bundle exec rails assets:precompile
 
 ######################################################################
 
@@ -71,23 +75,27 @@ COPY . ./
 # We're back at the base stage
 FROM base AS app
 
-# Create a non-root user to run the app and own app-specific files
-RUN adduser -D app
-
-# Switch to this user
-USER app
+ARG RAILS_ENV
+ENV RAILS_ENV="${RAILS_ENV}"
 
 # We'll install the app in this directory
 WORKDIR /app
 
 # Copy over gems from the dependencies stage
 COPY --from=dependencies /usr/local/bundle/ /usr/local/bundle/
-COPY --chown=app --from=dependencies /app/public/ /app/public/
+COPY --from=dependencies /app/public/ /app/public/
+COPY --from=dependencies /app/node_modules /app/node_modules
 
 # Finally, copy over the code
 # This is where the .dockerignore file comes into play
 # Note that we have to use `--chown` here
-COPY --chown=app . ./
+COPY . ./
+
+# Fix ruby vite cache known problem
+# ActionView::Template::Error
+# https://vite-ruby.netlify.app/guide/troubleshooting.html#troubleshooting
+RUN /app/bin/vite build --clear --mode=$RAILS_ENV
 
 # Launch the server
 CMD ["rails", "s"]
+

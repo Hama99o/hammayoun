@@ -2,17 +2,16 @@
   "scripts": {
     "lint": "vue-tsc --noEmit && eslint 'app/javascript/**/*.{js,vue,ts,tsx}' --fix",
     "format": "prettier ./**/*.{js,css,scss,md,vue,json,ts} --write",
-    "prepare": "husky install",
     "lint-staged": "lint-staged",
-    "dev": "./bin/vite dev"
+    "dev": "./bin/vite dev --mode=development"
   },
   "dependencies": {
     "@babel/types": "^7.23.3",
-    "axios": "^1.6.2",
+    "axios": "^1.4.0",
     "pinia": "^2.1.7",
-    "vue": "^3.3.8",
+    "vue": "^3.2.47",
     "vue-query": "^1.26.0",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.5.1",
@@ -32,8 +31,8 @@
     "prettier": "^3.1.0",
     "sass": "^1.69.5",
     "typescript": "^4.9.5",
-    "vite": "^4.3.5",
-    "vite-plugin-ruby": "^3.2.2",
+    "vite": "^5.0.0",
+    "vite-plugin-ruby": "^5.0.0",
     "vue-tsc": "^1.8.22"
   },
   "resolutions": {
