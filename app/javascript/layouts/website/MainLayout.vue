@@ -21,6 +21,6 @@ import MainMenu from './MainMenu.vue';
 const route = useRoute();
 
 const shouldShowBaseLayout = computed(() => {
-  return ['about', 'login', 'signup'].some((x) => x === route.name )
+  return ['about', 'login', 'signup', 'index'].some((x) => x === route.name )
 });
 </script>

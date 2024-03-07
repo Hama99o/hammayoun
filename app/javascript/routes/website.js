@@ -8,23 +8,16 @@ const Signup = () => import('@/pages/website/SignupPage.vue');
 
 const routes = [
   {
-    path: '/',
+    path: '/portfolio',
     name: 'portfolio',
     components: {
       default: MyPortfolio,
     },
   },
   {
-    path: '/app',
+    path: '/',
     name: 'index',
-    component: Index,
-    children: [
-      {
-        path: '',
-        name: 'PersonalProfile',
-        // component: PersonalProfile
-      },
-    ],
+    component: Index
   },
   {
     path: '/about',
