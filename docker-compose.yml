@@ -106,7 +106,7 @@ services:
       - "VITE_RUBY_HOST=0.0.0.0"
     command: "sh -c 'bundle install && yarn install && yarn run dev'"
     ports:
-      - "3036:3036"
+      - "3002:3002"
 
 volumes:
   postgres: {}

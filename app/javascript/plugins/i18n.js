@@ -7,7 +7,7 @@ export default createI18n({
   fallbackLocale: 'en', // set fallback locale
   messages: {
     en: en,
-    fr: fr
+    fr: fr,
   },
   datetimeFormats: {
     en: {
