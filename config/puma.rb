@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Specify the bind host and environment.
-bind "tcp://0.0.0.0:#{ENV.fetch('PORT', '3000')}"
+bind "tcp://0.0.0.0:#{ENV.fetch('PORT', '3001')}"
 environment ENV.fetch('RAILS_ENV', 'development')
 
 # Puma can serve each request in a thread from an internal thread pool.
