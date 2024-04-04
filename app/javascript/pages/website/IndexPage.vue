@@ -1,5 +1,5 @@
 <template>
-  <h2 class="text-center">You are visiting the {{ pageName }} page!</h2>
+  <h2 class="text-center">You are visitsing the {{ pageName }} page!</h2>
 </template>
 
 <script setup lang="ts">
