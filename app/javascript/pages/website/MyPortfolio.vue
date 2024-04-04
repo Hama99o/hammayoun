@@ -6,7 +6,7 @@
         <moon-or-sun-menu :theme="theme" :hasNightMood="hasNightMood" />
       </b-col>
     </b-row>
-    <!-- <b-row align-h="center">
+    <b-row align-h="center">
       <b-col cols="6" md="2" class="my-4">
         <my-photo/>
       </b-col>
@@ -14,20 +14,20 @@
         <div class="mb-4">
           <ul class="nav nav-pills">
             <li class="nav-item m-1" v-for="(text, routeName, index) in  $t('message.heading')" >
-              <router-link class="nav-link" :class="linkClassForTabs(index)" :to="{ name: routeName }">
+              <!-- <router-link class="nav-link" :class="linkClassForTabs(index)" :to="{ name: routeName }">
                 <code @click="clickOnMenu(index)">{{text}}</code>
-              </router-link>
+              </router-link> -->
             </li>
           </ul>
         </div>
-        <router-view> </router-view>
+        <!-- <router-view> </router-view> -->
       </b-col>
-    </b-row> -->
+    </b-row>
   </b-container>
 </template>
 
 <script setup lang="ts">
-import { defineProps, computed, ref, onMounted } from 'vue';
+import { defineProps, watch, ref, onMounted } from 'vue';
 import BackgroundAnimation from '@/layouts/website/BackgroundAnimation.vue'
 import MyPhoto from '@/components/portfolio/MyPhoto.vue';
 import MoonOrSunMenu from '@/components/portfolio/MoonOrSunMenu.vue';

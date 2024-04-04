@@ -4,7 +4,6 @@ import vue from '@vitejs/plugin-vue';
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath, URL } from 'url';
-
 export default defineConfig({
   resolve: {
     extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],
@@ -31,5 +30,5 @@ export default defineConfig({
         },
       },
     },
-  },
+  }
 });

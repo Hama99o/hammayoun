@@ -1,6 +1,5 @@
 <template>
   <div>
-    hiiiiiii
     <div class="zoom-effect-container">
       <div class="zoom-effect-container image-card d-flex justify-content-center">
         <b-img-lazy
