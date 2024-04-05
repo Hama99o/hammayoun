@@ -5,9 +5,7 @@ import AuthService from '@/services/auth.service';
 import i18n from "@/plugins/i18n.js";
 import router from "@/routes/website.js";
 import { showToast } from '@/utils/showToast';
-import jQuery from 'jquery'
 
-window.$ = window.jQuery = jQuery;
 export const globalProperties = {
   $showToast: showToast,
 };
