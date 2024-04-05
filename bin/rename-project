@@ -5,8 +5,8 @@ set -eo pipefail
 APP_NAME="${1}"
 MODULE_NAME="${2}"
 
-FIND_APP_NAME="hama99o"
-FIND_MODULE_NAME="Hama99o"
+FIND_APP_NAME="multi_magic"
+FIND_MODULE_NAME="MultiMagic"
 FIND_FRAMEWORK="rails"
 
 if [ -z "${APP_NAME}" ] || [ -z "${MODULE_NAME}" ]; then
