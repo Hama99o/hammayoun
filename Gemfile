@@ -4,7 +4,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby File.read('.ruby-version')
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem 'rails', '~> 7.0.8'
+gem 'rails'
+gem 'sprockets-rails'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -17,6 +18,9 @@ gem 'jbuilder'
 
 # Use Redis adapter to run Action Cable in production
 gem 'redis'
+
+# Redis session store for ActionPack
+gem "redis-actionpack", "~> 5.3"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -42,6 +46,11 @@ gem 'vite_rails'
 # paginator for Ruby
 gem 'pagy'
 
+# extended search for Ruby
+gem "pg_search"
+
+gem "pundit"
+
 # Map incoming controller parameters to named scopes in the resources
 gem 'has_scope'
 
@@ -52,15 +61,43 @@ gem 'jsonapi.rb'
 gem 'ransack'
 
 # Simple, efficient background processing for Ruby
-gem 'sidekiq'
+gem 'sidekiq', '~> 6.5.1'
 
 # provides support for Cross-Origin Resource Sharing (CORS)
 gem 'rack-cors'
 
-# a flexible authentication solution
-gem 'devise'
-# a devise extension which uses JWT tokens for user authentication
-gem 'devise-jwt'
+# API
+gem 'blueprinter'
+
+# gem "activerecord-airtable-adapter", path: "/home/harold/code/sombre/activerecord-airtable-adapter"
+# gem "activerecord-airtable-adapter", git: "https://gitlab.com/by-seven/open-tools/activerecord-airtable-adapter"
+gem "httparty", "~> 0.21.0"
+
+gem "image_processing", "~> 1.12"
+
+gem "cloudinary", "~> 1.27"
+
+# authentication
+gem "devise", "~> 4.9"
+
+gem "devise-jwt", "~> 0.11.0"
+
+# google libs
+gem "google-apis-calendar_v3", "~> 0.33.0"
+gem 'google-api-client'
+gem "google-id-token"
+gem "ruby-progressbar"
+
+# MAIL #
+gem 'postmark-rails'
+
+# Pretender for impersonate
+gem "pretender"
+
+# Report crash
+gem "sentry-ruby"
+gem "sentry-rails"
+gem "sentry-sidekiq"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -69,7 +106,8 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'pry'
   gem 'rspec-rails'
-
+  gem 'factory_bot_rails'
+  gem 'faker'
   # Linting
   gem 'brakeman'
   gem 'bundler-audit'
@@ -86,6 +124,8 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
 
+  gem "guard-rspec"
+
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 
@@ -97,8 +137,6 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'capybara'
   gem 'database_cleaner-active_record'
-  gem 'factory_bot_rails', '< 6.4'
-  gem 'faker'
   gem 'shoulda-matchers'
   # RSpec matchers for JSON API.
   gem 'jsonapi-rspec'
