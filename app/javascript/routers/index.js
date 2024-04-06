@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
-const Index = () => import('@/pages/website/IndexPage.vue');
-const About = () => import('@/pages/website/AboutPage.vue');
-const Login = () => import('@/pages/website/LoginPage.vue');
-const Signup = () => import('@/pages/website/SignupPage.vue');
+const Index = () => import('@/pages/unconnected_user/IndexPage.vue');
+const About = () => import('@/pages/unconnected_user/AboutPage.vue');
+const Login = () => import('@/pages/unconnected_user/LoginPage.vue');
+const Signup = () => import('@/pages/unconnected_user/SignupPage.vue');
 const Users = () => import('@/layouts/panel/users/Index.vue');
 const Panel = () => import('@/pages/panel/IndexPage.vue');
 

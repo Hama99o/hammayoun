@@ -3,7 +3,7 @@ import { pinia } from '@/stores';
 import { setHTTPHeader } from '@/services/http.service';
 import AuthService from '@/services/auth.service';
 import i18n from "@/plugins/i18n.js";
-import router from "@/routes/index.js";
+import router from "@/routers/index.js";
 import { showToast } from '@/utils/showToast';
 import vuetify from "@/plugins/vuetify";
 

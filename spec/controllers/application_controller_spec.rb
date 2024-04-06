@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 describe ApplicationController, type: :request do
-  shared_examples 'visiting website url' do
-    context 'when visiting website url' do
-      it 'stays at website' do
+  shared_examples 'visiting unconnected_user url' do
+    context 'when visiting unconnected_user url' do
+      it 'stays at unconnected_user' do
         get '/'
 
         expect(response.request.fullpath).to eq('/')
@@ -15,14 +15,14 @@ describe ApplicationController, type: :request do
 
   context 'when user not logged-in' do
     context 'when visiting panel url' do
-      it 'redirects to website' do
+      it 'redirects to unconnected_user' do
         get '/panel'
 
         expect(response).to redirect_to('/')
       end
     end
 
-    include_examples 'visiting website url'
+    include_examples 'visiting unconnected_user url'
   end
 
   context 'when user logged-in' do
@@ -38,6 +38,6 @@ describe ApplicationController, type: :request do
       end
     end
 
-    include_examples 'visiting website url'
+    include_examples 'visiting websunconnected_userite url'
   end
 end

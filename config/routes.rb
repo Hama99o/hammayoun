@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
-  root to: 'application#website'
+  root to: 'application#unconnected_user'
 
   devise_for :users, defaults: { format: :json }, skip: :all
   devise_scope :user do
@@ -13,5 +13,5 @@ Rails.application.routes.draw do
   end
 
   get '/panel(/*path)', to: 'application#panel', as: :panel
-  get '/(*path)', to: 'application#website', as: :website
+  get '/(*path)', to: 'application#unconnected_user', as: :unconnected_user
 end

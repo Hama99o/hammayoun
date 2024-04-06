@@ -4,12 +4,12 @@ class ApplicationController < ActionController::Base
 
   after_action { pagy_headers_merge(@pagy) if @pagy }
 
-  def website
-    render template: 'layouts/website'
+  def unconnected_user
+    render template: 'layouts/unconnected_user'
   end
 
   def panel
-    return redirect_to website_path unless user_signed_in?
+    return redirect_to unconnected_user_path unless user_signed_in?
 
     render template: 'layouts/panel'
   end
