@@ -3,6 +3,9 @@ const Index = () => import('@/pages/website/IndexPage.vue');
 const About = () => import('@/pages/website/AboutPage.vue');
 const Login = () => import('@/pages/website/LoginPage.vue');
 const Signup = () => import('@/pages/website/SignupPage.vue');
+const Users = () => import('@/layouts/panel/users/Index.vue');
+const Panel = () => import('@/pages/panel/IndexPage.vue');
+
 // import PersonalProfile from '@/components/portfolio/PersonalProfile.vue'
 
 const routes = [
@@ -32,6 +35,20 @@ const routes = [
     name: 'signup',
     components: {
       default: Signup,
+    },
+  },
+  {
+    path: '/panel/users',
+    name: 'users',
+    components: {
+      default: Users,
+    },
+  },
+  {
+    path: '/panel',
+    name: 'index',
+    components: {
+      default: Panel,
     },
   },
 ];

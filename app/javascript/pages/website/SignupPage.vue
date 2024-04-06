@@ -36,11 +36,11 @@
           label="Last Name"
         ></v-text-field>
 
-          <v-text-field
-            v-model="user.email"
-            type="email"
-            label="Email"
-          ></v-text-field>
+        <v-text-field
+          v-model="user.email"
+          type="email"
+          label="Email"
+        ></v-text-field>
 
 
         <v-text-field
@@ -82,7 +82,6 @@ import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth.store';
 import { IRegisterUser } from '@/types/general';
 import { showToast } from '@/utils/showToast';
-import DatePicker from '@/components/tools/DatePicker.vue';
 
 const router = useRouter();
 
