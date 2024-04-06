@@ -1,6 +1,11 @@
 export interface IUserLogin {
-  email: string;
-  password: string;
+  firstname: string,
+  lastname: string,
+  birth_date: string,
+  email: string,
+  password: string,
+  password_confirmation: string,
+  is_agree: boolean
 }
 
 export interface IRegisterUser extends IUserLogin {

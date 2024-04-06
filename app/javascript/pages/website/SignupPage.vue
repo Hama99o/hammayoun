@@ -19,10 +19,29 @@
 
       <v-form fast-fail @submit.prevent="submit">
         <v-text-field
-          v-model="user.email"
-          type="email"
-          label="Email"
+          v-model="user.firstname"
+          type="text"
+          label="First Name"
         ></v-text-field>
+
+        <v-text-field
+          v-model="user.lastname"
+          type="text"
+          label="Last Name"
+        ></v-text-field>
+
+        <v-text-field
+          v-model="user.birth_date"
+          type="date"
+          label="Last Name"
+        ></v-text-field>
+
+          <v-text-field
+            v-model="user.email"
+            type="email"
+            label="Email"
+          ></v-text-field>
+
 
         <v-text-field
           v-model="user.password"
@@ -63,12 +82,16 @@ import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth.store';
 import { IRegisterUser } from '@/types/general';
 import { showToast } from '@/utils/showToast';
+import DatePicker from '@/components/tools/DatePicker.vue';
 
 const router = useRouter();
 
 const authStore = useAuthStore();
 
 const user = reactive<IRegisterUser>({
+  firstname: '',
+  lastname: '',
+  birth_date: '',
   email: '',
   password: '',
   password_confirmation: '',
