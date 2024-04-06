@@ -1,5 +1,6 @@
 <template>
   <div
+    class="mb-12"
     v-if="toast.isShow"
     :class="{
       toast: true,

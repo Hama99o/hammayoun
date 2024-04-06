@@ -6,7 +6,7 @@ const initialState: IToastState = {
   show: false,
   type: 'success',
   configs: {
-    position: 'top-center',
+    position: 'bottom-center',
     duration: 5000,
   },
 };

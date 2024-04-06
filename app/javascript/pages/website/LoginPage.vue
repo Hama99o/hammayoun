@@ -1,36 +1,21 @@
 <template>
-  <div v-if="!loggedIn" class="form">
-    <div class="form-box pt-25">
-      <div class="form-bg py-30 px-50">
-        <span class="header pb-25">Sign in to your account</span>
+  <v-sheet v-if="!loggedIn" class="mx-auto" width="300">
+    <v-form fast-fail @submit.prevent="submit">
+      <v-text-field
+        v-model="user.email"
+        type="email"
+        label="Email"
+      ></v-text-field>
 
-        <span v-if="showMessage" class="header pb-25"> You've clicked on Submit button </span>
+      <v-text-field
+        v-model="user.password"
+        type="password"
+        label="Password"
+      ></v-text-field>
 
-        <form @submit.prevent="submit">
-          <div class="field pb-25">
-            <label for="email">Email</label>
-            <input v-model="user.email" type="email" />
-          </div>
-
-          <div class="field pb-25">
-            <label for="password">Password</label>
-            <input v-model="user.password" type="password" />
-          </div>
-
-          <div class="field pb-25">
-            <input class="submit" type="submit" name="submit" value="Continue" />
-          </div>
-        </form>
-
-        <div class="footer pt-25 text-center">
-          <span>
-            Don't have an account? <router-link :to="{ name: 'signup' }">Sign up</router-link>
-          </span>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="text-center">Redirecting to panel</div>
+      <v-btn class="mt-2" type="submit" block>Continue</v-btn>
+    </v-form>
+  </v-sheet>
 </template>
 
 <script setup lang="ts">
@@ -46,10 +31,15 @@ const user = reactive<IUserLogin>({
   password: '',
 });
 
+const emailRules = (value) => {
+  if (value?.length > 3) return true
+
+  return 'email and password must be at least 3 characters.'
+};
+
 const redirectToPanel = () => {
   window.location.href = '/panel/';
 };
-
 const showMessage = ref(false);
 
 const loggedIn = computed(() => authStore.isAuthenticated);
@@ -61,6 +51,7 @@ onMounted(() => {
 });
 
 const submit = () => {
+  console.log('hiii')
   authStore
     .login(user)
     .then(() => {
