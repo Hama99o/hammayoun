@@ -1,37 +1,59 @@
 <template>
-  <div class="form">
-    <div class="form-box pt-25">
-      <div class="form-bg py-30 px-50">
-        <span class="header pb-25">Create your account</span>
-
-        <form @submit.prevent="submit">
-          <div class="field pb-25">
-            <label for="email">Email</label>
-            <input v-model="user.email" type="email" />
-          </div>
-
-          <div class="field pb-25">
-            <label for="password">Password</label>
-            <input v-model="user.password" type="password" />
-          </div>
-
-          <div class="field pb-25">
-            <label for="password">Verify Password</label>
-            <input v-model="user.password_confirmation" type="password" />
-          </div>
-
-          <div class="field pb-25">
-            <input class="submit" type="submit" name="submit" value="Continue" />
-          </div>
-        </form>
-
-        <div class="footer pt-25 text-center">
-          <span>
-            Do you already have an account? <router-link :to="{ name: 'login' }">Login</router-link>
-          </span>
-        </div>
+  <div class="pt-[150px] flex justify-center items-center">
+    <v-sheet
+      border="md"
+      class="pa-6 text-white mx-auto !rounded-md"
+      color="#141518"
+      width="700"
+      max-width="800"
+    >
+      <div class="text-center">
+        <h2>Create Account</h2>
+        <p class="my-4">
+          Already have an account?
+          <router-link to="/login" tag="span" style="cursor: pointer" class="text-blue underline" >
+            Sign In
+          </router-link>
+        </p>
       </div>
-    </div>
+
+      <v-form fast-fail @submit.prevent="submit">
+        <v-text-field
+          v-model="user.email"
+          type="email"
+          label="Email"
+        ></v-text-field>
+
+        <v-text-field
+          v-model="user.password"
+          type="password"
+          label="Password"
+        ></v-text-field>
+
+        <v-text-field
+          v-model="user.password_confirmation"
+          type="password"
+          label="Verify Password"
+        ></v-text-field>
+
+        <v-btn class="mt-2" type="submit" block>Continue</v-btn>
+
+        <v-checkbox
+          class="mt-5"
+          v-model="user.is_agree"
+          label="I have read and agree to the "
+        >
+          <template v-slot:label>
+            <p>
+              I have read and agree to
+              <span @click.prevent="renderToTerms" style="cursor: pointer" class="text-blue underline">
+                the Terms of Service
+              </span>
+            </p>
+          </template>
+        </v-checkbox>
+      </v-form>
+    </v-sheet>
   </div>
 </template>
 
@@ -50,6 +72,7 @@ const user = reactive<IRegisterUser>({
   email: '',
   password: '',
   password_confirmation: '',
+  is_agree: false
 });
 
 const submit = () => {
@@ -61,5 +84,17 @@ const submit = () => {
       showToast(error, 'error');
     },
   );
+};
+
+const renderToTerms = () => {
+  console.log('we are in renderToTerms')
+  // authStore.register(user).then(
+  //   () => {
+  //     router.push({ name: 'login' });
+  //   },
+  //   (error) => {
+  //     showToast(error, 'error');
+  //   },
+  // );
 };
 </script>
