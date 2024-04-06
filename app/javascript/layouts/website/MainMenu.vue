@@ -1,6 +1,6 @@
 <template>
   <v-toolbar app>
-    <v-navigation-drawer v-model="sidebar" app>
+    <v-navigation-drawer  class="!flex md:!hidden" v-model="sidebar" app>
       <v-list lines="one">
         <v-list-item
         v-for="item in menuItems"
@@ -53,7 +53,7 @@
 import { ref } from 'vue';
 
 const menuItems = [
-  { title: 'Index', routeName: 'index', icon: "mdi-home-circle" },
+  { title: 'Indxex', routeName: 'index', icon: "mdi-home-circle" },
   { title: 'About', routeName: 'about', icon: "mdi-face-man-shimmer-outline" },
   { title: 'Sign in', routeName: 'login', icon: " mdi-login" },
   { title: 'Sign up', routeName: 'signup', icon: "mdi-account-plus-outline" },
