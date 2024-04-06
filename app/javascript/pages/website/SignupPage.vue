@@ -59,7 +59,7 @@
 
         <v-checkbox
           class="mt-5"
-          v-model="user.is_agree"
+          v-model="user.agreed_to_terms"
           label="I have read and agree to the "
         >
           <template v-slot:label>
@@ -95,7 +95,7 @@ const user = reactive<IRegisterUser>({
   email: '',
   password: '',
   password_confirmation: '',
-  is_agree: false
+  agreed_to_terms: false
 });
 
 const submit = () => {

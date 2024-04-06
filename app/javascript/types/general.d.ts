@@ -5,7 +5,7 @@ export interface IUserLogin {
   email: string,
   password: string,
   password_confirmation: string,
-  is_agree: boolean
+  agreed_to_terms: boolean
 }
 
 export interface IRegisterUser extends IUserLogin {

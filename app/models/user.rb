@@ -30,6 +30,7 @@
 #  lang                   :string           default("en")
 #  locked_at              :datetime
 #  strikes_count          :integer          default(0)
+#  agreed_to_terms        :boolean
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
