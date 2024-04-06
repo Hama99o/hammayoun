@@ -1,21 +1,41 @@
 <template>
-  <v-sheet v-if="!loggedIn" class="mx-auto" width="300">
-    <v-form fast-fail @submit.prevent="submit">
-      <v-text-field
-        v-model="user.email"
-        type="email"
-        label="Email"
-      ></v-text-field>
+  <div class="pt-[150px] flex justify-center items-center">
+    <v-sheet v-if="!loggedIn"
+      border="md"
+      class="pa-6 text-white mx-auto !rounded-md"
+      color="#141518"
+      width="700"
+      max-width="800"
+    >
+      <div class="text-center">
+        <h2>Welcome, User!</h2>
+        <p class="my-4">Please log in</p>
+      </div>
+      <v-form fast-fail @submit.prevent="submit">
+        <v-text-field
+          v-model="user.email"
+          type="email"
+          label="Email"
+        ></v-text-field>
 
-      <v-text-field
-        v-model="user.password"
-        type="password"
-        label="Password"
-      ></v-text-field>
+        <v-text-field
+          v-model="user.password"
+          type="password"
+          label="Password"
+        ></v-text-field>
 
-      <v-btn class="mt-2" type="submit" block>Continue</v-btn>
-    </v-form>
-  </v-sheet>
+        <v-btn class="mt-2" type="submit" block>Continue</v-btn>
+
+        <p class="message my-5 text-blue underline"  style="cursor: pointer" > Forgot password</p>
+        <p class="message">
+          Not registered?
+          <router-link to="/signup" tag="span" style="cursor: pointer" class="text-blue underline" >
+            Create an account
+          </router-link>
+        </p>
+      </v-form>
+    </v-sheet>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -30,12 +50,6 @@ const user = reactive<IUserLogin>({
   email: '',
   password: '',
 });
-
-const emailRules = (value) => {
-  if (value?.length > 3) return true
-
-  return 'email and password must be at least 3 characters.'
-};
 
 const redirectToPanel = () => {
   window.location.href = '/panel/';
