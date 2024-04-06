@@ -14,9 +14,9 @@ describe ApplicationController, type: :request do
   end
 
   context 'when user not logged-in' do
-    context 'when visiting panel url' do
+    context 'when visiting connected_user url' do
       it 'redirects to unconnected_user' do
-        get '/panel'
+        get '/connected_user'
 
         expect(response).to redirect_to('/')
       end
@@ -30,11 +30,11 @@ describe ApplicationController, type: :request do
 
     before { login(user) }
 
-    context 'when visiting panel url' do
-      it 'stay at panel' do
-        get '/panel'
+    context 'when visiting connected_user url' do
+      it 'stay at connected_user' do
+        get '/connected_user'
 
-        expect(response.request.fullpath).to eq('/panel')
+        expect(response.request.fullpath).to eq('/connected_user')
       end
     end
 

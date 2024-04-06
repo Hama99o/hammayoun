@@ -8,9 +8,9 @@ class ApplicationController < ActionController::Base
     render template: 'layouts/unconnected_user'
   end
 
-  def panel
+  def connected_user
     return redirect_to unconnected_user_path unless user_signed_in?
 
-    render template: 'layouts/panel'
+    render template: 'layouts/connected_user'
   end
 end

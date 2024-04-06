@@ -68,4 +68,3 @@ const users = ref([
 ]);
 
 </script>
-panel

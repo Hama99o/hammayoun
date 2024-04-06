@@ -52,7 +52,7 @@ const user = reactive<IUserLogin>({
 });
 
 const redirectToPanel = () => {
-  window.location.href = '/panel/';
+  window.location.href = '/connected_user/';
 };
 const showMessage = ref(false);
 

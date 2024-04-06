@@ -12,6 +12,6 @@ Rails.application.routes.draw do
     post '/users/signup' => 'registrations#create', as: :user_registration
   end
 
-  get '/panel(/*path)', to: 'application#panel', as: :panel
+  get '/connected_user(/*path)', to: 'application#connected_user', as: :connected_user
   get '/(*path)', to: 'application#unconnected_user', as: :unconnected_user
 end
