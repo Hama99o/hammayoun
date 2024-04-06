@@ -59,7 +59,7 @@ const menuItems = [
   { title: 'Sign up', routeName: 'signup', icon: "mdi-account-plus-outline" },
 ];
 
-const appTitle = ref('Awesome App')
+const appTitle = ref('Multi Magic')
 const sidebar = ref(false)
 
 </script>
