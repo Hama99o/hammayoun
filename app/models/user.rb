@@ -52,10 +52,8 @@ class User < ApplicationRecord
 
   enum access_level: {
     employee: 0,
-    manager: 30,
-    manager_creator: 35,
-    admin: 40,
-    super_admin: 60
+    admin: 1,
+    super_admin: 2
   }
 
   enum status: {
