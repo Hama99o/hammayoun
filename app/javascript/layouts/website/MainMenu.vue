@@ -1,9 +1,25 @@
 <template>
   <v-toolbar app>
+    <v-navigation-drawer v-model="sidebar" app>
+      <v-list lines="one">
+        <v-list-item
+        v-for="item in menuItems"
+        :key="item.title"
+        :to="item.routeName"
+
+        >
+        <v-list-tile-action>
+          <v-icon>{{ item.icon }}</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content class="ml-2">{{ item.title }}</v-list-tile-content>
+
+      </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
     <!-- for mobile -->
-    <span class="flex sm:hidden">
-      <v-toolbar-side-icon @click="sidebar = !sidebar">
-      </v-toolbar-side-icon>
+    <span class="!flex md:!hidden">
+      <v-app-bar-nav-icon @click="sidebar = !sidebar"></v-app-bar-nav-icon>
     </span>
 
     <v-toolbar-title>
@@ -13,9 +29,9 @@
     </v-toolbar-title>
     <v-spacer></v-spacer>
 
-  <!-- for destop -->
+  <!-- for desktop -->
 
-  <v-toolbar-items class="hidden sm:flex">
+  <v-toolbar-items class="!hidden md:!flex">
     <v-btn
         flat
         v-for="item in menuItems"
