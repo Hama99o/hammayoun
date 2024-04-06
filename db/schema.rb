@@ -35,6 +35,22 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_17_152356) do
     t.datetime "last_sign_in_at"
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
+    t.jsonb "tokens"
+    t.string "firstname", default: "", null: false
+    t.string "lastname", default: "", null: false
+    t.date "birth_date"
+    t.date "join_date"
+    t.string "authentication_token"
+    t.string "phone_number", default: "", null: false
+    t.string "gender", default: "", null: false
+    t.string "job_title", default: "", null: false
+    t.string "linkedin", default: "", null: false
+    t.integer "access_level", default: 0, null: false
+    t.integer "status"
+    t.string "timezone", default: "Europe/Paris"
+    t.string "lang", default: "en"
+    t.datetime "locked_at"
+    t.integer "strikes_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
