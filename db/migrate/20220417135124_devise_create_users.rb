@@ -44,6 +44,8 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       t.datetime :locked_at
       t.integer :strikes_count, default: 0
       t.boolean :agreed_to_terms
+      t.jsonb :applications
+      t.integer :current_application, default: 0
 
       ## Lockable
       # t.integer  :failed_attempts, default: 0, null: false # Only if lock strategy is :failed_attempts

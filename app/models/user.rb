@@ -24,13 +24,15 @@
 #  gender                 :string           default(""), not null
 #  job_title              :string           default(""), not null
 #  linkedin               :string           default(""), not null
-#  access_level           :integer          default(0), not null
+#  access_level           :integer          default("employee"), not null
 #  status                 :integer
 #  timezone               :string           default("Europe/Paris")
 #  lang                   :string           default("en")
 #  locked_at              :datetime
 #  strikes_count          :integer          default(0)
 #  agreed_to_terms        :boolean
+#  applications           :jsonb
+#  current_application    :integer          default(0)
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #

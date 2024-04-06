@@ -46,7 +46,7 @@ const routes = [
   },
   {
     path: '/panel',
-    name: 'index',
+    name: 'Panel',
     components: {
       default: Panel,
     },
