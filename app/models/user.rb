@@ -45,4 +45,22 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :validatable, :trackable,
          :jwt_authenticatable, jwt_revocation_strategy: self
+
+  validates :email, presence: true
+  validates :firstname, presence: true
+  validates :lastname, presence: true
+
+  enum access_level: {
+    employee: 0,
+    manager: 30,
+    manager_creator: 35,
+    admin: 40,
+    super_admin: 60
+  }
+
+  enum status: {
+    inactive: 0,
+    active: 1
+  }
+
 end
