@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-const MyPortfolio = () => import('@/pages/website/MyPortfolio.vue');
 const Index = () => import('@/pages/website/IndexPage.vue');
 const About = () => import('@/pages/website/AboutPage.vue');
 const Login = () => import('@/pages/website/LoginPage.vue');
@@ -8,16 +7,11 @@ const Signup = () => import('@/pages/website/SignupPage.vue');
 
 const routes = [
   {
-    path: '/portfolio',
-    name: 'portfolio',
-    components: {
-      default: MyPortfolio,
-    },
-  },
-  {
     path: '/',
     name: 'index',
-    component: Index
+    components: {
+      default: Index,
+    },
   },
   {
     path: '/about',
@@ -48,3 +42,5 @@ const router = createRouter({
 });
 
 export default router;
+
+

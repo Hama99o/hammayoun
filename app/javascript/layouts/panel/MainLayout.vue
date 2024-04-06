@@ -5,9 +5,9 @@
         <div class="top_navbar">
           <MainMenu />
         </div>
-        <div class="container">
-          <router-view />
-        </div>
+        <v-content>
+          <router-view></router-view>
+        </v-content>
       </div>
       <div class="sidebar">
         <MainSidebar />

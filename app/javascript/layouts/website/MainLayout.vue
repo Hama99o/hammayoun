@@ -1,14 +1,9 @@
 <template>
   <BaseLayout>
-    <div>
-      <div v-if="shouldShowBaseLayout"  class="header-bar">
-        <MainMenu />
-      </div>
-
-      <div class="container mt-15">
-        <router-view />
-      </div>
-    </div>
+    <v-app>
+      <MainMenu v-if="shouldShowBaseLayout" />
+      <router-view></router-view>
+    </v-app>
   </BaseLayout>
 </template>
 
