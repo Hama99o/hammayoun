@@ -38,14 +38,14 @@ const routes = [
     },
   },
   {
-    path: '/panel/users',
+    path: '/connected_user/users',
     name: 'users',
     components: {
       default: Users,
     },
   },
   {
-    path: '/panel',
+    path: '/connected_user',
     name: 'Panel',
     components: {
       default: Panel,
