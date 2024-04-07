@@ -52,7 +52,6 @@ const fetchNewPage = async(e) => {
 };
 
 const searchUser = async(e) => {
-  console.log(e)
   search.value = e
   await fetchUsers();
 };
