@@ -31,7 +31,7 @@
 
   <!-- for desktop -->
 
-  <v-toolbar-items class="!hidden md:!flex">
+  <v-toolbar-items class="!hidden md:!flex mr-5">
     <v-btn
         flat
         v-for="item in menuItems"
@@ -46,7 +46,75 @@
         {{ item.title }}
       </v-btn>
     </v-toolbar-items>
+    <div>
+      <Dropdown>
+        <template #activator>
+          <user-avatar
+            class="h-10 w-10"
+            size="lg"
+            :avatar="currentUser?.avatar"
+            :firstname="currentUser?.lastname"
+            :lastname="currentUser?.firstname"
+          />
+        </template>
+
+        <template #dropdown>
+          <div class="w-full flex flex-col py-2 gap-2 border">
+            <div class="flex flex-col gap-2">
+              <!-- User Firstname & Lastname -->
+              <p class="px-4">
+                {{ currentUser?.lastname }}
+
+                <span class="text-xl uppercase">
+                  {{ userLastname }}
+                </span>
+              </p>
+
+              <!-- User email -->
+              <p class="text-xs px-4 pb-2">
+                {{ currentUser?.email }}
+              </p>
+            </div>
+
+            <v-divider color="black" class="opacity-100 mx-4" />
+
+            <!-- Buttons -->
+            <div class="flex flex-col">
+              <!-- Profile-->
+              <div
+                class="flex justify-center items-center gap-2 h-[35px] px-4 hover:bg-[#CDCDCD] cursor-pointer"
+                @click="goToProfile"
+              >
+                <div>
+                  <Icon icon="mdi:person-outline" width="16" height="16" class="text-fakeBlack" />
+                </div>
+
+                <p class="!w-full text-xs">
+                  {{ 'Profile' }}
+                </p>
+              </div>
+
+              <!-- Log out -->
+              <div
+                class="flex justify-center items-center gap-2 h-[35px] px-4 hover:bg-[#CDCDCD] cursor-pointer"
+                @click="signOut"
+              >
+                <div>
+                  <Icon icon="mdi:logout" width="16" height="16" class="text-fakeBlack" />
+                </div>
+
+                <p class="!w-full text-xs">
+                  {{ 'Logout' }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </template>
+      </Dropdown>
+    </div>
+
   </v-toolbar>
+
 </template>
 
 <script setup lang="ts">
@@ -56,6 +124,8 @@ import AuthService from '@/services/auth.service';
 import { storeToRefs } from 'pinia';
 import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/user.store';
+import UserAvatar from '@/components/tools/Avatar.vue';
+import Dropdown from '@/components/button/Dropdown.vue';
 
 const { fetchCurrentUser } = useUserStore();
 const { currentUser } = storeToRefs(useUserStore());
@@ -79,12 +149,12 @@ onMounted(async () => {
     console.log(error);
   }
 });
+const router = useRouter();
 
 const menuLogInItems = ref([
   { title: 'Index', routeName: 'index', icon: "mdi-home-circle", allow: true },
   { title: 'About', routeName: 'about', icon: "mdi-face-man-shimmer-outline", allow: true },
   { title: 'Users', routeName: 'users', icon: "mdi-account-group", allow: false },
-  { title: 'Logout', routeName: 'logout', icon: "mdi-account-plus-outline", allow: true },
 
 ]);
 
@@ -116,6 +186,24 @@ const logout = () => {
 const isUserLogIn = computed(() => {
   return AuthService?.getUser() && AuthService?.getToken()
 });
+
+const goToProfile = () => {
+  router
+    .push({
+      name: 'index',
+    })
+    .then(() => {
+      router.go(0);
+    });
+};
+
+const signOut = async () => {
+  try {
+    logout();
+  } catch (error) {
+    console.log(error);
+  }
+};
 </script>
 
 <style>
