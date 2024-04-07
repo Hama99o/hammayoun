@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <MainMenu/>
-    <div class="md:container md:mx-auto">
+    <div class="md:container md:mx-auto mt-3">
     <router-view></router-view>
     </div>
   </v-app>
