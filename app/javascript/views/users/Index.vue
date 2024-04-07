@@ -33,12 +33,13 @@ import { storeToRefs } from 'pinia';
 import { useUserStore } from '@/stores/user.store';
 import { onMounted } from 'vue';
 
-const { fetchUsers } = useUserStore();
+const { fetchUsers, resetStates } = useUserStore();
 
 const { users, pagination, page, search } = storeToRefs(useUserStore());
 
 onMounted(async () => {
 try {
+  await resetStates()
   await fetchUsers();
 } catch (error) {
   console.log(error);

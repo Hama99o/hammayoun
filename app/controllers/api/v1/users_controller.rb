@@ -8,13 +8,13 @@ class Api::V1::UsersController < ApplicationController
   def index
     @users = @users
     @users = @users.search_user(params[:search]) if params[:search].present?
-    paginate_render(UserSerializer, @users)
+    paginate_render(UserSerializer,policy_scope(@users))
 
   end
 
   def show
     render json: {
-      user: UserSerializer.render_as_json(authorize(@user), view: :all, search: params[:search].present? ? params[:search] : '', current_user: current_user)
+      user: UserSerializer.render_as_json(authorize(@user))
     }, status: :ok
   end
 

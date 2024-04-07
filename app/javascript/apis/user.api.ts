@@ -11,11 +11,9 @@ class UserAPI {
       return error;
     }
   }
-  async fetchUser(id: number, search = '') {
-    if (!search) search = '';
-
+  async fetchUser(id: number) {
     try {
-      const res = await http.get(`/api/v1/users/${id}?search=${search}`);
+      const res = await http.get(`/api/v1/users/${id}`);
       return res.data;
     } catch (error) {
       if (error?.error === 'Signature has expired') {

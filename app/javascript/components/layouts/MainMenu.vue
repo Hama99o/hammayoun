@@ -51,24 +51,50 @@
 
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/auth.store';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import AuthService from '@/services/auth.service';
+import { storeToRefs } from 'pinia';
+import { useRoute, useRouter } from 'vue-router';
+import { useUserStore } from '@/stores/user.store';
 
-const menuLogInItems = [
-  { title: 'Indxex', routeName: 'index', icon: "mdi-home-circle" },
-  { title: 'About', routeName: 'about', icon: "mdi-face-man-shimmer-outline" },
-  { title: 'Users', routeName: 'users', icon: "mdi-account-group" },
-  { title: 'Logout', routeName: 'logout', icon: "mdi-account-plus-outline" },
+const { fetchCurrentUser } = useUserStore();
+const { currentUser } = storeToRefs(useUserStore());
 
-];
+onMounted(async () => {
+  try {
+    if (AuthService.getUser()?.id) {
+      await fetchCurrentUser(AuthService.getUser()?.id);
+      localStorage.setItem('user', JSON.stringify(currentUser?.value));
 
-const menuLogOutItems = [
-  { title: 'Indxex', routeName: 'index', icon: "mdi-home-circle" },
-  { title: 'About', routeName: 'about', icon: "mdi-face-man-shimmer-outline" },
-  { title: 'Sign in', routeName: 'login', icon: " mdi-login" },
-  { title: 'Sign up', routeName: 'signup', icon: "mdi-account-plus-outline" },
+      menuLogInItems.value = menuLogInItems.value.map((item) => {
+        if (item.title == 'Users') {
+          item.allow = AuthService?.isSuperAdmin()
+          return item
+        } else {
+          return item
+        }
+      })
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
 
-];
+const menuLogInItems = ref([
+  { title: 'Index', routeName: 'index', icon: "mdi-home-circle", allow: true },
+  { title: 'About', routeName: 'about', icon: "mdi-face-man-shimmer-outline", allow: true },
+  { title: 'Users', routeName: 'users', icon: "mdi-account-group", allow: false },
+  { title: 'Logout', routeName: 'logout', icon: "mdi-account-plus-outline", allow: true },
+
+]);
+
+const menuLogOutItems = ref([
+  { title: 'Index', routeName: 'index', icon: "mdi-home-circle", allow: true },
+  { title: 'About', routeName: 'about', icon: "mdi-face-man-shimmer-outline", allow: true },
+  { title: 'Sign in', routeName: 'login', icon: " mdi-login", allow: true },
+  { title: 'Sign up', routeName: 'signup', icon: "mdi-account-plus-outline", allow: true },
+
+]);
 
 const appTitle = ref('Multi Magic')
 const sidebar = ref(false)
@@ -77,9 +103,9 @@ const authStore = useAuthStore();
 
 const menuItems = computed(() => {
   if (isUserLogIn.value) {
-    return menuLogInItems
+    return menuLogInItems.value.filter((item) => item.allow)
   } else {
-    return menuLogOutItems
+    return menuLogOutItems.value.filter((item) => item.allow)
   }
 });
 

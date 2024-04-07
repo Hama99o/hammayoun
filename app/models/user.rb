@@ -74,4 +74,8 @@ class User < ApplicationRecord
   def fullname
     "#{firstname&.titleize} #{lastname&.upcase}"
   end
+
+  def admin_or_above?
+    %i[admin super_admin].include? access_level.to_sym
+  end
 end

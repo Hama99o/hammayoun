@@ -7,11 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useRoute } from 'vue-router';
 import MainMenu from '@/components/layouts/MainMenu.vue';
 import Toast from '@/components/Toast/Index.vue';
-const route = useRoute();
 
 </script>
 

@@ -65,7 +65,6 @@ onMounted(() => {
 });
 
 const submit = () => {
-  console.log('hiii')
   authStore
     .login(user)
     .then(() => {
