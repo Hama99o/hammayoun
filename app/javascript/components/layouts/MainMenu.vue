@@ -54,13 +54,19 @@ import { useAuthStore } from '@/stores/auth.store';
 import { ref, computed } from 'vue';
 import AuthService from '@/services/auth.service';
 
-const menuItems = [
+const menuLogInItems = [
   { title: 'Indxex', routeName: 'index', icon: "mdi-home-circle" },
   { title: 'About', routeName: 'about', icon: "mdi-face-man-shimmer-outline" },
-  { title: 'Users', routeName: 'users', icon: "mdi-account-plus-outline" },
+  { title: 'Users', routeName: 'users', icon: "mdi-account-group" },
+  { title: 'Logout', routeName: 'index', icon: "mdi-account-plus-outline" },
+
+];
+
+const menuLogOutItems = [
+  { title: 'Indxex', routeName: 'index', icon: "mdi-home-circle" },
+  { title: 'About', routeName: 'about', icon: "mdi-face-man-shimmer-outline" },
   { title: 'Sign in', routeName: 'login', icon: " mdi-login" },
   { title: 'Sign up', routeName: 'signup', icon: "mdi-account-plus-outline" },
-  { title: 'Logout', routeName: 'index', icon: "mdi-account-plus-outline" },
 
 ];
 
@@ -68,6 +74,14 @@ const appTitle = ref('Multi Magic')
 const sidebar = ref(false)
 
 const authStore = useAuthStore();
+
+const menuItems = computed(() => {
+  if (isUserLogIn) {
+    return menuLogInItems
+  } else {
+    return menuLogOutItems
+  }
+});
 
 const logout = () => {
   authStore.logout();
