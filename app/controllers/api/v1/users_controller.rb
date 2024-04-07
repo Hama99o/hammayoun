@@ -6,9 +6,10 @@ class Api::V1::UsersController < ApplicationController
   before_action :users, only: [:index, :activated_users]
 
   def index
-    @users = @users.where(on_off: 'On')
+    @users = @users
     @users = @users.search_name(params[:search]) if params[:search].present?
-    pagy_blue(UserSerializer, policy_scope(@users.order(created_at: :desc)), extra: { view: :all })
+    paginate_render(UserSerializer, @users)
+
   end
 
   def show

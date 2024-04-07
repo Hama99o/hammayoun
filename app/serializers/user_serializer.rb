@@ -41,8 +41,24 @@
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
-class UserSerializer
-  include JSONAPI::Serializer
+class UserSerializer < ApplicationSerializer
+  identifier :id
+  fields :email, :access_level, :lang, :status
 
-  attributes :email, :sign_in_count, :created_at
+  field :fullname do |object|
+    object.fullname.presence
+  end
+
+  field :firstname do |user|
+    user.firstname.presence
+  end
+
+  field :lastname do |user|
+    user.lastname.presence
+  end
+
+  field :email do |user|
+    user.email.presence
+  end
+
 end

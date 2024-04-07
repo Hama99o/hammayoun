@@ -63,4 +63,7 @@ class User < ApplicationRecord
     active: 1
   }
 
+  def fullname
+    "#{firstname&.titleize} #{lastname&.upcase}"
+  end
 end
