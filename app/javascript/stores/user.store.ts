@@ -13,9 +13,9 @@ export const useUserStore = defineStore({
   }),
   getters: {},
   actions: {
-    async fetchUsers(page = 1, search = '') {
+    async fetchUsers() {
       this.loading = true;
-      const res = await UserAPI.fetchUsers(page, search);
+      const res = await UserAPI.fetchUsers(this.page, this.search);
       this.users = res?.users;
       this.pagination = {
         current_page: res.meta.pagy.page,
