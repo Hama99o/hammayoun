@@ -1,5 +1,19 @@
 
 <template>
+  <div class="w-full md:w-fit">
+    <v-text-field
+      v-model="search"
+      color="primary"
+      class="w-full text-darkGrey md:w-[258px]"
+      variant="outlined"
+      density="compact"
+      hide-details
+      prepend-inner-icon="mdi-magnify"
+      :label="Search"
+      @update:model-value="searchUser"
+      />
+  </div>
+
   <user-table :users="users" />
   <v-pagination
     v-if="pagination"
@@ -21,7 +35,7 @@ import { onMounted } from 'vue';
 
 const { fetchUsers } = useUserStore();
 
-const { users, pagination, page } = storeToRefs(useUserStore());
+const { users, pagination, page, search } = storeToRefs(useUserStore());
 
 onMounted(async () => {
 try {
@@ -34,6 +48,12 @@ try {
 
 const fetchNewPage = async(e) => {
   page.value = e
+  await fetchUsers();
+};
+
+const searchUser = async(e) => {
+  console.log(e)
+  search.value = e
   await fetchUsers();
 };
 </script>

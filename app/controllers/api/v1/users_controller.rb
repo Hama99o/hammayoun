@@ -7,7 +7,7 @@ class Api::V1::UsersController < ApplicationController
 
   def index
     @users = @users
-    @users = @users.search_name(params[:search]) if params[:search].present?
+    @users = @users.search_user(params[:search]) if params[:search].present?
     paginate_render(UserSerializer, @users)
 
   end

@@ -48,6 +48,14 @@ class User < ApplicationRecord
          :recoverable, :validatable, :trackable,
          :jwt_authenticatable, jwt_revocation_strategy: self
 
+  include PgSearch::Model
+
+  pg_search_scope :search_user,
+                  against: [:firstname, :lastname, :email],
+                  using: {
+                    tsearch: { prefix: true }
+                  }
+
   validates :email, presence: true
   validates :firstname, presence: true
   validates :lastname, presence: true
