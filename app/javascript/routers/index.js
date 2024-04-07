@@ -37,7 +37,7 @@ const routes = [
     },
   },
   {
-    path: '/multi_magic/users',
+    path: '/users',
     name: 'users',
     components: {
       default: Users,
