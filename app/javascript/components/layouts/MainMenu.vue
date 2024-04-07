@@ -50,7 +50,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { useAuthStore } from '@/stores/auth.store';
+import { ref, computed } from 'vue';
+import AuthService from '@/services/auth.service';
 
 const menuItems = [
   { title: 'Indxex', routeName: 'index', icon: "mdi-home-circle" },
@@ -65,6 +67,15 @@ const menuItems = [
 const appTitle = ref('Multi Magic')
 const sidebar = ref(false)
 
+const authStore = useAuthStore();
+
+const logout = () => {
+  authStore.logout();
+};
+
+const isUserLogIn = computed(() => {
+  AuthService?.getUser() && AuthService?.getToken()
+});
 </script>
 
 <style>

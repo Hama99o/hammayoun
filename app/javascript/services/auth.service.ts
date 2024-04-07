@@ -41,7 +41,6 @@ class AuthService {
     }
   }
 
-
   getUser() {
     const user = localStorage.getItem('user');
 

@@ -52,7 +52,7 @@ const user = reactive<IUserLogin>({
 });
 
 const redirectToPanel = () => {
-  window.location.href = '/multi_magic/';
+  window.location.href = '/';
 };
 const showMessage = ref(false);
 
