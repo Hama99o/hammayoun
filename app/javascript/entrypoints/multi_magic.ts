@@ -1,8 +1,8 @@
 
 import {createApp} from "vue";
-import App from '@/layouts/connected_user/MainLayout.vue';
+import App from '@/App.vue';
 import {registerPlugins} from "@/plugins/index.js";
-import '@/assets/css/connected_user.scss';
+// import '@/assets/css/multi_magic.scss';
 
 const app = createApp(App);
 

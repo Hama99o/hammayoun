@@ -1,10 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
-const Index = () => import('@/pages/unconnected_user/IndexPage.vue');
-const About = () => import('@/pages/unconnected_user/AboutPage.vue');
-const Login = () => import('@/pages/unconnected_user/LoginPage.vue');
-const Signup = () => import('@/pages/unconnected_user/SignupPage.vue');
-const Users = () => import('@/layouts/connected_user/users/Index.vue');
-const Panel = () => import('@/pages/connected_user/IndexPage.vue');
+const Index = () => import('@/views/Home.vue');
+const About = () => import('@/views/AboutPage.vue');
+const Login = () => import('@/views/LoginPage.vue');
+const Signup = () => import('@/views/SignupPage.vue');
+const Users = () => import('@/views/users/Index.vue');
 
 // import PersonalProfile from '@/components/portfolio/PersonalProfile.vue'
 
@@ -38,19 +37,12 @@ const routes = [
     },
   },
   {
-    path: '/connected_user/users',
+    path: '/multi_magic/users',
     name: 'users',
     components: {
       default: Users,
     },
-  },
-  {
-    path: '/connected_user',
-    name: 'Panel',
-    components: {
-      default: Panel,
-    },
-  },
+  }
 ];
 
 const router = createRouter({

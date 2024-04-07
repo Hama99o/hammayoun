@@ -1,6 +1,6 @@
 <template>
   <BaseLayout>
-    <div class="wrapper">
+    <!-- <div class="wrapper">
       <div class="section">
         <div class="top_navbar">
           <MainMenu />
@@ -12,7 +12,7 @@
       <div class="sidebar">
         <MainSidebar />
       </div>
-    </div>
+    </div> -->
   </BaseLayout>
 </template>
 

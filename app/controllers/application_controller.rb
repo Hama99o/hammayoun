@@ -6,14 +6,11 @@ class ApplicationController < ActionController::Base
 
   after_action { pagy_headers_merge(@pagy) if @pagy }
 
-  def unconnected_user
-    render template: 'layouts/unconnected_user'
-  end
 
-  def connected_user
-    return redirect_to unconnected_user_path unless user_signed_in?
+  def multi_magic
+    # return redirect_to multi_magic unless user_signed_in?
 
-    render template: 'layouts/connected_user'
+    render template: 'layouts/multi_magic'
   end
 
   def paginate_render(serializer_const, list, page: 1, per_page: 10, root: list&.table_name, meta: {}, extra: {})

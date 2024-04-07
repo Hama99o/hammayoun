@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 describe ApplicationController, type: :request do
-  shared_examples 'visiting unconnected_user url' do
-    context 'when visiting unconnected_user url' do
-      it 'stays at unconnected_user' do
+  shared_examples 'visiting multi_magic url' do
+    context 'when visiting multi_magic url' do
+      it 'stays at multi_magic' do
         get '/'
 
         expect(response.request.fullpath).to eq('/')
@@ -14,15 +14,15 @@ describe ApplicationController, type: :request do
   end
 
   context 'when user not logged-in' do
-    context 'when visiting connected_user url' do
-      it 'redirects to unconnected_user' do
-        get '/connected_user'
+    context 'when visiting multi_magic url' do
+      it 'redirects to multi_magic' do
+        get '/multi_magic'
 
         expect(response).to redirect_to('/')
       end
     end
 
-    include_examples 'visiting unconnected_user url'
+    include_examples 'visiting multi_magic url'
   end
 
   context 'when user logged-in' do
@@ -30,14 +30,14 @@ describe ApplicationController, type: :request do
 
     before { login(user) }
 
-    context 'when visiting connected_user url' do
-      it 'stay at connected_user' do
-        get '/connected_user'
+    context 'when visiting multi_magic url' do
+      it 'stay at multi_magic' do
+        get '/multi_magic'
 
-        expect(response.request.fullpath).to eq('/connected_user')
+        expect(response.request.fullpath).to eq('/multi_magic')
       end
     end
 
-    include_examples 'visiting websunconnected_userite url'
+    include_examples 'visiting multi_magic url'
   end
 end

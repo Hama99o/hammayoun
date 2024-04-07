@@ -55,8 +55,11 @@ import { ref } from 'vue';
 const menuItems = [
   { title: 'Indxex', routeName: 'index', icon: "mdi-home-circle" },
   { title: 'About', routeName: 'about', icon: "mdi-face-man-shimmer-outline" },
+  { title: 'Users', routeName: 'users', icon: "mdi-account-plus-outline" },
   { title: 'Sign in', routeName: 'login', icon: " mdi-login" },
   { title: 'Sign up', routeName: 'signup', icon: "mdi-account-plus-outline" },
+  { title: 'Logout', routeName: 'index', icon: "mdi-account-plus-outline" },
+
 ];
 
 const appTitle = ref('Multi Magic')

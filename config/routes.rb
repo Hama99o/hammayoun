@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
-  root to: 'application#unconnected_user'
+  root to: 'application#multi_magic'
 
   devise_for :users, defaults: { format: :json }, skip: :all
   devise_scope :user do
@@ -24,6 +24,5 @@ Rails.application.routes.draw do
     post '/users/signup' => 'registrations#create', as: :user_registration
   end
 
-  get '/connected_user(/*path)', to: 'application#connected_user', as: :connected_user
-  get '/(*path)', to: 'application#unconnected_user', as: :unconnected_user
+  get '/(*path)', to: 'application#multi_magic', as: :multi_magic
 end
