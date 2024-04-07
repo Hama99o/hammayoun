@@ -1,7 +1,9 @@
 <template>
   <v-app>
     <MainMenu/>
+    <div class="md:container md:mx-auto">
     <router-view></router-view>
+    </div>
   </v-app>
   <Toast />
 </template>
