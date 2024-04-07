@@ -58,7 +58,7 @@ const menuLogInItems = [
   { title: 'Indxex', routeName: 'index', icon: "mdi-home-circle" },
   { title: 'About', routeName: 'about', icon: "mdi-face-man-shimmer-outline" },
   { title: 'Users', routeName: 'users', icon: "mdi-account-group" },
-  { title: 'Logout', routeName: 'index', icon: "mdi-account-plus-outline" },
+  { title: 'Logout', routeName: 'logout', icon: "mdi-account-plus-outline" },
 
 ];
 
@@ -76,7 +76,7 @@ const sidebar = ref(false)
 const authStore = useAuthStore();
 
 const menuItems = computed(() => {
-  if (isUserLogIn) {
+  if (isUserLogIn.value) {
     return menuLogInItems
   } else {
     return menuLogOutItems
@@ -88,7 +88,7 @@ const logout = () => {
 };
 
 const isUserLogIn = computed(() => {
-  AuthService?.getUser() && AuthService?.getToken()
+  return AuthService?.getUser() && AuthService?.getToken()
 });
 </script>
 

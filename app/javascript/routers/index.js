@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 const Index = () => import('@/views/Home.vue');
 const About = () => import('@/views/AboutPage.vue');
 const Login = () => import('@/views/LoginPage.vue');
+const Logout = () => import('@/views/Logout.vue');
 const Signup = () => import('@/views/SignupPage.vue');
 const Users = () => import('@/views/users/Index.vue');
 
@@ -41,6 +42,13 @@ const routes = [
     name: 'users',
     components: {
       default: Users,
+    },
+  },
+  {
+    path: '/logout',
+    name: 'logout',
+    components: {
+      default: Logout,
     },
   }
 ];
