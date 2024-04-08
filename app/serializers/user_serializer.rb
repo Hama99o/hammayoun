@@ -43,7 +43,7 @@
 #
 class UserSerializer < ApplicationSerializer
   identifier :id
-  fields :email, :access_level, :lang, :status
+  fields :email, :access_level, :lang, :status, :birth_date
 
   field :fullname do |object|
     object.fullname.presence

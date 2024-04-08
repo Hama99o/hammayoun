@@ -19,17 +19,14 @@ class UserPolicy < ApplicationPolicy
 
   def create?
     # user.admin_or_above?
-    true
   end
 
   def update?
-    # show?
-    true
+    show?
   end
 
   def destroy?
-    # create?
-    true
+    create?
   end
 
   def reset_password?

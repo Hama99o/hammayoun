@@ -3,6 +3,9 @@
     <v-row justify="center">
       <v-col cols="12" md="8" lg="6">
         <v-card class="elevation-10">
+          <v-card-actions>
+            <v-btn color="primary my-3" @click="editMode">Edit</v-btn>
+          </v-card-actions>
           <v-card-title class="text-lg font-bold text-center mb-4">User Profile</v-card-title>
           <v-card-text>
             <div class="flex flex-col items-center my-5">
@@ -19,9 +22,6 @@
               <div class="text-gray-600  my-3">{{ user?.address || 'no address added yet' }}</div>
             </div>
           </v-card-text>
-          <v-card-actions>
-            <v-btn color="primary" @click="editMode = true">Edit</v-btn>
-          </v-card-actions>
         </v-card>
       </v-col>
     </v-row>

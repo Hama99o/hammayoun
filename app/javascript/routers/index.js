@@ -6,6 +6,7 @@ const Logout = () => import('@/views/Logout.vue');
 const Signup = () => import('@/views/SignupPage.vue');
 const Users = () => import('@/views/users/Index.vue');
 const UserShow = () => import('@/views/users/Show.vue');
+const UserEdit = () => import('@/views/users/Edit.vue');
 
 // import PersonalProfile from '@/components/portfolio/PersonalProfile.vue'
 
@@ -50,6 +51,13 @@ const routes = [
     name: 'user',
     components: {
       default: UserShow,
+    },
+  },
+  {
+    path: '/users/:id/edit',
+    name: 'user_edit',
+    components: {
+      default: UserEdit,
     },
   },
   {

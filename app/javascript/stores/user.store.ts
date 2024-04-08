@@ -4,7 +4,7 @@ import UserAPI from '@/apis/user.api';
 export const useUserStore = defineStore({
   id: 'user-store',
   state: () => ({
-    user: null,
+    user: {},
     currentUser: null,
     users: [],
     search: '',

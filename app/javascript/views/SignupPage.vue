@@ -33,7 +33,7 @@
         <v-text-field
           v-model="user.birth_date"
           type="date"
-          label="Last Name"
+          label="Birth date"
         ></v-text-field>
 
         <v-text-field

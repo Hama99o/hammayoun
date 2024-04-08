@@ -18,13 +18,13 @@ class Api::V1::UsersController < ApplicationController
     }, status: :ok
   end
 
-  # def update
-  #   if @user.update(**user_params)
-  #     render json: { user: UserSerializer.render_as_hash(authorize(@user)) }, status: :ok
-  #   else
-  #     render json: @user.errors.messages, status: :unprocessable_entity
-  #   end
-  # end
+  def update
+    if @user.update(**user_params)
+      render json: { user: UserSerializer.render_as_hash(authorize(@user)) }, status: :ok
+    else
+      render json: @user.errors.messages, status: :unprocessable_entity
+    end
+  end
 
   # def create
   #   user = User.create(**user_params)
