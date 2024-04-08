@@ -32,7 +32,7 @@
 import { storeToRefs } from 'pinia';
 import { useUserStore } from '@/stores/user.store';
 import { onMounted } from 'vue';
-import { useRoute, useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import UserAvatar from '@/components/tools/Avatar.vue';
 
 const route = useRoute();
