@@ -19,6 +19,9 @@
               <div class="text-gray-600  my-3">{{ user?.address || 'no address added yet' }}</div>
             </div>
           </v-card-text>
+          <v-card-actions>
+            <v-btn color="primary" @click="editMode = true">Edit</v-btn>
+          </v-card-actions>
         </v-card>
       </v-col>
     </v-row>
@@ -29,10 +32,12 @@
 import { storeToRefs } from 'pinia';
 import { useUserStore } from '@/stores/user.store';
 import { onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRoute } from 'vue-router';
 import UserAvatar from '@/components/tools/Avatar.vue';
 
 const route = useRoute();
+const router = useRouter();
+
 const { fetchUser } = useUserStore();
 
 const { user } = storeToRefs(useUserStore());
@@ -44,4 +49,12 @@ try {
   console.log(error);
 }
 });
+
+const editMode = () => {
+  router
+    .push({
+      name: 'user_edit',
+      params: { id: user.value?.id }
+    })
+};
 </script>

@@ -190,9 +190,9 @@ const isUserLogIn = computed(() => {
 const goToProfile = () => {
   router
     .push({
-      name: 'index',
-    })
-    .then(() => {
+      name: 'user',
+      params: { id: currentUser.value?.id }
+    }).then(() => {
       router.go(0);
     });
 };
