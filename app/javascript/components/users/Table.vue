@@ -3,13 +3,13 @@
     <v-table>
       <thead>
         <tr>
-          <th class="text-center">
+          <th class="text-left">
             Name
           </th>
-          <th class="text-center">
+          <th class="text-left">
             Access level
           </th>
-          <th class="text-center">
+          <th class="text-left">
             Email
           </th>
         </tr>
@@ -20,13 +20,13 @@
           v-for="item in users"
           :key="item.name"
         >
-          <td class="px-0">
+          <td class="px-0 ">
             <router-link
               :to="{ name: 'index' }"
               class="w-full h-full"
             >
 
-            <div v-if="item?.fullname" class="w-[45px] h-full flex gap-2 items-center pl-4">
+            <div v-if="item?.fullname" class="w-[45px] h-full flex gap-2 items-center pl-4 whitespace-nowrap">
               {{ item.fullname }}
             </div>
             </router-link>
@@ -37,7 +37,7 @@
               :to="{ name: 'index' }"
               class="w-full h-full"
             >
-            <div v-if="item?.access_level" class="w-[45px] h-full flex gap-2 items-center pl-4">
+            <div v-if="item?.access_level" class="w-[45px] h-full flex gap-2 items-center pl-4 whitespace-nowrap">
               {{ item.access_level }}
             </div>
             </router-link>
@@ -48,7 +48,7 @@
               :to="{ name: 'index' }"
               class="w-full h-full"
             >
-            <div v-if="item?.email" class="w-[45px] h-full flex gap-2 items-center pl-4">
+            <div v-if="item?.email" class="w-[45px] h-full flex gap-2 items-center pl-4 whitespace-nowrap">
               {{ item.email }}
             </div>
             </router-link>
