@@ -22,7 +22,7 @@
         >
           <td class="px-0 ">
             <router-link
-              :to="{ name: 'index' }"
+              :to="{ name: 'user', params: {id: item.id } }"
               class="w-full h-full"
             >
 
@@ -34,7 +34,7 @@
 
           <td class="px-0">
             <router-link
-              :to="{ name: 'index' }"
+              :to="{ name: 'user', params: {id: item.id } }"
               class="w-full h-full"
             >
             <div v-if="item?.access_level" class="w-[45px] h-full flex gap-2 items-center pl-4 whitespace-nowrap">
@@ -45,7 +45,7 @@
 
           <td class="px-0">
             <router-link
-              :to="{ name: 'index' }"
+              :to="{ name: 'user', params: {id: item.id } }"
               class="w-full h-full"
             >
             <div v-if="item?.email" class="w-[45px] h-full flex gap-2 items-center pl-4 whitespace-nowrap">

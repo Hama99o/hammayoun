@@ -14,8 +14,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def show?
-    # user.admin_or_above? || user== record
-    true
+    user.admin_or_above? || user == record
   end
 
   def create?

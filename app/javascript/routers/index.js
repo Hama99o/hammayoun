@@ -5,6 +5,7 @@ const Login = () => import('@/views/LoginPage.vue');
 const Logout = () => import('@/views/Logout.vue');
 const Signup = () => import('@/views/SignupPage.vue');
 const Users = () => import('@/views/users/Index.vue');
+const UserShow = () => import('@/views/users/Show.vue');
 
 // import PersonalProfile from '@/components/portfolio/PersonalProfile.vue'
 
@@ -42,6 +43,13 @@ const routes = [
     name: 'users',
     components: {
       default: Users,
+    },
+  },
+  {
+    path: '/users/:id',
+    name: 'user',
+    components: {
+      default: UserShow,
     },
   },
   {

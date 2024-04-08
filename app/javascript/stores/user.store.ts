@@ -25,6 +25,12 @@ export const useUserStore = defineStore({
       };
       this.loading = false;
     },
+    async fetchUser(id: number) {
+      await this.resetStates();
+      const res = await UserAPI.fetchUser(id);
+      this.user = res.user;
+      this.loading = false;
+    },
     async fetchCurrentUser(id: number) {
       await this.resetStates();
       const res = await UserAPI.fetchUser(id);
