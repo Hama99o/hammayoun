@@ -75,7 +75,8 @@ class Api::V1::UsersController < ApplicationController
       :phone_number,
       :gender,
       :language,
-      :access_level
+      :access_level,
+      :photo
     )
   end
 end

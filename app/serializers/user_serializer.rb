@@ -61,4 +61,7 @@ class UserSerializer < ApplicationSerializer
     user.email.presence
   end
 
+  field :avatar do |object|
+    object.get_photo_url.presence if object.photo.attached?
+  end
 end

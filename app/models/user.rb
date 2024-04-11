@@ -60,6 +60,8 @@ class User < ApplicationRecord
   validates :firstname, presence: true
   validates :lastname, presence: true
 
+  has_one_attached :photo
+
   enum access_level: {
     employee: 0,
     admin: 1,
@@ -77,5 +79,21 @@ class User < ApplicationRecord
 
   def admin_or_above?
     %i[admin super_admin].include? access_level.to_sym
+  end
+
+  def get_photo_url
+    url_for(photo).presence
+  end
+
+  def get_photo_urls
+    if photo.representable?
+      {
+        "30" => Rails.application.routes.url_helpers.rails_blob_url(photo.variant(resize: "30")),
+        "50" => Rails.application.routes.url_helpers.rails_blob_url(photo.variant(resize: "50")),
+        "70" => Rails.application.routes.url_helpers.rails_blob_url(photo.variant(resize: "70")),
+        "100" => Rails.application.routes.url_helpers.rails_blob_url(photo.variant(resize: "100")),
+        "150" => Rails.application.routes.url_helpers.rails_blob_url(photo.variant(resize: "150"))
+      }
+    end
   end
 end
