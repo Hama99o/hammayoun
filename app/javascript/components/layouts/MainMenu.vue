@@ -127,7 +127,7 @@ import { useUserStore } from '@/stores/user.store';
 import UserAvatar from '@/components/tools/Avatar.vue';
 import Dropdown from '@/components/button/Dropdown.vue';
 
-const { fetchCurrentUser } = useUserStore();
+const { fetchCurrentUser, fetchUser } = useUserStore();
 const { currentUser } = storeToRefs(useUserStore());
 
 onMounted(async () => {
@@ -187,14 +187,14 @@ const isUserLogIn = computed(() => {
   return AuthService?.getUser() && AuthService?.getToken()
 });
 
-const goToProfile = () => {
-  router
-    .push({
+const goToProfile = async() => {
+  await fetchUser(currentUser.value?.id);
+  router.push(
+    {
       name: 'user',
       params: { id: currentUser.value?.id }
-    }).then(() => {
-      router.go(0);
-    });
+    }
+  )
 };
 
 const signOut = async () => {

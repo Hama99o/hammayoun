@@ -42,7 +42,7 @@ const { fetchUser } = useUserStore();
 
 const { user } = storeToRefs(useUserStore());
 
-onMounted(async () => {
+onMounted(async() => {
 try {
   await fetchUser(route.params.id);
 } catch (error) {
