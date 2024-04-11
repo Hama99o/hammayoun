@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_11_151709) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_11_154046) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -74,6 +74,19 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_11_151709) do
     t.datetime "updated_at", null: false
     t.index ["favoritable_type", "favoritable_id"], name: "index_favorites_on_favoritable"
     t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
+  create_table "lock_app_sensitive_infos", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "data_type"
+    t.text "data"
+    t.string "username"
+    t.string "link"
+    t.string "email"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_lock_app_sensitive_infos_on_user_id"
   end
 
   create_table "note_app_notes", force: :cascade do |t|
@@ -158,6 +171,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_11_151709) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "allowlisted_jwts", "users", on_delete: :cascade
   add_foreign_key "favorites", "users"
+  add_foreign_key "lock_app_sensitive_infos", "users"
   add_foreign_key "note_app_notes", "users", column: "owner_id"
   add_foreign_key "note_app_reminders", "note_app_notes", column: "note_id"
   add_foreign_key "note_app_reminders", "users"
