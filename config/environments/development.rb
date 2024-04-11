@@ -71,7 +71,12 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
 
   # Mailer configs
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3001 }
+  # config.action_mailer.default_url_options = { host: 'localhost', port: 3001 }
+  host = "http://localhost:3001"
+
+  config.action_mailer.default_url_options = { host: }
+
+  Rails.application.routes.default_url_options[:host] = host
 
   # [Blocked host] clear the entire whitelist, which lets through requests for all hostnames.
   config.hosts.clear

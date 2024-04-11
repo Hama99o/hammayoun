@@ -24,5 +24,5 @@ Rails.application.routes.draw do
     post '/users/signup' => 'registrations#create', as: :user_registration
   end
 
-  get '/(*path)', to: 'application#multi_magic', as: :multi_magic
+  get '/*path', to: 'application#multi_magic', as: :multi_magic, constraints: -> (req) { !(req.fullpath.start_with?('/rails/')) }
 end

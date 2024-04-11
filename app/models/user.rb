@@ -43,6 +43,7 @@
 #
 class User < ApplicationRecord
   include Devise::JWT::RevocationStrategies::Allowlist
+  include Rails.application.routes.url_helpers
 
   devise :database_authenticatable, :registerable,
          :recoverable, :validatable, :trackable,

@@ -23,7 +23,9 @@
     </span>
 
     <v-toolbar-title>
-      <router-link to="/" tag="span" style="cursor: pointer" class="text-black no-underline	">
+      <router-link to="/" tag="span" style="cursor: pointer" class="text-black no-underline d-flex align-center w-fit hover:bg-stone-300 p-5">
+        <img alt="" style="width: 30px;" src="@/assets/logos/image.png" class="mr-3"/>
+
         {{ appTitle }}
       </router-link>
     </v-toolbar-title>
@@ -33,6 +35,7 @@
 
   <v-toolbar-items class="!hidden md:!flex mr-5">
     <v-btn
+        class="d-flex align-center"
         flat
         v-for="item in menuItems"
         :key="item.title"

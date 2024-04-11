@@ -6,7 +6,8 @@ import i18n from "@/plugins/i18n.js";
 import router from "@/routers/index.js";
 import { showToast } from '@/utils/showToast';
 import vuetify from "@/plugins/vuetify";
-
+import SvnUiLibrary from "svn-ui-library";
+import "svn-ui-library/style.css";
 export const globalProperties = {
   $showToast: showToast,
 };
@@ -25,6 +26,7 @@ export const registerPlugins = (app) => {
   app.use(vuetify);
   app.use(pinia);
   app.use(VueQueryPlugin);
+  app.use(SvnUiLibrary);
   app.use(i18n);
   app.config.globalProperties = { ...app.config.globalProperties, ...globalProperties };
 };

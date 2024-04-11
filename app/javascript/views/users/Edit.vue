@@ -3,20 +3,23 @@
     <v-sheet
       border="md"
       class="pa-6 text-white mx-auto !rounded-md"
-      color="#141518"
+      color="rgb(8 47 73)"
       width="700"
       max-width="800"
     >
       <div class="flex justify-center my-5">
-        <user-avatar
-          class="h-10 w-10 my-4"
-          size="2xl"
+        <svn-profile
+          app-variant="studio"
+          :firstname="user?.firstname"
+          :lastname="user?.lastname"
           :avatar="user?.avatar"
-          :firstname="user?.lastname"
-          :lastname="user?.firstname"
+          :avatar-size="'2xl'"
+          :edit="true"
+          class="text-left !text-orange-300 sm:!text-center"
+          @upload-file="uploadAvatar"
+          @delete-picture="uploadAvatar(null)"
         />
       </div>
-
       <v-form fast-fail @submit.prevent="submit">
         <v-text-field
           v-model="user.firstname"
@@ -82,4 +85,17 @@ const submit = async() => {
     console.log(error);
   }
 };
+
+const uploadAvatar = async (data) => {
+  try {
+    await updateUser(route.params?.id, { photo: data });
+
+    // snackbar.setBgColor('fakeBlack');
+    // snackbar.setMsg('Avatar has been changed.');
+    // snackbar.displaySnackBar();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 </script>
