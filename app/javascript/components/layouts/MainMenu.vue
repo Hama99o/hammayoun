@@ -50,7 +50,7 @@
       <Dropdown>
         <template #activator>
           <user-avatar
-            class="h-10 w-10"
+            class="h-10 w-10 cursor-pointer mr-5"
             size="lg"
             :avatar="currentUser?.avatar"
             :firstname="currentUser?.lastname"
@@ -66,7 +66,7 @@
                 {{ currentUser?.lastname }}
 
                 <span class="text-xl uppercase">
-                  {{ userLastname }}
+                  {{ currentUser?.firstname }}
                 </span>
               </p>
 
