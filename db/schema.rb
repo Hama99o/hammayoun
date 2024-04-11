@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_11_103424) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_11_150417) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -53,6 +53,49 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_11_103424) do
     t.index ["user_id"], name: "index_allowlisted_jwts_on_user_id"
   end
 
+  create_table "note_app_notes", force: :cascade do |t|
+    t.bigint "owner_id"
+    t.jsonb "data"
+    t.string "title"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_id"], name: "index_note_app_notes_on_owner_id"
+  end
+
+  create_table "note_app_reminders", force: :cascade do |t|
+    t.bigint "note_id"
+    t.bigint "user_id"
+    t.datetime "reminder_time"
+    t.boolean "is_completed", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["note_id"], name: "index_note_app_reminders_on_note_id"
+    t.index ["user_id"], name: "index_note_app_reminders_on_user_id"
+  end
+
+  create_table "note_app_shares", force: :cascade do |t|
+    t.bigint "note_id"
+    t.bigint "shared_with_user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["note_id"], name: "index_note_app_shares_on_note_id"
+    t.index ["shared_with_user_id"], name: "index_note_app_shares_on_shared_with_user_id"
+  end
+
+  create_table "notes_tags", id: false, force: :cascade do |t|
+    t.bigint "note_id"
+    t.bigint "tag_id"
+    t.index ["note_id"], name: "index_notes_tags_on_note_id"
+    t.index ["tag_id"], name: "index_notes_tags_on_tag_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -91,4 +134,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_11_103424) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "allowlisted_jwts", "users", on_delete: :cascade
+  add_foreign_key "note_app_notes", "users", column: "owner_id"
+  add_foreign_key "note_app_reminders", "note_app_notes", column: "note_id"
+  add_foreign_key "note_app_reminders", "users"
+  add_foreign_key "note_app_shares", "note_app_notes", column: "note_id"
+  add_foreign_key "note_app_shares", "users", column: "shared_with_user_id"
+  add_foreign_key "notes_tags", "note_app_notes", column: "note_id"
 end
