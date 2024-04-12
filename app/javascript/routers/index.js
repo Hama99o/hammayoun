@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
+import AuthService from '@/services/auth.service';
+
 const Index = () => import('@/views/Home.vue');
 const About = () => import('@/views/AboutPage.vue');
 const Login = () => import('@/views/LoginPage.vue');
@@ -72,6 +74,17 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes
+});
+
+router.beforeEach(async (to, from, next) => {
+  const user = AuthService.getUser();
+
+  if (to.path.split('/').includes('login') && user) {
+    next('/');
+  } else {
+    next();
+  }
+
 });
 
 export default router;

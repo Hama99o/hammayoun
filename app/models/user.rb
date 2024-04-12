@@ -9,6 +9,7 @@
 #  encrypted_password     :string           default(""), not null
 #  reset_password_token   :string
 #  reset_password_sent_at :datetime
+#  remember_created_at    :datetime
 #  sign_in_count          :integer          default(0), not null
 #  current_sign_in_at     :datetime
 #  last_sign_in_at        :datetime
@@ -46,7 +47,7 @@ class User < ApplicationRecord
   include Rails.application.routes.url_helpers
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :validatable, :trackable,
+         :recoverable, :rememberable, :validatable, :trackable,
          :jwt_authenticatable, jwt_revocation_strategy: self
 
   include PgSearch::Model

@@ -12,7 +12,7 @@ http.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error.status === 401) {
+    if (error?.response?.status === 401 && error?.response?.data?.error == 'revoked token') {
       AuthService.clearCache();
       return error;
     }
