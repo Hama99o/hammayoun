@@ -37,6 +37,7 @@ export const useNoteStore = defineStore({
     async createNote(data: {}) {
       const res = await NoteAPI.createNote(data);
       this.note = res.note;
+      return res.note
     },
     async deleteNote(id: number) {
       await NoteAPI.deleteNote(id);

@@ -27,6 +27,18 @@ class Api::V1::NoteApp::NotesController < ApplicationController
     end
   end
 
+  def create
+    note = current_user.notes.create(status: :published, **note_params)
+
+    if note
+      render json: {
+        note: NoteApp::NoteSerializer.render_as_json(authorize(note))
+      }
+    else
+      render json: note.errors.messages, status: :unprocessable_entity
+    end
+  end
+
   def destroy
     if @note.delete
       render json: { note: authorize(@note) }, status: :ok

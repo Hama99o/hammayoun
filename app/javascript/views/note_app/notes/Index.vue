@@ -1,9 +1,10 @@
 
 <template>
   <div>
-    <p class="my-5 text-4xl leading-10 text-center">
-      Notes
-  </p>
+    <div>
+      <h1>Notes</h1>
+      <router-link :to="{ name: 'note_new' }" class="create-note-btn">Create New Note</router-link>
+    </div>
     <v-text-field
       v-model="search"
       color="primary"
