@@ -158,7 +158,7 @@ const menuLogInItems = ref([
   { title: 'Index', routeName: 'index', icon: "mdi-home-circle", allow: true },
   { title: 'About', routeName: 'about', icon: "mdi-face-man-shimmer-outline", allow: true },
   { title: 'Users', routeName: 'users', icon: "mdi-account-group", allow: false },
-  { title: 'Note', routeName: 'notes', icon: "mdi-account-group", allow: false },
+  { title: 'Note', routeName: 'notes', icon: "mdi-account-group", allow: true },
 
 ]);
 
