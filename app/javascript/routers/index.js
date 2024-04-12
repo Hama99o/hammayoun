@@ -12,6 +12,7 @@ const UserEdit = () => import('@/views/users/Edit.vue');
 
 // Note App imports
 const Notes = () => import('@/views/note_app/notes/Index.vue');
+const NoteShow = () => import('@/views/note_app/notes/Show.vue');
 
 
 const routes = [
@@ -80,7 +81,14 @@ const routes = [
     // children: [
     //   { path: "", redirect: "/note_app/notes" },
     // ]
-  }
+  },
+  {
+    path: "/note_app/notes/note/:id",
+    name: 'note',
+    components: {
+      default: NoteShow
+    },
+  },
 ];
 
 const router = createRouter({

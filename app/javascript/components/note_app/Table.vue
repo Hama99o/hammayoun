@@ -22,7 +22,7 @@
         >
           <td class="px-0 ">
             <router-link
-              :to="{ name: 'index' }"
+              :to="{ name: 'note', params: {id: item.id } }"
               class="w-full h-full"
             >
             <div v-if="item?.title" class="w-[45px] h-full flex gap-2 items-center pl-4 whitespace-nowrap">
@@ -33,7 +33,7 @@
 
           <td class="px-0">
             <router-link
-              :to="{ name: 'index' }"
+              :to="{ name: 'note', params: {id: item.id } }"
               class="w-full h-full"
             >
             <div v-if="item?.description" class="w-[45px] h-full flex gap-2 items-center pl-4 whitespace-nowrap">
@@ -44,7 +44,7 @@
 
           <td class="px-0">
             <router-link
-              :to="{ name: 'index' }"
+              :to="{ name: 'note', params: {id: item.id } }"
               class="w-full h-full"
             >
             <div v-if="item?.owner?.fullname" class="w-[45px] h-full flex gap-2 items-center pl-4 whitespace-nowrap">
