@@ -22,4 +22,15 @@ class NoteApp::Note < ApplicationRecord
     trashed: 0,
     published: 1
   }
+
+  include PgSearch::Model
+
+  pg_search_scope :search_notes,
+                  against: [:title, :description, :data],
+                  associated_against: {
+                    owner: %i[lastname firstname]
+                  },
+                  using: {
+                    tsearch: { prefix: true }
+                  }
 end

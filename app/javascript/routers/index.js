@@ -10,7 +10,9 @@ const Users = () => import('@/views/users/Index.vue');
 const UserShow = () => import('@/views/users/Show.vue');
 const UserEdit = () => import('@/views/users/Edit.vue');
 
-// import PersonalProfile from '@/components/portfolio/PersonalProfile.vue'
+// Note App imports
+const Notes = () => import('@/views/note_app/notes/Index.vue');
+
 
 const routes = [
   {
@@ -68,6 +70,16 @@ const routes = [
     components: {
       default: Logout,
     },
+  },
+  {
+    path: "/note_app/notes",
+    name: 'notes',
+    components: {
+      default: Notes
+    },
+    // children: [
+    //   { path: "", redirect: "/note_app/notes" },
+    // ]
   }
 ];
 

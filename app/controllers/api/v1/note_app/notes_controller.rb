@@ -4,9 +4,12 @@ class Api::V1::NoteApp::NotesController < ApplicationController
   before_action :notes, only: [:index]
 
   def index
+    @notes = @notes.search_notes(params[:search]) if params[:search].present?
+
     paginate_render(
       NoteApp::NoteSerializer,
-      policy_scope()
+      policy_scope(@notes),
+      extra: { root: :notes }
     )
   end
 

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import NoteAPI from '@/apis/note_app/noe.api';
+import NoteAPI from '@/apis/note_app/note.api';
 
 export const useNoteStore = defineStore({
   id: 'note-store',

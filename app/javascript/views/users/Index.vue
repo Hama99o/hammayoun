@@ -12,7 +12,7 @@
       density="compact"
       hide-details
       prepend-inner-icon="mdi-magnify"
-      :label="Search"
+      :label="'Search'"
       @update:model-value="searchUser"
       />
   </div>
