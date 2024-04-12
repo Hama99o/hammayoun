@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 describe ApplicationController, type: :request do
-  shared_examples 'visiting website url' do
-    context 'when visiting website url' do
-      it 'stays at website' do
+  shared_examples 'visiting multi_magic url' do
+    context 'when visiting multi_magic url' do
+      it 'stays at multi_magic' do
         get '/'
 
         expect(response.request.fullpath).to eq('/')
@@ -14,15 +14,15 @@ describe ApplicationController, type: :request do
   end
 
   context 'when user not logged-in' do
-    context 'when visiting panel url' do
-      it 'redirects to website' do
-        get '/panel'
+    context 'when visiting multi_magic url' do
+      it 'redirects to multi_magic' do
+        get '/multi_magic'
 
         expect(response).to redirect_to('/')
       end
     end
 
-    include_examples 'visiting website url'
+    include_examples 'visiting multi_magic url'
   end
 
   context 'when user logged-in' do
@@ -30,14 +30,14 @@ describe ApplicationController, type: :request do
 
     before { login(user) }
 
-    context 'when visiting panel url' do
-      it 'stay at panel' do
-        get '/panel'
+    context 'when visiting multi_magic url' do
+      it 'stay at multi_magic' do
+        get '/multi_magic'
 
-        expect(response.request.fullpath).to eq('/panel')
+        expect(response.request.fullpath).to eq('/multi_magic')
       end
     end
 
-    include_examples 'visiting website url'
+    include_examples 'visiting multi_magic url'
   end
 end

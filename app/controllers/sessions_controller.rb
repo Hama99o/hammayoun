@@ -4,7 +4,7 @@ class SessionsController < Devise::SessionsController
   private
 
   def respond_with(resource, _opts = {})
-    render jsonapi: resource
+    render json: UserSerializer.render_as_hash(resource)
   end
 
   def respond_to_on_destroy

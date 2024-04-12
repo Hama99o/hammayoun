@@ -35,7 +35,7 @@ services:
     volumes:
       - "postgres:/var/lib/postgresql/data"
     ports:
-      - "5432:5432"
+      - "5442:5432"
     profiles: ["postgres"]
 
   redis:
@@ -48,7 +48,7 @@ services:
     restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
     stop_grace_period: "3s"
     ports:
-      - "6379:6379"
+      - "6369:6369"
     volumes:
       - "redis:/data"
     profiles: ["redis"]

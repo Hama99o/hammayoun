@@ -1,8 +1,26 @@
 Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
-  root to: 'application#website'
+  root to: 'application#multi_magic'
+
+
+  namespace :api, defaults: {format: :json} do
+    namespace :v1 do
+      namespace :note_app do
+        resources :notes
+      end
+
+      resources :users do
+        collection do
+          get :activated_users
+          put :reset_password
+        end
+      end
+
+    end
+  end
 
   devise_for :users, defaults: { format: :json }, skip: :all
+
   devise_scope :user do
     # If you change these urls and helpers, you must change these files too:
     # - config/initializers/devise.rb#JWT Devise
@@ -12,6 +30,5 @@ Rails.application.routes.draw do
     post '/users/signup' => 'registrations#create', as: :user_registration
   end
 
-  get '/panel(/*path)', to: 'application#panel', as: :panel
-  get '/(*path)', to: 'application#website', as: :website
+  get '/*path', to: 'application#multi_magic', as: :multi_magic, constraints: -> (req) { !(req.fullpath.start_with?('/rails/')) }
 end

@@ -12,7 +12,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       t.datetime :reset_password_sent_at
 
       ## Rememberable
-      # t.datetime :remember_created_at
+      t.datetime :remember_created_at
 
       ## Trackable
       t.integer  :sign_in_count, default: 0, null: false
@@ -26,6 +26,26 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       # t.datetime :confirmed_at
       # t.datetime :confirmation_sent_at
       # t.string   :unconfirmed_email # Only if using reconfirmable
+
+      t.jsonb :tokens
+      t.string :firstname, null: false, default: ""
+      t.string :lastname, null: false, default: ""
+      t.date :birth_date
+      t.date :join_date
+      t.string :authentication_token
+      t.string :phone_number, null: false, default: ""
+      t.string :gender, null: false, default: ""
+      t.string :job_title, null: false, default: ""
+      t.string :linkedin, null: false, default: ""
+      t.integer :access_level, default: 0, null: false
+      t.integer :status
+      t.string :timezone, default: "Europe/Paris"
+      t.string :lang, default: "en"
+      t.datetime :locked_at
+      t.integer :strikes_count, default: 0
+      t.boolean :agreed_to_terms
+      t.jsonb :applications
+      t.integer :current_application, default: 0
 
       ## Lockable
       # t.integer  :failed_attempts, default: 0, null: false # Only if lock strategy is :failed_attempts

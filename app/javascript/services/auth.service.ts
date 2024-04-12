@@ -1,6 +1,8 @@
+import { storeToRefs } from 'pinia';
 import { http, setHTTPHeader } from './http.service';
 import { IUserLogin, IRegisterUser } from '@/types/general';
 import { login, logout, register } from '@/apis/auth.api';
+import { useUserStore } from '@/stores/user.store';
 
 class AuthService {
   async login(user: IUserLogin) {
@@ -31,6 +33,13 @@ class AuthService {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     location.href = '/';
+  }
+
+  isSuperAdmin() {
+    if (this.getUser()) {
+      const { currentUser } = storeToRefs(useUserStore());
+      return currentUser?.value?.access_level === 'super_admin';
+    }
   }
 
   getUser() {

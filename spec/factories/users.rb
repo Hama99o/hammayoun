@@ -9,11 +9,31 @@
 #  encrypted_password     :string           default(""), not null
 #  reset_password_token   :string
 #  reset_password_sent_at :datetime
+#  remember_created_at    :datetime
 #  sign_in_count          :integer          default(0), not null
 #  current_sign_in_at     :datetime
 #  last_sign_in_at        :datetime
 #  current_sign_in_ip     :string
 #  last_sign_in_ip        :string
+#  tokens                 :jsonb
+#  firstname              :string           default(""), not null
+#  lastname               :string           default(""), not null
+#  birth_date             :date
+#  join_date              :date
+#  authentication_token   :string
+#  phone_number           :string           default(""), not null
+#  gender                 :string           default(""), not null
+#  job_title              :string           default(""), not null
+#  linkedin               :string           default(""), not null
+#  access_level           :integer          default("employee"), not null
+#  status                 :integer
+#  timezone               :string           default("Europe/Paris")
+#  lang                   :string           default("en")
+#  locked_at              :datetime
+#  strikes_count          :integer          default(0)
+#  agreed_to_terms        :boolean
+#  applications           :jsonb
+#  current_application    :integer          default(0)
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
@@ -25,6 +45,9 @@
 FactoryBot.define do
   factory :user do
     sequence(:email) { |n| "#{n}_#{Faker::Internet.email}" }
+    firstname { Faker::Name.first_name }
+    lastname { Faker::Name.last_name }
+    status { 1 }
     password { Faker::Internet.password(min_length: 10, max_length: 20, special_characters: true) }
   end
 end

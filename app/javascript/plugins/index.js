@@ -3,17 +3,17 @@ import { pinia } from '@/stores';
 import { setHTTPHeader } from '@/services/http.service';
 import AuthService from '@/services/auth.service';
 import i18n from "@/plugins/i18n.js";
-import router from "@/routes/website.js";
+import router from "@/routers/index.js";
 import { showToast } from '@/utils/showToast';
-import jQuery from 'jquery'
-
-window.$ = window.jQuery = jQuery;
+import vuetify from "@/plugins/vuetify";
+import SvnUiLibrary from "svn-ui-library";
+import "svn-ui-library/style.css";
 export const globalProperties = {
   $showToast: showToast,
 };
 
 // STYLES
-import '@/assets/css/style.scss';
+// import '@/assets/css/style.scss';
 
 const token = AuthService.getToken();
 
@@ -23,8 +23,10 @@ if (token) {
 
 export const registerPlugins = (app) => {
   app.use(router);
+  app.use(vuetify);
   app.use(pinia);
   app.use(VueQueryPlugin);
+  app.use(SvnUiLibrary);
   app.use(i18n);
   app.config.globalProperties = { ...app.config.globalProperties, ...globalProperties };
 };

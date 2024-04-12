@@ -17,6 +17,8 @@ Rails.application.configure do
   # Enable server timing
   config.server_timing = true
 
+  config.active_storage.service = :local
+
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
   if Rails.root.join('tmp/caching-dev.txt').exist?
@@ -69,7 +71,12 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
 
   # Mailer configs
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3001 }
+  # config.action_mailer.default_url_options = { host: 'localhost', port: 3001 }
+  host = "http://localhost:3001"
+
+  config.action_mailer.default_url_options = { host: }
+
+  Rails.application.routes.default_url_options[:host] = host
 
   # [Blocked host] clear the entire whitelist, which lets through requests for all hostnames.
   config.hosts.clear

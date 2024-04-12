@@ -33,7 +33,7 @@ export const useAuthStore = defineStore('auth.store', {
     },
     register(user: IRegisterUser) {
       return AuthService.register(user);
-    },
+    }
   },
 });
 
