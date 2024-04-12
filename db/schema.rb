@@ -91,6 +91,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_11_154046) do
 
   create_table "note_app_notes", force: :cascade do |t|
     t.bigint "owner_id"
+    t.integer "status", default: 0, null: false
     t.jsonb "data"
     t.string "title"
     t.text "description"

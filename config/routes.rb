@@ -5,6 +5,10 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: :json} do
     namespace :v1 do
+      namespace :note_app do
+        resources :notes
+      end
+
       resources :users do
         collection do
           get :activated_users

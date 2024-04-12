@@ -46,6 +46,8 @@ class User < ApplicationRecord
   include Devise::JWT::RevocationStrategies::Allowlist
   include Rails.application.routes.url_helpers
 
+  has_many :notes, class_name: "NoteApp::Note", foreign_key: :owner_id, dependent: :nullify
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :trackable,
          :jwt_authenticatable, jwt_revocation_strategy: self

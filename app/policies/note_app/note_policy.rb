@@ -1,22 +1,22 @@
-class UserPolicy < ApplicationPolicy
+class NoteApp::NotePolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
     def resolve
       if user.admin_or_above?
         scope.all
       else
-        # Handle unauthorized access
-        raise Pundit::NotAuthorizedError, "not allowed to perform this action"
+        scope.where(owner: user)
       end
     end
   end
 
   def show?
-    user.admin_or_above? || user == record
+    user == record.owner
   end
 
   def create?
     # user.admin_or_above?
+    true
   end
 
   def update?
@@ -24,10 +24,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def destroy?
-    create?
+    show?
   end
 
-  def reset_password?
-    true
-  end
 end
