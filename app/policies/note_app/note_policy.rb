@@ -16,7 +16,7 @@ class NoteApp::NotePolicy < ApplicationPolicy
 
   def create?
     # user.admin_or_above?
-    true
+    user.present?
   end
 
   def update?
@@ -26,5 +26,4 @@ class NoteApp::NotePolicy < ApplicationPolicy
   def destroy?
     show?
   end
-
 end
