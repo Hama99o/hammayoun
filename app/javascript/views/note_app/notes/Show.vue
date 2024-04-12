@@ -1,12 +1,16 @@
 <template>
-  <div>
-    <h1 v-if="!isEditing">{{ note.title }}</h1>
-    <input v-model="note.title" v-if="isEditing" class="input-field" />
+  <div class="note-container">
+    <div class="note-content">
+      <h1 v-if="!isEditing">{{ note.title }}</h1>
+      <input v-model="note.title" v-if="isEditing" class="input-field" />
 
-    <p v-if="!isEditing">{{ note.description }}</p>
-    <textarea v-model="note.description" v-if="isEditing" class="input-field"></textarea>
+      <p v-if="!isEditing">{{ note.description }}</p>
+      <textarea v-model="note.description" v-if="isEditing" class="input-field"></textarea>
 
-    <button @click="toggleEdit">{{ isEditing ? 'Save' : 'Edit' }}</button>
+      <button @click="toggleEdit" class="edit-button">{{ isEditing ? 'Save' : 'Edit' }}</button>
+    </div>
+
+    <button @click="destroyNote" class="delete-button">Delete</button>
   </div>
 </template>
 
@@ -19,7 +23,7 @@ import { useRoute, useRouter } from 'vue-router';
 const route = useRoute();
 const router = useRouter();
 
-const { fetchNote, updateNote } = useNoteStore();
+const { fetchNote, updateNote, deleteNote } = useNoteStore();
 
 const { note } = storeToRefs(useNoteStore());
 const isEditing = ref(false)
@@ -37,5 +41,13 @@ const toggleEdit = async() => {
     await updateNote(note.value.id, { title: note.value.title, description: note.value.description })
   }
   isEditing.value = !isEditing.value
+};
+
+const destroyNote = async() => {
+  await deleteNote(note.value.id)
+  router
+    .push({
+      name: 'notes'
+    })
 };
 </script>
