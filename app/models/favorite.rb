@@ -11,6 +11,8 @@
 #  favoritor_id     :bigint           not null
 #  scope            :string           default("favorite"), not null
 #  blocked          :boolean          default(FALSE), not null
+#  data             :jsonb
+#  role             :integer
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #
@@ -26,6 +28,14 @@
 #
 class Favorite < ApplicationRecord
   extend ActsAsFavoritor::FavoriteScopes
+
+  enum role: {
+    viewer: 0,   # Can only view
+    contributor: 1,   # Can view and contribute (update)
+    administrator: 2,   # Can delete, invite, update, and view
+    owner: 3   # Highest level of access, can perform all actions including managing administrators
+  }
+
 
   belongs_to :favoritable, polymorphic: true
   belongs_to :favoritor, polymorphic: true

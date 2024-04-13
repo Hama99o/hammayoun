@@ -73,6 +73,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_13_052644) do
     t.bigint "favoritor_id", null: false
     t.string "scope", default: "favorite", null: false
     t.boolean "blocked", default: false, null: false
+    t.jsonb "data"
+    t.integer "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["blocked"], name: "index_favorites_on_blocked"

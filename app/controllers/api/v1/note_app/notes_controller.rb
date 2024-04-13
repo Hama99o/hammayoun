@@ -22,6 +22,35 @@ class Api::V1::NoteApp::NotesController < ApplicationController
     }, status: :ok
   end
 
+  def invite_user
+    user = User.find_by(id: params.require(:user_id))
+    return render json: { error: 'User not found' }, status: :not_found unless user
+    note = authorize(NoteApp::Note.find(params.require(:note_id)))
+
+    if user.favorite_with_role(note, scope: :favorite_note, role: params.require(:role))
+      render json: {
+        note: NoteApp::NoteSerializer.render_as_json(note, current_user: current_user)
+      }, status: :ok
+    else
+      render json: { error: 'Failed to invite user' }, status: :unprocessable_entity
+    end
+  end
+
+  def remove_user
+    user = User.find_by(id: params.require(:user_id))
+    return render json: { error: 'User not found' }, status: :not_found unless user
+    note = authorize(NoteApp::Note.find(params.require(:note_id)))
+
+    if user.unfavorite(note, scope: :favorite_note)
+      render json: {
+        note: NoteApp::NoteSerializer.render_as_json(note, current_user: current_user)
+      }, status: :ok
+    else
+      render json: { error: 'Failed to remove user' }, status: :unprocessable_entity
+    end
+  end
+
+
   def update
     if @note.update(**note_params)
       render json: { note: NoteApp::NoteSerializer.render_as_hash(authorize(@note), current_user: current_user) }, status: :ok

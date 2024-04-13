@@ -9,6 +9,8 @@
 #  favoritor_id     :bigint           not null
 #  scope            :string           default("favorite"), not null
 #  blocked          :boolean          default(FALSE), not null
+#  data             :jsonb
+#  role             :integer
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #

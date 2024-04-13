@@ -9,6 +9,8 @@ class ActsAsFavoritorMigration < ActiveRecord::Migration[7.0]
                        null: false,
                        index: true
       t.boolean :blocked, default: false, null: false, index: true
+      t.jsonb :data
+      t.integer :role
       t.timestamps
     end
 

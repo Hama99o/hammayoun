@@ -90,7 +90,7 @@ class User < ApplicationRecord
 
   def all_notes
     NoteApp::Note.where(
-      id: favorites.favorite_note_list.map(&:favoritable_id) + notes.ids
+      id: favorite_notes.ids + notes.ids
     )
   end
 
@@ -112,5 +112,12 @@ class User < ApplicationRecord
         "150" => Rails.application.routes.url_helpers.rails_blob_url(photo.variant(resize: "150"))
       }
     end
+  end
+
+  def favorite_with_role(favoritable, options = {})
+    role = options.delete(:role)
+    favorite = favorites.find_or_initialize_by(favoritable: favoritable, scope: options[:scope])
+    favorite.role = role
+    favorite.save!
   end
 end

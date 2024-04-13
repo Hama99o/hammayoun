@@ -6,7 +6,10 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: :json} do
     namespace :v1 do
       namespace :note_app do
-        resources :notes
+        resources :notes do
+          put :invite_user
+          delete :remove_user
+        end
       end
 
       resources :users do

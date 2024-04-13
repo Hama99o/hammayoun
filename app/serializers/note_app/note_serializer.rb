@@ -26,6 +26,16 @@ class NoteApp::NoteSerializer < ApplicationSerializer
     note.favorited.where(favoritor_id: current_user.id).present?
   end
 
+  field :role do |note, options|
+    current_user = options[:current_user]
+    next unless current_user.present?
+    if current_user == note.owner
+      :owner
+    else
+      note.favorited.find_by(favoritor_id: current_user.id, scope: :favorite_note).role
+    end
+  end
+
   field :shared_users do |note, options|
     users = User.where(id: note.favorited.where(scope: :favorite_note).pluck(:favoritor_id))
     next [] unless users.present?

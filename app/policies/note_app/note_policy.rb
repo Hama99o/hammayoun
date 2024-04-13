@@ -25,4 +25,12 @@ class NoteApp::NotePolicy < ApplicationPolicy
   def destroy?
     show?
   end
+
+  def invite_user?
+    show?
+  end
+
+  def remove_user?
+    show?
+  end
 end
