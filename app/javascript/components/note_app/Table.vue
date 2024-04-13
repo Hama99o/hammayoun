@@ -112,7 +112,7 @@
                     <v-card-actions class="flex justify-center item-center">
                       <v-btn
                         text="Add User"
-                        @click="test(item.id)"
+                        @click="test(item.id, 'add')"
 
                       ></v-btn>
                     </v-card-actions>
@@ -131,6 +131,10 @@
 
 <script setup>
 import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useNoteStore } from '@/stores/note_app/note.store';
+
+const { inviteUserToggle } = useNoteStore();
 
 const props = defineProps({
   notes: { type: Array, default: () => [] },
@@ -140,11 +144,25 @@ const role = ref('viewer')
 const email = ref('')
 const isActive = ref(false)
 
-const test = async(e) => {
+const test = async(noteId, UserAction) => {
   isActive.value = false
-  console.log(email.value)
-  console.log(role.value)
-  console.log(e)
-  console.log('hiiii')
+  const data = {
+    role: role.value,
+    email: email.value,
+    user_action: UserAction
+  }
+  await inviteUserToggle(noteId, data)
 };
+
+
+const toggleEdit = async() => {
+  try {
+    if (isEditing.value) {
+    }
+    isEditing.value = !isEditing.value
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 </script>

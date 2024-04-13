@@ -26,11 +26,7 @@ class NoteApp::NotePolicy < ApplicationPolicy
     show?
   end
 
-  def invite_user?
-    show?
-  end
-
-  def remove_user?
-    show?
+  def invite_user_toggle?
+    true
   end
 end

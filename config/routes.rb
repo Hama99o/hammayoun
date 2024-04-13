@@ -7,8 +7,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       namespace :note_app do
         resources :notes do
-          put :invite_user
-          delete :remove_user
+          put :invite_user_toggle
         end
       end
 

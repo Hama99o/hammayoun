@@ -44,6 +44,15 @@ class NoteAPI {
       return error;
     }
   }
+  async inviteUserToggle(id: number, data: {}) {
+    try {
+      const headers = { 'Content-Type': 'multipart/form-data' };
+      const res = await http.put(`/api/v1/note_app/notes/${id}/invite_user_toggle`, data, { headers });
+      return res.data;
+    } catch (error) {
+      return error;
+    }
+  }
 }
 
 const instance = new NoteAPI();

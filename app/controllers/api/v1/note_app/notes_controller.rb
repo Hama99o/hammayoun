@@ -22,34 +22,30 @@ class Api::V1::NoteApp::NotesController < ApplicationController
     }, status: :ok
   end
 
-  def invite_user
-    user = User.find_by(email: params.require(:email))
-    return render json: { error: 'User not found' }, status: :not_found unless user
-    note = authorize(NoteApp::Note.find(params.require(:note_id)))
+  def invite_user_toggle
+    email = params.require(:email)
+    user_action = params.require(:user_action)
+    role = params.require(:role)
+    note_id = params.require(:note_id)
 
-    if user.favorite_with_role(note, scope: :favorite_note, role: params.require(:role))
-      render json: {
-        note: NoteApp::NoteSerializer.render_as_json(note, current_user: current_user)
-      }, status: :ok
+    user = User.find_by(email: email)
+    return render json: { error: 'User not found' }, status: :not_found unless user
+
+    note = authorize(NoteApp::Note.find(note_id))
+
+    if user_action == 'add'
+      if user.favorite_with_role(note, scope: :favorite_note, role: role)
+        render json: { note: NoteApp::NoteSerializer.render_as_json(note, current_user: current_user) }, status: :ok
+      else
+        render json: { error: "Failed to add user" }, status: :unprocessable_entity
+      end
+    elsif user_action == 'remove'
+      user.unfavorite(note, scope: :favorite_note)
+      render json: { note: NoteApp::NoteSerializer.render_as_json(note, current_user: current_user) }, status: :ok
     else
-      render json: { error: 'Failed to invite user' }, status: :unprocessable_entity
+      render json: { error: "Invalid action: #{user_action}" }, status: :unprocessable_entity
     end
   end
-
-  def remove_user
-    user = User.find_by(email: params.require(:email))
-    return render json: { error: 'User not found' }, status: :not_found unless user
-    note = authorize(NoteApp::Note.find(params.require(:note_id)))
-
-    if user.unfavorite(note, scope: :favorite_note)
-      render json: {
-        note: NoteApp::NoteSerializer.render_as_json(note, current_user: current_user)
-      }, status: :ok
-    else
-      render json: { error: 'Failed to remove user' }, status: :unprocessable_entity
-    end
-  end
-
 
   def update
     if @note.update(**note_params)
