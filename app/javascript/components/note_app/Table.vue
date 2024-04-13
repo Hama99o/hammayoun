@@ -15,6 +15,8 @@
           <th class="text-left">
             Share count
           </th>
+          <th class="text-left">
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -66,6 +68,59 @@
             </div>
             </router-link>
           </td>
+          <td class="px-0">
+            <router-link
+              :to="{ name: 'note', params: {id: item.id } }"
+              class="w-full h-full"
+            >
+            <div  class="w-[45px] h-full flex gap-1 items-center whitespace-nowrap">
+
+              <v-dialog max-width="500">
+                <template v-slot:activator="{ props: activatorProps }">
+                  <v-icon
+                    v-bind="activatorProps"
+                    color="dark"
+                    icon="mdi mdi-plus-thick"
+                    text="Open Dialog"
+                    @click.prevent=""
+                    variant="flat"
+                  />
+                </template>
+
+                <template v-slot:default="{ isActive }">
+                  <v-card title="Invite John to connect">
+                    <v-card-text class="text-center">
+                      Invite collaborators to your network and grow your connections.
+                    </v-card-text>
+
+                    <v-card-actions class="flex justify-center item-center  bg-red">
+                      <v-spacer></v-spacer>
+                      <v-card-text>
+                        <v-autocomplete
+                        v-model="role"
+                        label="role"
+                        :items="['viewer', 'contributor', 'administrator', 'owner']"
+                      ></v-autocomplete>
+                      </v-card-text>
+                    </v-card-actions>
+
+                    <v-text-field v-model="email" label="User email"></v-text-field>
+
+                    <v-card-actions >
+                      <v-spacer></v-spacer>
+                      <v-btn
+                        text="Add User"
+                        @click="test(item.id)"
+
+                      ></v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </template>
+              </v-dialog>
+
+            </div>
+            </router-link>
+          </td>
         </tr>
       </tbody>
     </v-table>
@@ -73,9 +128,20 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
 
 const props = defineProps({
   notes: { type: Array, default: () => [] },
 });
 
+const role = ref('viewer')
+const email = ref('')
+const isActive = ref(false)
+
+const test = async(e) => {
+  isActive.value = false
+  console.log(email.value)
+  console.log(role.value)
+  console.log('hiiii')
+};
 </script>

@@ -49,7 +49,6 @@ try {
 }
 });
 
-
 const fetchNewPage = async(e) => {
   page.value = e
   await fetchUsers();
