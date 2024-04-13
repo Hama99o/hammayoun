@@ -74,51 +74,13 @@
               class="w-full h-full"
             >
             <div  class="w-[45px] h-full flex gap-1 items-center whitespace-nowrap">
-
-              <v-dialog max-width="500">
-                <template v-slot:activator="{ props: activatorProps }">
-                  <v-icon
-                    v-bind="activatorProps"
-                    color="dark"
-                    icon="mdi mdi-plus-thick"
-                    text="Open Dialog"
-                    @click.prevent=""
-                    variant="flat"
-                  />
-                </template>
-
-                <template v-slot:default="{ isActive }">
-                  <v-card title="Invite John to connect">
-                    <v-card-text class="text-center">
-                      Invite collaborators to your network and grow your connections.
-                    </v-card-text>
-
-                    <v-card-actions>
-                      <v-card-text>
-                        <v-autocomplete
-                        v-model="role"
-                        label="role"
-                        :items="['viewer', 'contributor', 'administrator', 'owner']"
-                      ></v-autocomplete>
-                      </v-card-text>
-                    </v-card-actions>
-                    <v-text-field
-                      v-model="email"
-                      label="Email address"
-                      placeholder="johndoe@gmail.com"
-                      type="email"
-                    ></v-text-field>
-
-                    <v-card-actions class="flex justify-center item-center">
-                      <v-btn
-                        text="Add User"
-                        @click="test(item.id, 'add')"
-
-                      ></v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </template>
-              </v-dialog>
+              <v-icon
+                color="dark"
+                icon="mdi mdi-plus-thick"
+                text="Open Dialog"
+                @click.prevent="openInviteUserDialog(item.id)"
+                variant="flat"
+              />
 
             </div>
             </router-link>
@@ -126,6 +88,10 @@
         </tr>
       </tbody>
     </v-table>
+    <invite-user
+      ref="inviteUser"
+      @add-user="test"
+    />
 </div>
 </template>
 
@@ -133,6 +99,8 @@
 import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useNoteStore } from '@/stores/note_app/note.store';
+import InviteUser from '@/components/note_app/InviteUser.vue';
+import { showToast } from '@/utils/showToast';
 
 const { inviteUserToggle } = useNoteStore();
 
@@ -140,28 +108,25 @@ const props = defineProps({
   notes: { type: Array, default: () => [] },
 });
 
-const role = ref('viewer')
-const email = ref('')
-const isActive = ref(false)
+const SelectednoteId = ref(null)
+const inviteUser = ref(null)
 
-const test = async(noteId, UserAction) => {
-  isActive.value = false
-  const data = {
-    role: role.value,
-    email: email.value,
-    user_action: UserAction
-  }
-  await inviteUserToggle(noteId, data)
-};
+const openInviteUserDialog = (id) => {
+  SelectednoteId.value = id
+  inviteUser.value.isActive = true
+}
 
-
-const toggleEdit = async() => {
+const test = async(role, email, UserAction) => {
   try {
-    if (isEditing.value) {
+    const data = {
+      role: role,
+      email: email,
+      user_action: UserAction
     }
-    isEditing.value = !isEditing.value
-  } catch (error) {
-    console.log(error);
+    await inviteUserToggle(SelectednoteId.value, data)
+    inviteUser.value.isActive = false
+  } catch (errorMessage) {
+    showToast(errorMessage.error, 'error');
   }
 };
 

@@ -34,6 +34,7 @@ class Api::V1::NoteApp::NotesController < ApplicationController
     note = authorize(NoteApp::Note.find(note_id))
 
     return render json: { error: 'User is already the owner' }, status: :not_found if user == note.owner
+    return render json: { error: 'User is already invited' }, status: :not_found if user.favorites.where(favoritable_id: note_id, scope: :favorite_note).present?
 
     if user_action == 'add'
       if user.favorite_with_role(note, scope: :favorite_note, role: role)
