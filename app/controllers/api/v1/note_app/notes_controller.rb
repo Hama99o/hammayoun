@@ -9,19 +9,22 @@ class Api::V1::NoteApp::NotesController < ApplicationController
     paginate_render(
       NoteApp::NoteSerializer,
       policy_scope(@notes),
-      extra: { root: :notes }
+      extra: {
+        root: :notes,
+        current_user: current_user
+      }
     )
   end
 
   def show
     render json: {
-      note: NoteApp::NoteSerializer.render_as_json(authorize(@note))
+      note: NoteApp::NoteSerializer.render_as_json(authorize(@note), current_user: current_user)
     }, status: :ok
   end
 
   def update
     if @note.update(**note_params)
-      render json: { note: NoteApp::NoteSerializer.render_as_hash(authorize(@note)) }, status: :ok
+      render json: { note: NoteApp::NoteSerializer.render_as_hash(authorize(@note), current_user: current_user) }, status: :ok
     else
       render json: @note.errors.messages, status: :unprocessable_entity
     end
@@ -32,7 +35,7 @@ class Api::V1::NoteApp::NotesController < ApplicationController
 
     if note
       render json: {
-        note: NoteApp::NoteSerializer.render_as_json(authorize(note))
+        note: NoteApp::NoteSerializer.render_as_json(authorize(note), current_user: current_user)
       }
     else
       render json: note.errors.messages, status: :unprocessable_entity
@@ -40,8 +43,8 @@ class Api::V1::NoteApp::NotesController < ApplicationController
   end
 
   def destroy
-    if @note.delete
-      render json: { note: authorize(@note) }, status: :ok
+    if authorize(@note).delete
+      render json: { note: @note }, status: :ok
     else
       render json: @note.errors.messages, status: :unprocessable_entity
     end

@@ -5,17 +5,16 @@ class NoteApp::NotePolicy < ApplicationPolicy
       if user.admin_or_above?
         scope.all
       else
-        scope.where(owner: user)
+        user.all_notes
       end
     end
   end
 
   def show?
-    user == record.owner
+    user == record.owner || record.favorited.where(scope: :favorite_note, favoritor_id: user.id)
   end
 
   def create?
-    # user.admin_or_above?
     user.present?
   end
 

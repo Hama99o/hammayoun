@@ -12,6 +12,9 @@
           <th class="text-left">
             Ower
           </th>
+          <th class="text-left">
+            Share count
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -53,6 +56,16 @@
             </router-link>
           </td>
 
+          <td class="px-0">
+            <router-link
+              :to="{ name: 'note', params: {id: item.id } }"
+              class="w-full h-full"
+            >
+            <div  class="w-[45px] h-full flex gap-2 items-center pl-4 whitespace-nowrap">
+              {{ item?.shared_count }}
+            </div>
+            </router-link>
+          </td>
         </tr>
       </tbody>
     </v-table>

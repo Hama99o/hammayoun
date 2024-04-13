@@ -20,6 +20,20 @@ class NoteApp::NoteSerializer < ApplicationSerializer
 
   fields :title, :description, :data, :created_at
 
-  association :owner, blueprint: UserSerializer
+  field :is_shared do |note, options|
+    current_user = options[:current_user]
+    next unless current_user.present?
+    note.favorited.where(favoritor_id: current_user.id).present?
+  end
 
+  field :shared_users do |note, options|
+    users = User.where(id: note.favorited.where(scope: :favorite_note).pluck(:favoritor_id))
+    next [] unless users.present?
+    UserSerializer.render_as_hash(users)
+  end
+
+  field :shared_count do |note, options|
+    User.where(id: note.favorited.where(scope: :favorite_note).pluck(:favoritor_id)).count
+  end
+  association :owner, blueprint: UserSerializer
 end
