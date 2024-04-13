@@ -23,7 +23,7 @@ class Api::V1::NoteApp::NotesController < ApplicationController
   end
 
   def invite_user
-    user = User.find_by(id: params.require(:user_id))
+    user = User.find_by(email: params.require(:email))
     return render json: { error: 'User not found' }, status: :not_found unless user
     note = authorize(NoteApp::Note.find(params.require(:note_id)))
 
@@ -37,7 +37,7 @@ class Api::V1::NoteApp::NotesController < ApplicationController
   end
 
   def remove_user
-    user = User.find_by(id: params.require(:user_id))
+    user = User.find_by(email: params.require(:email))
     return render json: { error: 'User not found' }, status: :not_found unless user
     note = authorize(NoteApp::Note.find(params.require(:note_id)))
 

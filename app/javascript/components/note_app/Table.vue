@@ -93,8 +93,7 @@
                       Invite collaborators to your network and grow your connections.
                     </v-card-text>
 
-                    <v-card-actions class="flex justify-center item-center  bg-red">
-                      <v-spacer></v-spacer>
+                    <v-card-actions>
                       <v-card-text>
                         <v-autocomplete
                         v-model="role"
@@ -103,11 +102,14 @@
                       ></v-autocomplete>
                       </v-card-text>
                     </v-card-actions>
+                    <v-text-field
+                      v-model="email"
+                      label="Email address"
+                      placeholder="johndoe@gmail.com"
+                      type="email"
+                    ></v-text-field>
 
-                    <v-text-field v-model="email" label="User email"></v-text-field>
-
-                    <v-card-actions >
-                      <v-spacer></v-spacer>
+                    <v-card-actions class="flex justify-center item-center">
                       <v-btn
                         text="Add User"
                         @click="test(item.id)"
@@ -142,6 +144,7 @@ const test = async(e) => {
   isActive.value = false
   console.log(email.value)
   console.log(role.value)
+  console.log(e)
   console.log('hiiii')
 };
 </script>
