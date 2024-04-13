@@ -44,6 +44,7 @@ export const useNoteStore = defineStore({
     },
     async inviteUserToggle(id: number, data: {}) {
       await NoteAPI.inviteUserToggle(id, data);
+      await this.fetchNotes()
     },
     async resetStates() {
       this.note = {};
