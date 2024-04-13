@@ -4,7 +4,7 @@
 
       <template #default>
 
-        <div class="w-full flex flex-col p-6 gap-8 bg-grey">
+        <div class="w-full flex flex-col p-6 gap-8 bg-white">
           <!-- Icon and text -->
           <div class="flex flex-col items-center gap-4">
             <!-- icon -->
@@ -27,7 +27,6 @@
           </div>
 
           <div>
-
             <v-autocomplete
               v-model="role"
               label="role"
@@ -37,7 +36,7 @@
             <v-text-field
               v-model="email"
               label="Email address"
-              placeholder="johndoe@gmail.com"
+              placeholder="hama99o@blablaablaa.fr"
               type="email"
             ></v-text-field>
           </div>

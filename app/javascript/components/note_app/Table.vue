@@ -21,11 +21,10 @@
       </thead>
       <tbody>
         <tr
-          class=" bg-zinc-50 hover:bg-zinc-200"
           v-for="item in notes"
           :key="item.id"
         >
-          <td class="px-0 ">
+          <td class="truncate px-0">
             <router-link
               :to="{ name: 'note', params: {id: item.id } }"
               class="w-full h-full"
@@ -36,7 +35,7 @@
             </router-link>
           </td>
 
-          <td class="px-0">
+          <td class="truncate px-0">
             <router-link
               :to="{ name: 'note', params: {id: item.id } }"
               class="w-full h-full"
@@ -68,29 +67,36 @@
             </div>
             </router-link>
           </td>
-          <td class="px-0">
-            <router-link
-              :to="{ name: 'note', params: {id: item.id } }"
-              class="w-full h-full"
-            >
-            <div  class="w-[45px] h-full flex gap-1 items-center whitespace-nowrap">
-              <v-icon
-                color="dark"
-                icon="mdi mdi-plus-thick"
-                text="Open Dialog"
-                @click.prevent="openInviteUserDialog(item.id)"
-                variant="flat"
-              />
+          <td class="!w-[50px] pa-0">
+            <v-menu >
+              <template v-slot:activator="{ props }">
+                <v-icon icon="mdi-dots-vertical" v-bind="props"></v-icon>
+              </template>
+              <v-list class="py-0">
+                <div class="flex flex-col">
+                  <div
+                    class="cursor-pointer hover:bg-grey px-5 py-2"
+                    @click.prevent="openInviteUserDialog(item.id)"
+                  >
+                    Invite User
+                  </div>
 
-            </div>
-            </router-link>
+                  <div
+                    class="cursor-pointer hover:bg-grey px-5 py-2"
+                    @click.prevent="destroyNote(item.id)"
+                  >
+                    Delete Note
+                  </div>
+                </div>
+              </v-list>
+            </v-menu>
           </td>
         </tr>
       </tbody>
     </v-table>
     <invite-user
       ref="inviteUser"
-      @add-user="test"
+      @add-user="inviteUserWithEmail"
     />
 </div>
 </template>
@@ -102,7 +108,7 @@ import { useNoteStore } from '@/stores/note_app/note.store';
 import InviteUser from '@/components/note_app/InviteUser.vue';
 import { showToast } from '@/utils/showToast';
 
-const { inviteUserToggle } = useNoteStore();
+const { inviteUserToggle, deleteNote } = useNoteStore();
 
 const props = defineProps({
   notes: { type: Array, default: () => [] },
@@ -116,7 +122,11 @@ const openInviteUserDialog = (id) => {
   inviteUser.value.isActive = true
 }
 
-const test = async(role, email, UserAction) => {
+const destroyNote = async(id) => {
+  await deleteNote(id)
+}
+
+const inviteUserWithEmail = async(role, email, UserAction) => {
   try {
     const data = {
       role: role,
