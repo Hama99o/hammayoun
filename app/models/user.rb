@@ -46,6 +46,7 @@ class User < ApplicationRecord
   include Devise::JWT::RevocationStrategies::Allowlist
   include Rails.application.routes.url_helpers
 
+  acts_as_favoritor
   has_many :notes, class_name: "NoteApp::Note", foreign_key: :owner_id, dependent: :nullify
 
   devise :database_authenticatable, :registerable,
@@ -79,6 +80,18 @@ class User < ApplicationRecord
 
   def fullname
     "#{firstname&.titleize} #{lastname&.upcase}"
+  end
+
+  def favorite_notes
+    NoteApp::Note.where(
+      id: favorites.favorite_note_list.map(&:favoritable_id)
+    )
+  end
+
+  def all_notes
+    NoteApp::Note.where(
+      id: favorites.favorite_note_list.map(&:favoritable_id) + notes.ids
+    )
   end
 
   def admin_or_above?

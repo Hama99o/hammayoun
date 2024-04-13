@@ -54,7 +54,7 @@ class Api::V1::NoteApp::NotesController < ApplicationController
   end
 
   def notes
-    @notes ||= current_user.notes.where(status: :published).order(created_at: :desc)
+    @notes ||= current_user.all_notes.where(status: :published).order(created_at: :desc)
   end
 
   def note_params

@@ -4,7 +4,7 @@
 #
 #  id          :bigint           not null, primary key
 #  owner_id    :bigint
-#  status      :integer          default(0), not null
+#  status      :integer          default("trashed"), not null
 #  data        :jsonb
 #  title       :string
 #  description :text
@@ -17,6 +17,8 @@
 #
 class NoteApp::Note < ApplicationRecord
   belongs_to :owner, class_name: "User"
+
+  acts_as_favoritable
 
   enum status: {
     trashed: 0,

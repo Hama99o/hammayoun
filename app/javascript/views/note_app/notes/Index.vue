@@ -42,23 +42,30 @@ const { fetchNotes, resetStates } = useNoteStore();
 const { notes, pagination, page, search } = storeToRefs(useNoteStore());
 
 onMounted(async () => {
-  console.log('hiiiii')
-try {
-  await resetStates()
-  await fetchNotes();
-} catch (error) {
-  console.log(error);
-}
+  try {
+    await resetStates()
+    await fetchNotes();
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 
 const fetchNewPage = async(e) => {
-  page.value = e
-  await fetchNotes();
+  try {
+    page.value = e
+    await fetchNotes();
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const searchNote = async(e) => {
-  search.value = e
-  await fetchNotes();
+  try {
+    search.value = e
+    await fetchNotes();
+  } catch (error) {
+    console.log(error);
+  }
 };
 </script>

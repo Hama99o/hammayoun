@@ -37,17 +37,24 @@ try {
 });
 
 const toggleEdit = async() => {
-  if (isEditing.value) {
-    await updateNote(note.value.id, { title: note.value.title, description: note.value.description })
+  try {
+    if (isEditing.value) {
+      await updateNote(note.value.id, { title: note.value.title, description: note.value.description })
+    }
+    isEditing.value = !isEditing.value
+  } catch (error) {
+    console.log(error);
   }
-  isEditing.value = !isEditing.value
 };
 
 const destroyNote = async() => {
-  await deleteNote(note.value.id)
-  router
-    .push({
+  try {
+    await deleteNote(note.value.id)
+    router.push({
       name: 'notes'
     })
+  } catch (error) {
+    console.log(error);
+  }
 };
 </script>
