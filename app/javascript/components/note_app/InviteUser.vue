@@ -1,7 +1,6 @@
 <template>
   <div>
     <v-dialog max-width="500" v-model="isActive">
-
       <template #default>
 
         <div class="w-full flex flex-col p-6 gap-8 bg-white">
@@ -62,8 +61,7 @@
         </div>
       </template>
     </v-dialog>
-
-</div>
+  </div>
 </template>
 
 <script setup>
