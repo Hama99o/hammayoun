@@ -33,6 +33,8 @@ class Api::V1::NoteApp::NotesController < ApplicationController
 
     note = authorize(NoteApp::Note.find(note_id))
 
+    return render json: { error: 'User is already the owner' }, status: :not_found if user == note.owner
+
     if user_action == 'add'
       if user.favorite_with_role(note, scope: :favorite_note, role: role)
         render json: { note: NoteApp::NoteSerializer.render_as_json(note, current_user: current_user) }, status: :ok
