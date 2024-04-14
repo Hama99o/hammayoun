@@ -114,8 +114,10 @@ import { useNoteStore } from '@/stores/note_app/note.store';
 import InviteUser from '@/components/note_app/InviteUser.vue';
 import { showToast } from '@/utils/showToast';
 import OpenNote from '@/components/note_app/OpenNote.vue';
+import { usePopUpStore } from "@/stores/pop-up.store";
 
 const { inviteUserToggle, deleteNote, fetchNotes } = useNoteStore();
+const { openPopUp, closePopUp } = usePopUpStore();
 
 const props = defineProps({
   notes: { type: Array, default: () => [] },
@@ -131,15 +133,35 @@ const openInviteUserDialog = (id) => {
 }
 
 const openNoteDialog = (note) => {
-  console.log('hiii')
   SelectedNote.value = note
   IsNoteOpened.value.isOpen = true
 }
 
+
+
 const destroyNote = async(id) => {
-  await deleteNote(id)
-  await fetchNotes()
-}
+  try {
+    openPopUp({
+      componentName: "pop-up-validation",
+      title: ("Are you sure you want to delete this note ?"),
+      textClose: "No, cancel",
+      textConfirm: "Yes, delete this note",
+      textLoading: "Deleting ...",
+      icon: "mdi-trash-can-outline",
+      color: "red",
+      customClass: "w-[400px]",
+      showClose: false,
+      async confirm() {
+        console.log('hiiiiiii')
+        await deleteNote(id)
+        await fetchNotes()
+        closePopUp();
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const inviteUserWithEmail = async(role, email, UserAction) => {
   try {
