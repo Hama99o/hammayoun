@@ -100,8 +100,8 @@
     />
 
     <open-note
-      ref="IsNoteOpened"
-      :note="SelectedNote"
+      ref="isNoteOpened"
+      :note="selectedNote"
       @add-user="inviteUserWithEmail"
     />
 </div>
@@ -123,21 +123,19 @@ const props = defineProps({
   notes: { type: Array, default: () => [] },
 });
 
-const SelectedNote = ref(null)
+const selectedNote = ref(null)
 const inviteUser = ref(null)
-const IsNoteOpened = ref(null)
+const isNoteOpened = ref(null)
 
 const openInviteUserDialog = (id) => {
-  SelectedNote.value = id
+  selectedNote.value = id
   inviteUser.value.isActive = true
 }
 
 const openNoteDialog = (note) => {
-  SelectedNote.value = note
-  IsNoteOpened.value.isOpen = true
+  selectedNote.value = note
+  isNoteOpened.value.isOpen = true
 }
-
-
 
 const destroyNote = async(id) => {
   try {
@@ -152,7 +150,6 @@ const destroyNote = async(id) => {
       customClass: "w-[400px]",
       showClose: false,
       async confirm() {
-        console.log('hiiiiiii')
         await deleteNote(id)
         await fetchNotes()
         closePopUp();

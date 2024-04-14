@@ -83,7 +83,7 @@ const { notes } = storeToRefs(useNoteStore());
 
 const inviteUser = ref(null)
 const title = ref('')
-const description = ref('viewer')
+const description = ref('')
 
 const isOpen = ref(false)
 const emit = defineEmits(['add-user'])

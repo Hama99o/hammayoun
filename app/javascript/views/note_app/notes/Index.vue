@@ -1,9 +1,9 @@
 
 <template>
   <div>
-    <div>
+    <div class="flex  justify-between py-5">
       <h1>Notes</h1>
-      <router-link :to="{ name: 'note_new' }" class="create-note-btn">Create New Note</router-link>
+      <v-icon @click="createNewNote" icon="mdi mdi-plus  hover:!bg-very-light-grey " class="cursor-pointer create-note-btn"/>
     </div>
     <v-text-field
       v-model="search"
@@ -29,17 +29,28 @@
     class="mt-16 !list-none"
     @update:model-value="fetchNewPage"
   />
+
+  <open-note
+    ref="isNoteOpened"
+    :note="selectedNote"
+    @add-user="inviteUserWithEmail"
+  />
 </template>
 
 <script setup>
 import NoteTable from '@/components/note_app/Table.vue';
 import { storeToRefs } from 'pinia';
 import { useNoteStore } from '@/stores/note_app/note.store';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
+import OpenNote from '@/components/note_app/OpenNote.vue';
 
-const { fetchNotes, resetStates } = useNoteStore();
+const { fetchNotes, resetStates, createNote } = useNoteStore();
 
 const { notes, pagination, page, search } = storeToRefs(useNoteStore());
+
+
+const selectedNote = ref(null)
+const isNoteOpened = ref(null)
 
 onMounted(async () => {
   try {
@@ -50,11 +61,29 @@ onMounted(async () => {
   }
 });
 
+const openNoteDialog = (note) => {
+  selectedNote.value = note
+  isNoteOpened.value.isOpen = true
+}
 
 const fetchNewPage = async(e) => {
   try {
     page.value = e
     await fetchNotes();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const createNewNote = async() => {
+  try {
+    const data = {
+      title: '',
+      description: ''
+    }
+    const note = await createNote(data);
+    notes.value.unshift(note)
+    openNoteDialog(note)
   } catch (error) {
     console.log(error);
   }
