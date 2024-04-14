@@ -8,4 +8,14 @@
 #  updated_at :datetime         not null
 #
 class Tag < ApplicationRecord
+  include PgSearch::Model
+  acts_as_favoritable
+  acts_as_favoritor
+
+  pg_search_scope :search_tags,
+                  against: [:name],
+                  using: {
+                   tsearch: { prefix: true
+                  }
+  }
 end

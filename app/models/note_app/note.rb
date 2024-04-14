@@ -19,6 +19,7 @@ class NoteApp::Note < ApplicationRecord
   belongs_to :owner, class_name: "User"
 
   acts_as_favoritable
+  acts_as_favoritor
 
   enum status: {
     trashed: 0,
@@ -35,4 +36,7 @@ class NoteApp::Note < ApplicationRecord
                   using: {
                     tsearch: { prefix: true }
                   }
+  def tags
+    NoteApp::Tag.where(id: favorites.where(scope: :note_tag).pluck(:favoritable_id))
+  end
 end

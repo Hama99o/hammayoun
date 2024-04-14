@@ -49,6 +49,16 @@ class NoteAPI {
     const res = await http.put(`/api/v1/note_app/notes/${id}/invite_user_toggle`, data, { headers });
     return res.data;
   }
+  async fetchTags(search = '') {
+    const headers = { 'Content-Type': 'multipart/form-data' };
+    const res = await http.get(`/api/v1/note_app/notes/tags?search=${search}`, { headers });
+    return res.data;
+  }
+  async toggleTag(id: number, data: {}) {
+    const headers = { 'Content-Type': 'multipart/form-data' };
+    const res = await http.put(`/api/v1/note_app/notes/${id}/toggle_tag`, data, { headers });
+    return res.data;
+  }
 }
 
 const instance = new NoteAPI();

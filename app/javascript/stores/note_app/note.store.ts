@@ -6,6 +6,7 @@ export const useNoteStore = defineStore({
   state: () => ({
     note: {},
     notes: [],
+    tags: [],
     search: '',
     loading: true,
     pagination: {},
@@ -45,6 +46,19 @@ export const useNoteStore = defineStore({
     async inviteUserToggle(id: number, data: {}) {
       await NoteAPI.inviteUserToggle(id, data);
       await this.fetchNotes()
+    },
+    async fetchTags(search = '') {
+      const res = await NoteAPI.fetchTags(search);
+      this.tags = res.tags
+    },
+    async toggleTag(noteId: number, tagId: number) {
+      const res = await NoteAPI.toggleTag(noteId, { tag_id: tagId });
+      return res.tag
+    },
+    inintTags(note) {
+      this.tags.forEach((tag) => {
+        tag.is_tagged = note?.tags?.some((note_tag) => note_tag.id == tag.id)
+      })
     },
     async resetStates() {
       this.note = {};

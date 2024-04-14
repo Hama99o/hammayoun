@@ -24,7 +24,8 @@ class Api::V1::NoteApp::NotesController < ApplicationController
 
   def tags
     tags = NoteApp::Tag.all
-    p tags
+    tags = tags.search_tags(params[:search]) if params[:search].present?
+
     paginate_render(
       TagSerializer,
       tags,
@@ -33,6 +34,20 @@ class Api::V1::NoteApp::NotesController < ApplicationController
         current_user: current_user
       }
     )
+  end
+
+  def toggle_tag
+    tag = NoteApp::Tag.find(params[:tag_id])
+    note = NoteApp::Note.find(params[:note_id])
+    if note.favorited?(tag, scope:  :note_tag)
+      note.unfavorite(tag, scope: :note_tag)
+    else
+      note.favorite(tag, scope: :note_tag)
+    end
+
+    render json: {
+      tag: TagSerializer.render_as_json(tag, current_user: current_user)
+    }, status: :ok
   end
 
   def invite_user_toggle

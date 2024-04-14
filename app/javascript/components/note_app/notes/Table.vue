@@ -87,6 +87,13 @@
                   >
                     Delete Note
                   </div>
+
+                  <div
+                    class="cursor-pointer hover:bg-grey px-5 py-2"
+                    @click.prevent="openTagDialog(item)"
+                  >
+                    Change tags
+                  </div>
                 </div>
               </v-list>
             </v-menu>
@@ -104,6 +111,12 @@
       :note="selectedNote"
       @add-user="inviteUserWithEmail"
     />
+
+    <tag-dialog
+      ref="isTagDialogOpened"
+      :note="selectedNoteForTag"
+      @add-user="addTagToNote"
+    />
 </div>
 </template>
 
@@ -112,6 +125,7 @@ import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useNoteStore } from '@/stores/note_app/note.store';
 import InviteUser from '@/components/note_app/notes/InviteUser.vue';
+import TagDialog from '@/components/note_app/notes/TagDialog.vue';
 import { showToast } from '@/utils/showToast';
 import OpenNote from '@/components/note_app/notes/OpenNote.vue';
 import { usePopUpStore } from "@/stores/pop-up.store";
@@ -124,12 +138,20 @@ const props = defineProps({
 });
 
 const selectedNote = ref(null)
+const selectedNoteForTag = ref(null)
 const inviteUser = ref(null)
 const isNoteOpened = ref(null)
+const isTagDialogOpened = ref(null)
 
 const openInviteUserDialog = (id) => {
   selectedNote.value = id
   inviteUser.value.isActive = true
+}
+
+const openTagDialog = (id) => {
+  selectedNoteForTag.value = id
+  console.log(selectedNoteForTag.value)
+  isTagDialogOpened.value.isActive = true
 }
 
 const openNoteDialog = (note) => {
@@ -169,6 +191,21 @@ const inviteUserWithEmail = async(role, email, UserAction) => {
     }
     await inviteUserToggle(SelectednoteId.value, data)
     inviteUser.value.isActive = false
+  } catch (errorMessage) {
+    showToast(errorMessage.error, 'error');
+  }
+};
+
+const addTagToNote = async(tag) => {
+  try {
+    console.log(tag)
+    // const data = {
+    //   role: role,
+    //   email: email,
+    //   user_action: UserAction
+    // }
+    // await inviteUserToggle(SelectednoteId.value, data)
+    // inviteUser.value.isActive = false
   } catch (errorMessage) {
     showToast(errorMessage.error, 'error');
   }

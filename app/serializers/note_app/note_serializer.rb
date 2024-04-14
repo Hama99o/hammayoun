@@ -45,5 +45,14 @@ class NoteApp::NoteSerializer < ApplicationSerializer
   field :shared_count do |note, options|
     User.where(id: note.favorited.where(scope: :favorite_note).pluck(:favoritor_id)).count
   end
+
+  field :tags do |note, options|
+    TagSerializer.render_as_hash(note.tags)
+  end
+
+  field :tag_ids do |note, options|
+    note.tags.ids
+  end
+
   association :owner, blueprint: UserSerializer
 end
