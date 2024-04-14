@@ -115,7 +115,7 @@ import InviteUser from '@/components/note_app/InviteUser.vue';
 import { showToast } from '@/utils/showToast';
 import OpenNote from '@/components/note_app/OpenNote.vue';
 
-const { inviteUserToggle, deleteNote } = useNoteStore();
+const { inviteUserToggle, deleteNote, fetchNotes } = useNoteStore();
 
 const props = defineProps({
   notes: { type: Array, default: () => [] },
@@ -138,6 +138,7 @@ const openNoteDialog = (note) => {
 
 const destroyNote = async(id) => {
   await deleteNote(id)
+  await fetchNotes()
 }
 
 const inviteUserWithEmail = async(role, email, UserAction) => {
