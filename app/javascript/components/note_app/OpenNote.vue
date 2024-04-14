@@ -25,7 +25,7 @@
           </div>
 
           <!-- Buttons -->
-          <div class="flex flex-wrap items-between gap-3 self-stretch lg:!flex-row  ">
+          <div class="flex  !justify-between">
             <v-menu >
               <template v-slot:activator="{ props }">
                 <v-icon icon="mdi-dots-vertical" v-bind="props"></v-icon>
