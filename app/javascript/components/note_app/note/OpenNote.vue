@@ -73,6 +73,7 @@ import { useNoteStore } from '@/stores/note_app/note.store';
 import {debounce} from "lodash";
 import { showToast } from '@/utils/showToast';
 import { storeToRefs } from 'pinia';
+import { usePopUpStore } from "@/stores/pop-up.store";
 
 const props = defineProps({
   note: { type: Object, default: () => {} },
@@ -80,6 +81,7 @@ const props = defineProps({
 
 const { updateNote, deleteNote, inviteUserToggle } = useNoteStore();
 const { notes } = storeToRefs(useNoteStore());
+const { openPopUp, closePopUp } = usePopUpStore();
 
 const inviteUser = ref(null)
 const title = ref('')
@@ -97,11 +99,30 @@ const openInviteUserDialog = (id) => {
   inviteUser.value.isActive = true
 }
 
+
 const destroyNote = async(id) => {
-  await deleteNote(id)
-  isOpen.value = false
-  notes.value = notes.value.filter((n) => n.id !== id)
-}
+  try {
+    openPopUp({
+      componentName: "pop-up-validation",
+      title: ("Are you sure you want to delete this note ?"),
+      textClose: "No, cancel",
+      textConfirm: "Yes, delete this note",
+      textLoading: "Deleting ...",
+      icon: "mdi-trash-can-outline",
+      color: "red",
+      customClass: "w-[400px]",
+      showClose: false,
+      async confirm() {
+        await deleteNote(id)
+        isOpen.value = false
+        notes.value = notes.value.filter((n) => n.id !== id)
+        closePopUp();
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const updateCurrentNote = debounce(async() => {
   await updateNote(props.note.id, { title: title.value, description: description.value })
