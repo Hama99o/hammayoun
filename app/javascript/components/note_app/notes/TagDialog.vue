@@ -5,6 +5,7 @@
         <div class="w-full flex flex-col p-6 gap-8 bg-white">
           <div>
             <v-autocomplete
+              v-model:search="searchText"
               :items="tags"
               :autofocus="true"
               no-filter
@@ -19,19 +20,25 @@
               label="Tags"
               @click:clear="clear"
               @update:search="searchTag"
-              v-slot:item="{ item }"
             >
-              <v-list-item-content>
-                <v-checkbox
-                  v-model="note.tag_ids"
-                  color="info"
-                  :label="item.raw.name"
-                  hide-details
-                  :value="item.raw?.id"
-                  @click.stop
-                  @update:model-value="toggleTagToNote(item.raw)"
-                ></v-checkbox>
-              </v-list-item-content>
+              <template v-slot:item="{ item }">
+                <v-list-item-content>
+                  <v-checkbox
+                    v-model="note.tag_ids"
+                    color="info"
+                    :label="item.raw.name"
+                    hide-details
+                    :value="item.raw?.id"
+                    @click.stop
+                    @update:model-value="toggleTagToNote(item.raw)"
+                  ></v-checkbox>
+                </v-list-item-content>
+              </template>
+              <template #no-data>
+                <v-list-item-content>
+                  <div class="ml-3 px-4 bg-grey rounded w-fit cursor-pointer " @click="createNewTag(note, searchText)">+ Create "{{searchText}}"</div>
+                </v-list-item-content>
+              </template>
             </v-autocomplete>
           </div>
         </div>
@@ -46,7 +53,7 @@ import { storeToRefs } from 'pinia';
 import { useNoteStore } from '@/stores/note_app/note.store';
 import {debounce} from "lodash";
 
-const { fetchTags, toggleTag } = useNoteStore();
+const { fetchTags, toggleTag, createTag } = useNoteStore();
 const { tags } = storeToRefs(useNoteStore());
 
 const emit = defineEmits(['add-user'])
@@ -71,7 +78,6 @@ const clear = () => {
 
 onMounted(async () => {
   try {
-    console.log(tags.value)
     await fetchTags();
   } catch (error) {
     console.log(error);
@@ -81,6 +87,14 @@ onMounted(async () => {
 const searchTag = async(x) => {
   try {
     await fetchTags(x);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const createNewTag = async(note, text) => {
+  try {
+    await createTag(note.id, text);
   } catch (error) {
     console.log(error);
   }

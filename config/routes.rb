@@ -9,6 +9,7 @@ Rails.application.routes.draw do
         resources :notes do
           put :invite_user_toggle
           put :toggle_tag
+          post :create_and_assign_tag
           collection do
             get :tags
           end

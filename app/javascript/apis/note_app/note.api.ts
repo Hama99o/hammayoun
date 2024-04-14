@@ -59,6 +59,11 @@ class NoteAPI {
     const res = await http.put(`/api/v1/note_app/notes/${id}/toggle_tag`, data, { headers });
     return res.data;
   }
+  async createTag(id: number, data: {}) {
+    const headers = { 'Content-Type': 'multipart/form-data' };
+    const res = await http.post(`/api/v1/note_app/notes/${id}/create_and_assign_tag`, data, { headers });
+    return res.data;
+  }
 }
 
 const instance = new NoteAPI();

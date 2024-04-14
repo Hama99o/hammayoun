@@ -57,6 +57,12 @@ export const useNoteStore = defineStore({
       this.fetchNotes()
       return res.tag
     },
+    async createTag(noteId: number, text: string) {
+      const res = await NoteAPI.createTag(noteId, { text: text });
+      this.fetchNotes()
+      this.fetchTags()
+      return res.tag
+    },
     async resetStates() {
       this.note = {};
       this.notes = [];

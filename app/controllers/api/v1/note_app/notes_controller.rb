@@ -37,6 +37,18 @@ class Api::V1::NoteApp::NotesController < ApplicationController
     )
   end
 
+  def create_and_assign_tag
+    note = NoteApp::Note.find(params[:note_id])
+    tag = NoteApp::Tag.create(name: params[:text])
+    if note.favorite(tag, scope: :note_tag)
+      render json: {
+        tag: TagSerializer.render_as_json(tag, current_user: current_user)
+      }, status: :ok
+    else
+      render json: { error: "Failed to create and assign tag" }, status: :unprocessable_entity
+    end
+  end
+
   def toggle_tag
     tag = NoteApp::Tag.find(params[:tag_id])
     note = NoteApp::Note.find(params[:note_id])
