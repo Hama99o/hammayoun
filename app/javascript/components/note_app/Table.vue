@@ -25,49 +25,49 @@
           :key="item.id"
         >
           <td class="truncate px-0">
-            <router-link
-              :to="{ name: 'note', params: {id: item.id } }"
-              class="w-full h-full"
+            <div
+              @click="openNoteDialog(item)"
+              class="w-full h-full cursor-pointer"
             >
             <div v-if="item?.title" class="w-[45px] h-full flex gap-2 items-center pl-4 whitespace-nowrap">
               {{ item.title }}
             </div>
-            </router-link>
+          </div>
           </td>
 
           <td class="truncate px-0">
-            <router-link
-              :to="{ name: 'note', params: {id: item.id } }"
-              class="w-full h-full"
+            <div
+              @click="openNoteDialog(item)"
+              class="w-full h-full cursor-pointer"
             >
             <div v-if="item?.description" class="w-[45px] h-full flex gap-2 items-center pl-4 whitespace-nowrap">
               {{ item.description }}
             </div>
-            </router-link>
-          </td>
-
-          <td class="px-0">
-            <router-link
-              :to="{ name: 'note', params: {id: item.id } }"
-              class="w-full h-full"
-            >
-            <div v-if="item?.owner?.fullname" class="w-[45px] h-full flex gap-2 items-center pl-4 whitespace-nowrap">
-              {{ item?.owner?.fullname }}
             </div>
-            </router-link>
           </td>
 
           <td class="px-0">
-            <router-link
-              :to="{ name: 'note', params: {id: item.id } }"
-              class="w-full h-full"
+            <div
+              @click="openNoteDialog(item)"
+              class="w-full h-full cursor-pointer"
+            >
+              <div v-if="item?.owner?.fullname" class="w-[45px] h-full flex gap-2 items-center pl-4 whitespace-nowrap">
+                {{ item?.owner?.fullname }}
+              </div>
+            </div>
+          </td>
+
+          <td class="px-0">
+            <div
+              @click="openNoteDialog(item)"
+              class="w-full h-full cursor-pointer"
             >
             <div  class="w-[45px] h-full flex gap-2 items-center pl-4 whitespace-nowrap">
               {{ item?.shared_count }}
             </div>
-            </router-link>
+            </div>
           </td>
-          <td class="!w-[50px] pa-0">
+          <td class="!w-[50px] pa-0 cursor-pointer">
             <v-menu >
               <template v-slot:activator="{ props }">
                 <v-icon icon="mdi-dots-vertical" v-bind="props"></v-icon>
@@ -98,6 +98,12 @@
       ref="inviteUser"
       @add-user="inviteUserWithEmail"
     />
+
+    <open-note
+      ref="IsNoteOpened"
+      :note="SelectedNote"
+      @add-user="inviteUserWithEmail"
+    />
 </div>
 </template>
 
@@ -107,6 +113,7 @@ import { storeToRefs } from 'pinia';
 import { useNoteStore } from '@/stores/note_app/note.store';
 import InviteUser from '@/components/note_app/InviteUser.vue';
 import { showToast } from '@/utils/showToast';
+import OpenNote from '@/components/note_app/OpenNote.vue';
 
 const { inviteUserToggle, deleteNote } = useNoteStore();
 
@@ -114,12 +121,19 @@ const props = defineProps({
   notes: { type: Array, default: () => [] },
 });
 
-const SelectednoteId = ref(null)
+const SelectedNote = ref(null)
 const inviteUser = ref(null)
+const IsNoteOpened = ref(null)
 
 const openInviteUserDialog = (id) => {
-  SelectednoteId.value = id
+  SelectedNote.value = id
   inviteUser.value.isActive = true
+}
+
+const openNoteDialog = (note) => {
+  console.log('hiii')
+  SelectedNote.value = note
+  IsNoteOpened.value.isOpen = true
 }
 
 const destroyNote = async(id) => {

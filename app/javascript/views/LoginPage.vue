@@ -26,7 +26,7 @@
 
         <v-btn class="mt-2" type="submit" block>Continue</v-btn>
 
-        <p class="message my-5 text-blue underline"  style="cursor: pointer" > Forgot password</p>
+        <p class="message my-5 text-blue underline"  style="cursor: pointer"> Forgot password</p>
         <p class="message">
           Not registered?
           <router-link to="/signup" tag="span" style="cursor: pointer" class="text-blue underline" >
