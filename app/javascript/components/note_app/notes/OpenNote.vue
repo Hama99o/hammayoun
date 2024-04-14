@@ -68,7 +68,7 @@
 
 <script setup>
 import { ref, onMounted, watch } from 'vue';
-import InviteUser from '@/components/note_app/note/InviteUser.vue';
+import InviteUser from '@/components/note_app/notes/InviteUser.vue';
 import { useNoteStore } from '@/stores/note_app/note.store';
 import {debounce} from "lodash";
 import { showToast } from '@/utils/showToast';

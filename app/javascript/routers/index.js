@@ -12,8 +12,6 @@ const UserEdit = () => import('@/views/users/Edit.vue');
 
 // Note App imports
 const Notes = () => import('@/views/note_app/notes/Index.vue');
-const NoteShow = () => import('@/views/note_app/notes/Show.vue');
-const NoteNew = () => import('@/views/note_app/notes/New.vue');
 
 
 const routes = [
@@ -79,24 +77,7 @@ const routes = [
     components: {
       default: Notes
     },
-    // children: [
-    //   { path: "", redirect: "/note_app/notes" },
-    // ]
-  },
-  {
-    path: "/note_app/notes/:id",
-    name: 'note',
-    components: {
-      default: NoteShow
-    },
-  },
-  {
-    path: "/note_app/notes/new",
-    name: 'note_new',
-    components: {
-      default: NoteNew
-    },
-  },
+  }
 ];
 
 const router = createRouter({

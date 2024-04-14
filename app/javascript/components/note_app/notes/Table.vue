@@ -111,9 +111,9 @@
 import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useNoteStore } from '@/stores/note_app/note.store';
-import InviteUser from '@/components/note_app/note/InviteUser.vue';
+import InviteUser from '@/components/note_app/notes/InviteUser.vue';
 import { showToast } from '@/utils/showToast';
-import OpenNote from '@/components/note_app/note/OpenNote.vue';
+import OpenNote from '@/components/note_app/notes/OpenNote.vue';
 import { usePopUpStore } from "@/stores/pop-up.store";
 
 const { inviteUserToggle, deleteNote, fetchNotes } = useNoteStore();
