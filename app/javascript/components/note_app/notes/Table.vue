@@ -46,7 +46,7 @@
             </div>
           </td>
 
-          <td class="px-0">
+          <td class="truncate px-0">
             <div
               @click="openNoteDialog(item)"
               class="w-full h-full cursor-pointer"
@@ -57,7 +57,7 @@
             </div>
           </td>
 
-          <td class="px-0">
+          <td class="truncate px-0">
             <div
               @click="openNoteDialog(item)"
               class="w-full h-full cursor-pointer"
