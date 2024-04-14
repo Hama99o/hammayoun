@@ -54,6 +54,7 @@ export const useNoteStore = defineStore({
     },
     async toggleTag(noteId: number, tagId: number) {
       const res = await NoteAPI.toggleTag(noteId, { tag_id: tagId });
+      this.fetchNotes()
       return res.tag
     },
     async resetStates() {

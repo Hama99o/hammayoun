@@ -16,6 +16,9 @@
             Share count
           </th>
           <th class="text-left">
+            tags
+          </th>
+          <th class="text-left">
           </th>
         </tr>
       </thead>
@@ -67,6 +70,21 @@
             </div>
             </div>
           </td>
+
+          <td class="truncate px-0 ">
+            <div
+              @click="openNoteDialog(item)"
+              class="w-full h-full cursor-pointer flex align-center"
+            >
+              <div  v-for="tag in item.tags.slice(1).slice(-2)" :key="tag.id" class=" inline-block flex flex-nowrap rounded-full px-2  bg-grey">
+                #{{ tag.name }}
+              </div>
+              <span v-if="item.tags.length > 2">
+                ...
+              </span>
+            </div>
+          </td>
+
           <td class="!w-[50px] pa-0 cursor-pointer">
             <v-menu >
               <template v-slot:activator="{ props }">

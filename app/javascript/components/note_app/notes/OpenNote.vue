@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog max-width="500" v-model="isOpen">
+    <v-dialog max-width="700" v-model="isOpen">
       <template #default>
 
         <div class="w-full flex flex-col p-6 gap-8 bg-white">
@@ -22,6 +22,13 @@
               label="Description"
               @update:model-value="updateCurrentNote"
             ></v-textarea>
+          </div>
+
+          Tags:
+          <div class="flex flex-wrap">
+            <div  v-for="tag in note.tags.slice(1)" :key="tag.id" class="w-fit text-sm flex rounded-full px-2 m-1 bg-grey ">
+              #{{ tag.name }}
+            </div>
           </div>
 
           <!-- Buttons -->
