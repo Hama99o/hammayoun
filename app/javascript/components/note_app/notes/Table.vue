@@ -115,7 +115,6 @@
     <tag-dialog
       ref="isTagDialogOpened"
       :note="selectedNoteForTag"
-      @add-user="addTagToNote"
     />
 </div>
 </template>
@@ -150,7 +149,6 @@ const openInviteUserDialog = (id) => {
 
 const openTagDialog = (id) => {
   selectedNoteForTag.value = id
-  console.log(selectedNoteForTag.value)
   isTagDialogOpened.value.isActive = true
 }
 
@@ -191,21 +189,6 @@ const inviteUserWithEmail = async(role, email, UserAction) => {
     }
     await inviteUserToggle(SelectednoteId.value, data)
     inviteUser.value.isActive = false
-  } catch (errorMessage) {
-    showToast(errorMessage.error, 'error');
-  }
-};
-
-const addTagToNote = async(tag) => {
-  try {
-    console.log(tag)
-    // const data = {
-    //   role: role,
-    //   email: email,
-    //   user_action: UserAction
-    // }
-    // await inviteUserToggle(SelectednoteId.value, data)
-    // inviteUser.value.isActive = false
   } catch (errorMessage) {
     showToast(errorMessage.error, 'error');
   }

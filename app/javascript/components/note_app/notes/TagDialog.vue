@@ -2,16 +2,22 @@
   <div>
     <v-dialog max-width="500" v-model="isActive">
       <template #default>
-
         <div class="w-full flex flex-col p-6 gap-8 bg-white">
           <div>
             <v-autocomplete
               :items="tags"
               :autofocus="true"
+              no-filter
+              variant="outlined"
+              multiple
+              hide-details
+              menu-icon=""
+              density="compact"
               item-value="id"
+              :clear-on-select="true"
               item-text="name"
               label="Tags"
-              multiple
+              @click:clear="clear"
               @update:search="searchTag"
               v-slot:item="{ item }"
             >
@@ -23,18 +29,11 @@
                   hide-details
                   :value="item.raw?.id"
                   @click.stop
-                  @update:model-value="test(item.raw)"
+                  @update:model-value="toggleTagToNote(item.raw)"
                 ></v-checkbox>
               </v-list-item-content>
-
-
-
-              <!-- <v-list-item-action>
-                <v-checkbox v-model="item.selected" />
-              </v-list-item-action> -->
             </v-autocomplete>
           </div>
-
         </div>
       </template>
     </v-dialog>
@@ -42,13 +41,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useNoteStore } from '@/stores/note_app/note.store';
-import { usePopUpStore } from "@/stores/pop-up.store";
+import {debounce} from "lodash";
 
 const { fetchTags, toggleTag } = useNoteStore();
-const { openPopUp, closePopUp } = usePopUpStore();
 const { tags } = storeToRefs(useNoteStore());
 
 const emit = defineEmits(['add-user'])
@@ -67,6 +65,10 @@ defineExpose({
   isActive
 })
 
+const clear = () => {
+  searchText.value = ''
+}
+
 onMounted(async () => {
   try {
     console.log(tags.value)
@@ -84,11 +86,9 @@ const searchTag = async(x) => {
   }
 };
 
-const test = async(x) => {
+const toggleTagToNote = async(tag) => {
   try {
-    console.log(props.note)
-    console.log(x)
-    toggleTag(props.note.id, x.id)
+    toggleTag(props.note.id, tag.id)
   } catch (error) {
     console.log(error);
   }
