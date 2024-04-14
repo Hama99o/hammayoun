@@ -45,6 +45,12 @@
                   >
                     Delete Note
                   </div>
+                  <div
+                    class="cursor-pointer hover:bg-grey px-5 py-2"
+                    @click.prevent="openTagDialog(note)"
+                  >
+                    Change tags
+                  </div>
                 </div>
               </v-list>
             </v-menu>
@@ -63,6 +69,11 @@
       ref="inviteUser"
       @add-user="inviteUserWithEmail"
     />
+
+    <tag-dialog
+      ref="isTagDialogOpened"
+      :note="selectedNoteForTag"
+    />
   </div>
 </template>
 
@@ -74,6 +85,7 @@ import {debounce} from "lodash";
 import { showToast } from '@/utils/showToast';
 import { storeToRefs } from 'pinia';
 import { usePopUpStore } from "@/stores/pop-up.store";
+import TagDialog from '@/components/note_app/notes/TagDialog.vue';
 
 const props = defineProps({
   note: { type: Object, default: () => {} },
@@ -83,9 +95,11 @@ const { updateNote, deleteNote, inviteUserToggle } = useNoteStore();
 const { notes } = storeToRefs(useNoteStore());
 const { openPopUp, closePopUp } = usePopUpStore();
 
+const selectedNoteForTag = ref(null)
 const inviteUser = ref(null)
 const title = ref('')
 const description = ref('')
+const isTagDialogOpened = ref(null)
 
 const isOpen = ref(false)
 const emit = defineEmits(['add-user'])
@@ -99,6 +113,10 @@ const openInviteUserDialog = (id) => {
   inviteUser.value.isActive = true
 }
 
+const openTagDialog = (note) => {
+  selectedNoteForTag.value = note
+  isTagDialogOpened.value.isActive = true
+}
 
 const destroyNote = async(id) => {
   try {

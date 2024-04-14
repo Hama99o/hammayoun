@@ -29,7 +29,7 @@ class Api::V1::NoteApp::NotesController < ApplicationController
     paginate_render(
       TagSerializer,
       tags,
-      per_page: 5,
+      per_page: 50,
       extra: {
         root: :tags,
         current_user: current_user
