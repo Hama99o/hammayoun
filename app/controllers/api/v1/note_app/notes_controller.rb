@@ -22,6 +22,19 @@ class Api::V1::NoteApp::NotesController < ApplicationController
     }, status: :ok
   end
 
+  def tags
+    tags = NoteApp::Tag.all
+    p tags
+    paginate_render(
+      TagSerializer,
+      tags,
+      extra: {
+        root: :tags,
+        current_user: current_user
+      }
+    )
+  end
+
   def invite_user_toggle
     email = params.require(:email)
     user_action = params.require(:user_action)

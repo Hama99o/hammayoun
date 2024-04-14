@@ -8,6 +8,9 @@ Rails.application.routes.draw do
       namespace :note_app do
         resources :notes do
           put :invite_user_toggle
+          collection do
+            get :tags
+          end
         end
       end
 
