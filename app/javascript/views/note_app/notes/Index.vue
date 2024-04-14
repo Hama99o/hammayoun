@@ -38,11 +38,11 @@
 </template>
 
 <script setup>
-import NoteTable from '@/components/note_app/Table.vue';
+import NoteTable from '@/components/note_app/note/Table.vue';
 import { storeToRefs } from 'pinia';
 import { useNoteStore } from '@/stores/note_app/note.store';
 import { onMounted, ref } from 'vue';
-import OpenNote from '@/components/note_app/OpenNote.vue';
+import OpenNote from '@/components/note_app/note/OpenNote.vue';
 
 const { fetchNotes, resetStates, createNote } = useNoteStore();
 
