@@ -8,6 +8,7 @@
 #  data        :jsonb
 #  title       :string
 #  description :text
+#  deleted_at  :datetime
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
@@ -18,7 +19,7 @@
 class NoteApp::NoteSerializer < ApplicationSerializer
   identifier :id
 
-  fields :title, :description, :data, :created_at
+  fields :title, :description, :data, :status, :created_at
 
   field :is_shared do |note, options|
     current_user = options[:current_user]

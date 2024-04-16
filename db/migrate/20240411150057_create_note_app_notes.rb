@@ -6,6 +6,7 @@ class CreateNoteAppNotes < ActiveRecord::Migration[7.0]
       t.jsonb :data
       t.string :title
       t.text :description
+      t.datetime :deleted_at
 
       t.timestamps
     end

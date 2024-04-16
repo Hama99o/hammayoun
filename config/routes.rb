@@ -7,11 +7,18 @@ Rails.application.routes.draw do
     namespace :v1 do
       namespace :note_app do
         resources :notes do
+          member do
+            put :restore
+            delete :destroy_permanently
+          end
+
           put :invite_user_toggle
           put :toggle_tag
           post :create_and_assign_tag
           collection do
             get :tags
+            get :trashes
+
           end
         end
       end

@@ -2,11 +2,7 @@ class NoteApp::NotePolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
     def resolve
-      if user.admin_or_above?
-        scope.all
-      else
-        user.all_notes
-      end
+      scope.all
     end
   end
 

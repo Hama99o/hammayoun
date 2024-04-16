@@ -1,19 +1,13 @@
 class Api::V1::NoteApp::NotesController < ApplicationController
 
   before_action :note, only: [:show, :update, :destroy]
-  before_action :notes, only: [:index]
 
   def index
-    @notes = @notes.search_notes(params[:search]) if params[:search].present?
+    note_index(:published)
+  end
 
-    paginate_render(
-      NoteApp::NoteSerializer,
-      policy_scope(@notes),
-      extra: {
-        root: :notes,
-        current_user: current_user
-      }
-    )
+  def trashes
+    note_index(:trashed)
   end
 
   def show
@@ -95,7 +89,7 @@ class Api::V1::NoteApp::NotesController < ApplicationController
     if @note.update(**note_params)
       render json: { note: NoteApp::NoteSerializer.render_as_hash(authorize(@note), current_user: current_user) }, status: :ok
     else
-      render json: @note.errors.messages, status: :unprocessable_entity
+      render_unprocessable_entity(@note)
     end
   end
 
@@ -107,34 +101,59 @@ class Api::V1::NoteApp::NotesController < ApplicationController
         note: NoteApp::NoteSerializer.render_as_json(authorize(note), current_user: current_user)
       }
     else
-      render json: note.errors.messages, status: :unprocessable_entity
+      render_unprocessable_entity(note)
+    end
+  end
+
+  def destroy_permanently
+    if authorize(@note).delete
+      render json: { note: @note }, status: :ok
+    else
+      render_unprocessable_entity(@note)
+    end
+  end
+
+  def restore
+    if authorize(@note).update(status: :published, deleted_at: nil)
+      render json: @note
+    else
+      render_unprocessable_entity(@note)
     end
   end
 
   def destroy
-    if authorize(@note).delete
-      render json: { note: @note }, status: :ok
+    if authorize(@note).update(status: :trashed, deleted_at: Time.now)
+
+      render json: @note
     else
-      render json: @note.errors.messages, status: :unprocessable_entity
+      render_unprocessable_entity(@note)
     end
   end
 
   private
 
-  def note
-    @note = NoteApp::Note.find(params.require(:id))
-  end
+  def note_index(status)
+    notes = current_user.all_notes.where(status:)
+    notes = notes.search_notes(params[:search]) if params[:search].present?
 
+    paginate_render(
+      NoteApp::NoteSerializer,
+      policy_scope(notes.order(created_at: :desc)),
+      extra: {
+        root: :notes,
+        current_user: current_user
+      }
+    )
+  end
   def notes
-    @notes ||= current_user.all_notes.where(status: :published).order(created_at: :desc)
+    current_user.all_notes
   end
 
   def note_params
     params.permit(
       :title,
       :description,
-      :data,
-      :status
+      :data
     )
   end
 end
