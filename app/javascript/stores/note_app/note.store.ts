@@ -6,10 +6,12 @@ export const useNoteStore = defineStore({
   state: () => ({
     note: {},
     notes: [],
+    trashesNotes: [],
     tags: [],
     search: '',
     loading: true,
     pagination: {},
+    trashesNotesPagination: {},
     page: 1,
   }),
   getters: {},
@@ -19,6 +21,17 @@ export const useNoteStore = defineStore({
       const res = await NoteAPI.fetchNotes(this.page, this.search);
       this.notes = res?.notes;
       this.pagination = {
+        current_page: res.meta.pagy.page,
+        total_pages: res.meta.pagy.pages,
+        total_items: res.meta.total_count,
+      };
+      this.loading = false;
+    },
+    async fetchTrashesNotes() {
+      this.loading = true;
+      const res = await NoteAPI.fetchTrashesNotes(this.page, this.search);
+      this.trashesNotes = res?.notes;
+      this.trashesNotesPagination = {
         current_page: res.meta.pagy.page,
         total_pages: res.meta.pagy.pages,
         total_items: res.meta.total_count,
@@ -42,6 +55,12 @@ export const useNoteStore = defineStore({
     },
     async deleteNote(id: number) {
       await NoteAPI.deleteNote(id);
+    },
+    async noteRestore(id: number) {
+      await NoteAPI.noteRestore(id);
+    },
+    async noteDeletePermanently(id: number) {
+      await NoteAPI.noteDeletePermanently(id);
     },
     async inviteUserToggle(id: number, data: {}) {
       await NoteAPI.inviteUserToggle(id, data);
