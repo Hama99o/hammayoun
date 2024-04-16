@@ -9,6 +9,14 @@ class NoteAPI {
       return error;
     }
   }
+  async fetchTrashesNotes(page = 1, search = '') {
+    try {
+      const res = await http.get(`/api/v1/note_app/notes/trashes?page=${page}&search=${search}`);
+      return res.data;
+    } catch (error) {
+      return error;
+    }
+  }
   async fetchNote(id: number) {
     try {
       const res = await http.get(`/api/v1/note_app/notes/${id}`);
@@ -39,6 +47,24 @@ class NoteAPI {
     try {
       const headers = { 'Content-Type': 'multipart/form-data' };
       const res = await http.delete(`/api/v1/note_app/notes/${id}`);
+      return res.data;
+    } catch (error) {
+      return error;
+    }
+  }
+  async noteDeletePermanently(id: number) {
+    try {
+      const headers = { 'Content-Type': 'multipart/form-data' };
+      const res = await http.delete(`/api/v1/note_app/notes/${id}/destroy_permanently`);
+      return res.data;
+    } catch (error) {
+      return error;
+    }
+  }
+  async noteRestore(id: number) {
+    try {
+      const headers = { 'Content-Type': 'multipart/form-data' };
+      const res = await http.delete(`/api/v1/note_app/notes/${id}/restore`);
       return res.data;
     } catch (error) {
       return error;
