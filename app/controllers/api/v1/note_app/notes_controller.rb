@@ -132,6 +132,10 @@ class Api::V1::NoteApp::NotesController < ApplicationController
 
   private
 
+  def note
+    @note = NoteApp::Note.find(params.require(:id))
+  end
+
   def note_index(status)
     notes = current_user.all_notes.where(status:)
     notes = notes.search_notes(params[:search]) if params[:search].present?

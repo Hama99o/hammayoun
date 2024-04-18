@@ -16,11 +16,19 @@
             <!-- Title & description -->
             <div class="flex flex-col items-center self-stretch gap-4">
               <p class="text-fakeBlack text-xl font-medium text-center">
-                Trashes
               </p>
             </div>
           </div>
 
+          <div
+            class="flex flex-col items-center self-stretch gap-4"
+            v-for="trashesNote in trashesNotes"
+            :key="trashesNote.id"
+          >
+          <p>
+            title: {{ trashesNote.title }}
+          </p>
+        </div>
 
           <!-- Buttons -->
           <div class="flex flex-col items-start gap-3 self-stretch lg:!flex-row">
@@ -47,13 +55,25 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useNoteStore } from '@/stores/note_app/note.store';
 
+const { fetchTrashesNotes } = useNoteStore();
+const { trashesNotes } = storeToRefs(useNoteStore());
 
 const role = ref('')
 const email = ref('')
 const isActive = ref(false)
 const emit = defineEmits(['add-user'])
+
+onMounted(async() => {
+  try {
+    await fetchTrashesNotes()
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 defineExpose({
   isActive
