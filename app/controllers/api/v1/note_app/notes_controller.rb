@@ -46,6 +46,7 @@ class Api::V1::NoteApp::NotesController < ApplicationController
   def toggle_tag
     tag = NoteApp::Tag.find(params[:tag_id])
     note = NoteApp::Note.find(params[:note_id])
+
     if note.favorited?(tag, scope:  :note_tag)
       note.unfavorite(tag, scope: :note_tag)
     else
