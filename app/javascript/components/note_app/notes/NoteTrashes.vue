@@ -1,11 +1,11 @@
 <template>
   <div>
-    <v-dialog max-width="500" v-model="isActive">
+    <v-dialog max-width="600" v-model="isActive">
       <template #default>
 
         <div class="w-full flex flex-col p-6 gap-8 bg-white">
           <!-- Icon and text -->
-          <div class="flex flex-col items-center gap-4">
+          <div class="flex flex-col items-center gap-4 mb-5">
             <!-- icon -->
             <v-icon
               icon="mdi mdi-trash-can-outline"
@@ -13,29 +13,32 @@
               width="52"
             />
 
-            <!-- Title & description -->
-            <div class="flex flex-col items-center self-stretch gap-4">
-              <p class="text-fakeBlack text-xl font-medium text-center">
+            <div class="flex flex-grow justify-center ml-6">
+              <p
+                class="font-medium text-xl text-fakeBlack line-clamp-1"
+              >
+                Deleted Notes
               </p>
             </div>
           </div>
 
-          <div
-            class="flex justify-center items-center self-stretch gap-4"
-            v-for="trashesNote in trashesNotes"
-            :key="trashesNote.id"
-          >
-            <p>
-              Title: {{ trashesNote.title }}
-            </p>
-            <p>
-              Delete: {{ moment(trashesNote.deleted_at, "YYYY-MM-DD HH:mm:ss [UTC]").format("dddd Do MMMM, h:mm a") }}
-            </p>
-            <v-icon icon="mdi mdi-restore" @click="trashNoteRestore(trashesNote.id)"></v-icon>
-            <v-icon icon="mdi mdi-delete" @click="trashNoteDeletePermanently(trashesNote.id)"></v-icon>
+            <div
+              class="px-6 py-4 flex gap-3 flex-row justify-between border-b text-fake-black text-sm items-center cursor-pointer hover:bg-[#F6F6F6]"
+              v-for="trashesNote in trashesNotes"
+              :key="trashesNote.id"
+            >
+              <p class="ml-1 flex basis-1/3 truncate">
+                Title: {{ trashesNote.title }}
+              </p>
+              <p
+                class="min-w-[92px]"
+              >
+                Deleted at: {{ moment(trashesNote.deleted_at, "YYYY-MM-DD HH:mm:ss [UTC]").format("dddd Do MMMM, h:mm a") }}
+              </p>
+              <v-icon icon="mdi mdi-restore" @click="trashNoteRestore(trashesNote.id)"></v-icon>
+              <v-icon icon="mdi mdi-delete" @click="trashNoteDeletePermanently(trashesNote.id)"></v-icon>
 
-          </div>
-
+            </div>
           <!-- Buttons -->
           <div class="flex flex-col items-start gap-3 self-stretch lg:!flex-row">
             <v-btn
