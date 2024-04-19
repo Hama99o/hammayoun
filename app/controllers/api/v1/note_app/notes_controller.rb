@@ -1,6 +1,6 @@
 class Api::V1::NoteApp::NotesController < ApplicationController
 
-  before_action :note, only: [:show, :update, :destroy]
+  before_action :note, only: [:show, :update, :destroy, :restore, :destroy_permanently]
 
   def index
     note_index(:published)

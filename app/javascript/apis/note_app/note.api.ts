@@ -64,7 +64,7 @@ class NoteAPI {
   async noteRestore(id: number) {
     try {
       const headers = { 'Content-Type': 'multipart/form-data' };
-      const res = await http.delete(`/api/v1/note_app/notes/${id}/restore`);
+      const res = await http.put(`/api/v1/note_app/notes/${id}/restore`);
       return res.data;
     } catch (error) {
       return error;

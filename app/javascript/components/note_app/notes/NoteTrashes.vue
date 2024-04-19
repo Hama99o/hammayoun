@@ -21,14 +21,19 @@
           </div>
 
           <div
-            class="flex flex-col items-center self-stretch gap-4"
+            class="flex justify-center items-center self-stretch gap-4"
             v-for="trashesNote in trashesNotes"
             :key="trashesNote.id"
           >
-          <p>
-            title: {{ trashesNote.title }}
-          </p>
-        </div>
+            <p>
+              Title: {{ trashesNote.title }}
+            </p>
+            <p>
+              Delete: {{ moment(trashesNote.deleted_at, "YYYY-MM-DD HH:mm:ss [UTC]").format("dddd Do MMMM, h:mm a") }}
+            </p>
+            <v-icon icon="mdi mdi-restore" @click="trashNoteRestore(trashesNote.id)"></v-icon>
+
+          </div>
 
           <!-- Buttons -->
           <div class="flex flex-col items-start gap-3 self-stretch lg:!flex-row">
@@ -38,14 +43,6 @@
               class="normal-case text-xs w-full lg:!flex-1"
               text="cancel"
               @click="isActive = false"
-            />
-
-            <v-btn
-              variant="flat"
-              color="negativeRed"
-              class="normal-case text-xs w-full lg:!w-1/2"
-              text="Add User"
-              @click="emit('add-user', role, email, 'add')"
             />
           </div>
         </div>
@@ -58,13 +55,20 @@
 import { ref, onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useNoteStore } from '@/stores/note_app/note.store';
+import filters from "@/tools/filters.js";
+import moment from 'moment';
 
 const { trashesNotes } = storeToRefs(useNoteStore());
+const {  noteRestore } = useNoteStore();
 
 const role = ref('')
 const email = ref('')
 const isActive = ref(false)
 const emit = defineEmits(['add-user'])
+
+const trashNoteRestore = async(id) => {
+  await noteRestore(id)
+}
 
 defineExpose({
   isActive

@@ -25,4 +25,12 @@ class NoteApp::NotePolicy < ApplicationPolicy
   def invite_user_toggle?
     true
   end
+
+  def restore?
+    show?
+  end
+
+  def destroy_permanently?
+    show?
+  end
 end
