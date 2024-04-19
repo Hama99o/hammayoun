@@ -59,21 +59,12 @@ import { ref, onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useNoteStore } from '@/stores/note_app/note.store';
 
-const { fetchTrashesNotes } = useNoteStore();
 const { trashesNotes } = storeToRefs(useNoteStore());
 
 const role = ref('')
 const email = ref('')
 const isActive = ref(false)
 const emit = defineEmits(['add-user'])
-
-onMounted(async() => {
-  try {
-    await fetchTrashesNotes()
-  } catch (error) {
-    console.log(error);
-  }
-});
 
 defineExpose({
   isActive
