@@ -76,7 +76,7 @@
               @click="openNoteDialog(item)"
               class="w-full h-full cursor-pointer flex align-center"
             >
-              <div  v-for="tag in item.tags.slice(1).slice(-2)" :key="tag.id" class=" inline-block flex flex-nowrap rounded-full px-2  bg-grey">
+              <div  v-for="tag in item.tags.slice(0, 2)" :key="tag.id" class=" inline-block flex flex-nowrap rounded-full px-2  bg-grey">
                 #{{ tag.name }}
               </div>
               <span v-if="item.tags.length > 2">
