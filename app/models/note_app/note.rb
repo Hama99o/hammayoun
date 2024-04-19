@@ -18,6 +18,7 @@
 #
 class NoteApp::Note < ApplicationRecord
   belongs_to :owner, class_name: "User"
+  before_destroy :delete_note_relations
 
   acts_as_favoritable
   acts_as_favoritor
@@ -39,5 +40,12 @@ class NoteApp::Note < ApplicationRecord
                   }
   def tags
     NoteApp::Tag.where(id: favorites.where(scope: :note_tag).pluck(:favoritable_id))
+  end
+
+  def delete_note_relations
+    Favorite.where(
+      favoritor_type: "NoteApp::Note",
+      scope: :note_tag
+    ).destroy_all
   end
 end

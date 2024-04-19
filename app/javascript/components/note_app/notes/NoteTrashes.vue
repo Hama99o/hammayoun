@@ -32,6 +32,7 @@
               Delete: {{ moment(trashesNote.deleted_at, "YYYY-MM-DD HH:mm:ss [UTC]").format("dddd Do MMMM, h:mm a") }}
             </p>
             <v-icon icon="mdi mdi-restore" @click="trashNoteRestore(trashesNote.id)"></v-icon>
+            <v-icon icon="mdi mdi-delete" @click="trashNoteDeletePermanently(trashesNote.id)"></v-icon>
 
           </div>
 
@@ -59,7 +60,7 @@ import filters from "@/tools/filters.js";
 import moment from 'moment';
 
 const { trashesNotes } = storeToRefs(useNoteStore());
-const {  noteRestore } = useNoteStore();
+const {  noteRestore, noteDeletePermanently } = useNoteStore();
 
 const role = ref('')
 const email = ref('')
@@ -68,6 +69,10 @@ const emit = defineEmits(['add-user'])
 
 const trashNoteRestore = async(id) => {
   await noteRestore(id)
+}
+
+const trashNoteDeletePermanently = async(id) => {
+  await noteDeletePermanently(id)
 }
 
 defineExpose({
