@@ -53,11 +53,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useNoteStore } from '@/stores/note_app/note.store';
-import filters from "@/tools/filters.js";
 import moment from 'moment';
+const { openPopUp, closePopUp } = usePopUpStore();
+import { usePopUpStore } from "@/stores/pop-up.store";
 
 const { trashesNotes } = storeToRefs(useNoteStore());
 const {  noteRestore, noteDeletePermanently } = useNoteStore();
@@ -72,8 +73,26 @@ const trashNoteRestore = async(id) => {
 }
 
 const trashNoteDeletePermanently = async(id) => {
-  await noteDeletePermanently(id)
-}
+  try {
+    openPopUp({
+      componentName: "pop-up-validation",
+      title: ("Are you sure you want to delete permanently this note ?"),
+      textClose: "No, cancel",
+      textConfirm: "Yes, delete this note",
+      textLoading: "Deleting ...",
+      icon: "mdi-trash-can-outline",
+      color: "red",
+      customClass: "w-[400px]",
+      showClose: false,
+      async confirm() {
+        await noteDeletePermanently(id)
+        closePopUp();
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 defineExpose({
   isActive
