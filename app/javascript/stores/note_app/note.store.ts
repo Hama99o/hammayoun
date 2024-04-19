@@ -56,14 +56,17 @@ export const useNoteStore = defineStore({
     async deleteNote(id: number) {
       await NoteAPI.deleteNote(id);
       await this.fetchTrashesNotes()
+      await this.fetchNotes()
     },
     async noteRestore(id: number) {
       await NoteAPI.noteRestore(id);
       await this.fetchTrashesNotes()
+      await this.fetchNotes()
     },
     async noteDeletePermanently(id: number) {
       await NoteAPI.noteDeletePermanently(id);
       await this.fetchTrashesNotes()
+      await this.fetchNotes()
     },
     async inviteUserToggle(id: number, data: {}) {
       await NoteAPI.inviteUserToggle(id, data);
