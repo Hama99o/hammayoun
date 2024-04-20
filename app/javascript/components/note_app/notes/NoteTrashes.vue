@@ -22,23 +22,31 @@
             </div>
           </div>
 
-            <div
-              class="px-6 py-4 flex gap-3 flex-row justify-between border-b text-fake-black text-sm items-center cursor-pointer hover:bg-[#F6F6F6]"
-              v-for="trashesNote in trashesNotes"
-              :key="trashesNote.id"
+          <div
+            class="flex gap-3 flex-row justify-between border-b text-fake-black text-sm items-center cursor-pointer hover:bg-[#F6F6F6]"
+            v-for="trashesNote in trashesNotes"
+            :key="trashesNote.id"
+          >
+            <p class="ml-1 flex basis-1/3 truncate">
+              Title: {{ trashesNote.title }}
+            </p>
+            <p
+              class="min-w-[92px]"
             >
-              <p class="ml-1 flex basis-1/3 truncate">
-                Title: {{ trashesNote.title }}
-              </p>
-              <p
-                class="min-w-[92px]"
-              >
-                Deleted at: {{ moment(trashesNote.deleted_at, "YYYY-MM-DD HH:mm:ss [UTC]").format("dddd Do MMMM, h:mm a") }}
-              </p>
-              <v-icon icon="mdi mdi-restore" @click="trashNoteRestore(trashesNote.id)"></v-icon>
-              <v-icon icon="mdi mdi-delete" @click="trashNoteDeletePermanently(trashesNote.id)"></v-icon>
+              Deleted at: {{ moment(trashesNote.deleted_at, "YYYY-MM-DD HH:mm:ss [UTC]").format("dddd Do MMMM, h:mm a") }}
+            </p>
+            <v-tooltip text="Restore note" location="top">
+              <template v-slot:activator="{ props }">
+                <v-icon v-bind="props" icon="mdi mdi-restore" @click="trashNoteRestore(trashesNote.id)"></v-icon>
+              </template>
+            </v-tooltip>
+            <v-tooltip text="Delete permanently note" location="top">
+              <template v-slot:activator="{ props }">
+                <v-icon v-bind="props" icon="mdi mdi-delete" @click="trashNoteDeletePermanently(trashesNote.id)"></v-icon>
+              </template>
+            </v-tooltip>
+          </div>
 
-            </div>
           <!-- Buttons -->
           <div class="flex flex-col items-start gap-3 self-stretch lg:!flex-row">
             <v-btn
