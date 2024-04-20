@@ -1,6 +1,6 @@
 <template>
   <div
-    class="mb-16 flex justify-between"
+    class="mb-16 flex justify-between !w-[500px]"
     v-if="toast.isShow"
     :class="{
       toast: true,

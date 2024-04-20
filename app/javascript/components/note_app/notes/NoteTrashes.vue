@@ -36,13 +36,13 @@
             </p>
             <v-tooltip text="Restore note" location="top">
               <template v-slot:activator="{ props }">
-                <v-icon v-bind="props" icon="mdi mdi-restore" @click="trashNoteRestore(trashesNote.id)"></v-icon>
+                <v-icon v-bind="props" icon="mdi mdi-restore" @click="trashNoteRestore(trashesNote)"></v-icon>
               </template>
             </v-tooltip>
 
             <v-tooltip text="Delete permanently note" location="top">
               <template v-slot:activator="{ props }">
-                <v-icon v-bind="props" icon="mdi mdi-delete" @click="trashNoteDeletePermanently(trashesNote.id)"></v-icon>
+                <v-icon v-bind="props" icon="mdi mdi-delete" @click="trashNoteDeletePermanently(trashesNote)"></v-icon>
               </template>
             </v-tooltip>
           </div>
@@ -78,12 +78,12 @@ const {  noteRestore, noteDeletePermanently } = useNoteStore();
 const isActive = ref(false)
 const emit = defineEmits(['add-user'])
 
-const trashNoteRestore = async(id) => {
-  await noteRestore(id)
-  showToast('Note restore successfully', 'success');
+const trashNoteRestore = async(trashesNote) => {
+  await noteRestore(trashesNote.id)
+  showToast(`${trashesNote.title} note restore successfully`, 'success');
 }
 
-const trashNoteDeletePermanently = async(id) => {
+const trashNoteDeletePermanently = async(trashesNote) => {
   try {
     openPopUp({
       componentName: "pop-up-validation",
@@ -96,9 +96,9 @@ const trashNoteDeletePermanently = async(id) => {
       customClass: "w-[400px]",
       showClose: false,
       async confirm() {
-        await noteDeletePermanently(id)
+        await noteDeletePermanently(trashesNote.id)
         closePopUp();
-        showToast('Note deleted successfully', 'error');
+        showToast(`${trashesNote.title} note deleted successfully`, 'error');
       },
     });
   } catch (error) {

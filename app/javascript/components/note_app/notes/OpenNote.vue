@@ -48,7 +48,7 @@
 
                   <div
                     class="cursor-pointer hover:bg-grey px-5 py-2"
-                    @click.prevent="destroyNote(note.id)"
+                    @click.prevent="destroyNote(note)"
                   >
                     Delete Note
                   </div>
@@ -125,7 +125,7 @@ const openTagDialog = (note) => {
   isTagDialogOpened.value.isActive = true
 }
 
-const destroyNote = async(id) => {
+const destroyNote = async(note) => {
   try {
     openPopUp({
       componentName: "pop-up-validation",
@@ -138,10 +138,11 @@ const destroyNote = async(id) => {
       customClass: "w-[400px]",
       showClose: false,
       async confirm() {
-        await deleteNote(id)
+        await deleteNote(note.id)
         isOpen.value = false
-        notes.value = notes.value.filter((n) => n.id !== id)
+        notes.value = notes.value.filter((n) => n.id !== note.id)
         closePopUp();
+        showToast(`${note.title} note delete successfully`, 'error');
       },
     });
   } catch (error) {
