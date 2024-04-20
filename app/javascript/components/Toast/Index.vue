@@ -1,6 +1,6 @@
 <template>
   <div
-    class="mb-12"
+    class="mb-16 flex justify-between"
     v-if="toast.isShow"
     :class="{
       toast: true,
@@ -16,6 +16,9 @@
       'toast--bottom-left': position === 'bottom-left',
     }"
   >
+    <div>
+    </div>
+
     <div class="toast__message">
       {{ toast.message }}
     </div>
@@ -63,22 +66,22 @@ const close = () => {
   justify-content: space-between;
 
   &.toast--success {
-    background-color: #dff0d8;
+    background-color: #88e71c;
     border-color: #d0e9c6;
   }
 
   &.toast--error {
-    background-color: #f2dede;
+    background-color: #e70707;
     border-color: #ebccd1;
   }
 
   &.toast--info {
-    background-color: #d9edf7;
+    background-color: #75cabc;
     border-color: #bce8f1;
   }
 
   &.toast--warning {
-    background-color: #fcf8e3;
+    background-color: #635f4c;
     border-color: #faebcc;
   }
 

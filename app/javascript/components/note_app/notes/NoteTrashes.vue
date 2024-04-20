@@ -2,7 +2,6 @@
   <div>
     <v-dialog max-width="600" v-model="isActive">
       <template #default>
-
         <div class="w-full flex flex-col p-6 gap-8 bg-white">
           <!-- Icon and text -->
           <div class="flex flex-col items-center gap-4 mb-5">
@@ -71,17 +70,17 @@ import { useNoteStore } from '@/stores/note_app/note.store';
 import moment from 'moment';
 const { openPopUp, closePopUp } = usePopUpStore();
 import { usePopUpStore } from "@/stores/pop-up.store";
+import { showToast } from '@/utils/showToast';
 
 const { trashesNotes } = storeToRefs(useNoteStore());
 const {  noteRestore, noteDeletePermanently } = useNoteStore();
 
-const role = ref('')
-const email = ref('')
 const isActive = ref(false)
 const emit = defineEmits(['add-user'])
 
 const trashNoteRestore = async(id) => {
   await noteRestore(id)
+  showToast('Note restore successfully', 'success');
 }
 
 const trashNoteDeletePermanently = async(id) => {
@@ -99,6 +98,7 @@ const trashNoteDeletePermanently = async(id) => {
       async confirm() {
         await noteDeletePermanently(id)
         closePopUp();
+        showToast('Note deleted successfully', 'error');
       },
     });
   } catch (error) {
