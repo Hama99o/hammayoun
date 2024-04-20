@@ -40,6 +40,7 @@
                 <v-icon v-bind="props" icon="mdi mdi-restore" @click="trashNoteRestore(trashesNote.id)"></v-icon>
               </template>
             </v-tooltip>
+
             <v-tooltip text="Delete permanently note" location="top">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind="props" icon="mdi mdi-delete" @click="trashNoteDeletePermanently(trashesNote.id)"></v-icon>
