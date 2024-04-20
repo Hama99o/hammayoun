@@ -22,6 +22,7 @@
           </div>
 
           <div
+            v-if="trashesNotes.length"
             class="flex gap-3 flex-row justify-between border-b text-fake-black text-sm items-center cursor-pointer hover:bg-[#F6F6F6]"
             v-for="trashesNote in trashesNotes"
             :key="trashesNote.id"
@@ -45,6 +46,10 @@
                 <v-icon v-bind="props" icon="mdi mdi-delete" @click="trashNoteDeletePermanently(trashesNote)"></v-icon>
               </template>
             </v-tooltip>
+          </div>
+
+          <div v-else class="flex justify-center">
+            No trash notes are available at the moment.
           </div>
 
           <!-- Buttons -->

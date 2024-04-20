@@ -2,7 +2,6 @@
   <div>
     <v-dialog max-width="700" v-model="isOpen">
       <template #default>
-
         <div class="w-full flex flex-col p-6 gap-8 bg-white">
 
           <div>
@@ -23,10 +22,9 @@
               @update:model-value="updateCurrentNote"
             ></v-textarea>
           </div>
-
           Tags:
           <div class="flex flex-wrap">
-            <div  v-for="tag in note.tags.slice(1)" :key="tag.id" class="w-fit text-sm flex rounded-full px-2 m-1 bg-grey ">
+            <div  v-for="tag in tags.filter((x) => note.tag_ids.includes(x.id))" :key="tag.id" class="w-fit text-sm flex rounded-full px-2 m-1 bg-grey ">
               #{{ tag.name }}
             </div>
           </div>
@@ -99,7 +97,7 @@ const props = defineProps({
 });
 
 const { updateNote, deleteNote, inviteUserToggle } = useNoteStore();
-const { notes } = storeToRefs(useNoteStore());
+const { notes, tags } = storeToRefs(useNoteStore());
 const { openPopUp, closePopUp } = usePopUpStore();
 
 const selectedNoteForTag = ref(null)
