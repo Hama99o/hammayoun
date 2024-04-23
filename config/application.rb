@@ -52,7 +52,6 @@ module MultiMagic
     config.action_mailer.default_url_options = { host: ENV['DEFAULT_HOST'] }
     # config.action_mailer.delivery_method = :postmark
     # config.action_mailer.postmark_settings = { api_token: Rails.application.credentials[:postmark_api_token] }
-    # config.action_mailer.delivery_method = :smp
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
       address: Rails.application.credentials[:smtp_address],
