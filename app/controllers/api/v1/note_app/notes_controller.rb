@@ -20,7 +20,7 @@ class Api::V1::NoteApp::NotesController < ApplicationController
     note = Note.find(params[:id])
     reminder_date_time = DateTime.parse(params[:reminder_date_time])
 
-    if reminder_date_time && NoteReminderWorker.perform_at(reminder_date_time, @note.id)
+    if reminder_date_time && NoteReminderWorker.perform_at(reminder_date_time, @note.id, current_user.id)
       render json: { message: "Reminder set successfully" }, status: :ok
     else
       render json: { error: "Failed to set reminder" }, status: :unprocessable_entity
