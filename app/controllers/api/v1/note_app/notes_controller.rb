@@ -1,6 +1,6 @@
 class Api::V1::NoteApp::NotesController < ApplicationController
 
-  before_action :note, only: [:show, :update, :destroy, :restore, :destroy_permanently]
+  before_action :note, only: [:show, :update, :destroy, :restore, :destroy_permanently, :reminder]
 
   def index
     note_index(:published)
@@ -14,6 +14,17 @@ class Api::V1::NoteApp::NotesController < ApplicationController
     render json: {
       note: NoteApp::NoteSerializer.render_as_json(authorize(@note), current_user: current_user)
     }, status: :ok
+  end
+
+  def set_reminder
+    note = Note.find(params[:id])
+    reminder_date_time = DateTime.parse(params[:reminder_date_time])
+
+    if reminder_date_time && NoteReminderWorker.perform_at(reminder_date_time, @note.id)
+      render json: { message: "Reminder set successfully" }, status: :ok
+    else
+      render json: { error: "Failed to set reminder on note" }, status: :unprocessable_entity
+    end
   end
 
   def tags
@@ -150,7 +161,7 @@ class Api::V1::NoteApp::NotesController < ApplicationController
       }
     )
   end
-  
+
   def notes
     current_user.all_notes
   end
