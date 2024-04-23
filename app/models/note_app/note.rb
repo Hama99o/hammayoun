@@ -30,6 +30,12 @@ class NoteApp::Note < ApplicationRecord
 
   include PgSearch::Model
 
+  store_accessor :data,
+                 :job_id,
+                 :repeat_frequency,
+                 :launch_time,
+                 :launch_date
+
   pg_search_scope :search_notes,
                   against: [:title, :description, :data],
                   associated_against: {
