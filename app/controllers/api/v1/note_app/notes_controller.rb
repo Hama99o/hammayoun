@@ -150,6 +150,7 @@ class Api::V1::NoteApp::NotesController < ApplicationController
       }
     )
   end
+  
   def notes
     current_user.all_notes
   end
