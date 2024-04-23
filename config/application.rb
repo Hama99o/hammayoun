@@ -50,5 +50,7 @@ module MultiMagic
     end
 
     config.action_mailer.default_url_options = { host: ENV['DEFAULT_HOST'] }
+    config.action_mailer.delivery_method = :postmark
+
   end
 end
