@@ -94,7 +94,7 @@
                 <div class="flex flex-col">
                   <div
                     class="cursor-pointer hover:bg-grey px-5 py-2"
-                    @click.prevent="openInviteUserDialog(item.id)"
+                    @click.prevent="openInviteUserDialog(item)"
                   >
                     Invite User
                   </div>
@@ -160,13 +160,13 @@ const inviteUser = ref(null)
 const isNoteOpened = ref(null)
 const isTagDialogOpened = ref(null)
 
-const openInviteUserDialog = (id) => {
-  selectedNote.value = id
+const openInviteUserDialog = (note) => {
+  selectedNote.value = note
   inviteUser.value.isActive = true
 }
 
-const openTagDialog = (id) => {
-  selectedNoteForTag.value = id
+const openTagDialog = (note) => {
+  selectedNoteForTag.value = note
   isTagDialogOpened.value.isActive = true
 }
 
@@ -206,7 +206,7 @@ const inviteUserWithEmail = async(role, email, UserAction) => {
       email: email,
       user_action: UserAction
     }
-    await inviteUserToggle(SelectednoteId.value, data)
+    await inviteUserToggle(selectedNote.value?.id, data)
     inviteUser.value.isActive = false
   } catch (errorMessage) {
     showToast(errorMessage.error, 'error');
