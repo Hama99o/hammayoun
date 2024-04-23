@@ -23,7 +23,7 @@ class Api::V1::NoteApp::NotesController < ApplicationController
     if reminder_date_time && NoteReminderWorker.perform_at(reminder_date_time, @note.id)
       render json: { message: "Reminder set successfully" }, status: :ok
     else
-      render json: { error: "Failed to set reminder on note" }, status: :unprocessable_entity
+      render json: { error: "Failed to set reminder" }, status: :unprocessable_entity
     end
   end
 
