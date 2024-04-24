@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_16_203800) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_24_163904) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -64,6 +64,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_16_203800) do
     t.datetime "updated_at", null: false
     t.index ["jti"], name: "index_allowlisted_jwts_on_jti", unique: true
     t.index ["user_id"], name: "index_allowlisted_jwts_on_user_id"
+  end
+
+  create_table "email_records", force: :cascade do |t|
+    t.string "email"
+    t.string "model_name"
+    t.bigint "record_id"
+    t.jsonb "additional_info", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email", "model_name", "record_id"], name: "index_email_records_on_email_and_model_name_and_record_id", unique: true
   end
 
   create_table "favorites", force: :cascade do |t|
