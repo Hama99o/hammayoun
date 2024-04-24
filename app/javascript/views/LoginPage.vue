@@ -26,7 +26,7 @@
 
         <v-btn class="mt-2" type="submit" block>Continue</v-btn>
 
-        <p class="message my-5 text-blue underline"  style="cursor: pointer"> Forgot password</p>
+        <p class="message my-5 text-blue underline" @click="resetPassword" style="cursor: pointer"> Forgot password</p>
         <p class="message">
           Not registered?
           <router-link to="/signup" tag="span" style="cursor: pointer" class="text-blue underline" >
@@ -43,7 +43,9 @@ import { reactive, ref, onMounted, computed } from 'vue';
 import { useAuthStore } from '@/stores/auth.store';
 import { IUserLogin } from '@/types/general';
 import { showToast } from '@/utils/showToast';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const authStore = useAuthStore();
 
 const user = reactive<IUserLogin>({
@@ -63,6 +65,11 @@ onMounted(() => {
     redirectToPanel();
   }
 });
+
+const resetPassword = () => {
+  router.push({ name: 'index' });
+};
+
 
 const submit = () => {
   authStore
