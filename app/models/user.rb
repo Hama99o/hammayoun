@@ -26,7 +26,7 @@
 #  job_title              :string           default(""), not null
 #  linkedin               :string           default(""), not null
 #  access_level           :integer          default("employee"), not null
-#  status                 :integer
+#  status                 :integer          default("active"), not null
 #  timezone               :string           default("Europe/Paris")
 #  lang                   :string           default("en")
 #  locked_at              :datetime

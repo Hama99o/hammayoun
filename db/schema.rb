@@ -167,7 +167,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_16_203800) do
     t.string "job_title", default: "", null: false
     t.string "linkedin", default: "", null: false
     t.integer "access_level", default: 0, null: false
-    t.integer "status"
+    t.integer "status", default: 1, null: false
     t.string "timezone", default: "Europe/Paris"
     t.string "lang", default: "en"
     t.datetime "locked_at"
