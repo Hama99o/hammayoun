@@ -13,11 +13,14 @@
 50.times { FactoryBot.create(:tag) }
 
 # Create 3 users
-users = FactoryBot.create_list(:user, 3)
+users = FactoryBot.create_list(:user, 20)
 
-users.push(FactoryBot.create(:user, firstname: 'hama', lastname: 'safi', email: 'hmmshl@gmail.com')) if User.where(email: 'hmmshl@gmail.com').blank?
+users.push(FactoryBot.create(:user, firstname: 'hama', lastname: 'safi', access_level: :super_admin, email: 'hmmshl@gmail.com', password: 'Admin12345')) if User.where(email: 'hmmshl@gmail.com').blank?
 
 # Create 10 notes for each user
 users.each do |user|
   FactoryBot.create_list(:note, 10, owner: user)
 end
+
+p "email:" + "hmmshl@gmail.com"
+p "password :" + "Admin12345"
