@@ -70,7 +70,6 @@ const resetPassword = () => {
   router.push({ name: 'forget_password' });
 };
 
-
 const submit = () => {
   authStore
     .login(user)

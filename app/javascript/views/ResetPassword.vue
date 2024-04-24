@@ -34,11 +34,12 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { IUserResetPassword } from '@/types/general';
 import { showToast } from '@/utils/showToast';
 import { useAuthStore } from '@/stores/auth.store';
 import { useRoute, useRouter } from 'vue-router';
+import { useUserStore } from '@/stores/user.store';
 
+const { resetPassword } = useUserStore();
 const authStore = useAuthStore();
 const route = useRoute();
 const router = useRouter();
@@ -48,18 +49,18 @@ const user = ref({
   confirmPassword: '',
 });
 
-const submit = () => {
+const submit = async() => {
   const data = {
     password: user.value.password,
     token: route.query.reset_password_token
   }
 
   try {
-    authStore.resetPassword(data)
+    await resetPassword(data)
     router.push({ name: 'login' });
     showToast('Password successfully reset!', 'success');
   } catch (error) {
-    showToast(error, 'error');
+    showToast(error.message, 'error');
   }
 };
 </script>

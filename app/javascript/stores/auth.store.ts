@@ -31,12 +31,6 @@ export const useAuthStore = defineStore('auth.store', {
         this.user = null;
       });
     },
-    forgotPassword(email: string) {
-      AuthService.forgotPassword(email)
-    },
-    resetPassword(data: object) {
-      AuthService.resetPassword(data)
-    },
     register(user: IRegisterUser) {
       return AuthService.register(user);
     }

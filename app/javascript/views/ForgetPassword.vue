@@ -29,8 +29,10 @@ import { reactive } from 'vue';
 import { IUserForgotPassword } from '@/types/general';
 import { showToast } from '@/utils/showToast';
 import { useAuthStore } from '@/stores/auth.store';
+import { useUserStore } from '@/stores/user.store';
 
 const authStore = useAuthStore();
+const { forgotPassword } = useUserStore();
 
 const user = reactive<IUserForgotPassword>({
   email: '',
@@ -38,10 +40,10 @@ const user = reactive<IUserForgotPassword>({
 
 const submit = async() => {
   try {
-    authStore.forgotPassword(user)
+    await forgotPassword(user)
     showToast('Password reset email sent!', 'success');
   } catch (error) {
-    showToast(error, 'error');
+    showToast(error.message, 'error');
   }
 };
 </script>

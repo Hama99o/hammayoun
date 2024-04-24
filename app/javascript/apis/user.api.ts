@@ -33,6 +33,12 @@ class UserAPI {
       return error;
     }
   }
+  async forgotPassword(email: string) {
+    return http.put('api/v1/users/reset_password', email);
+  }
+  async resetPassword(data: {}) {
+    return http.put('api/v1/users/reset_password_confirmation', data);
+  }
 }
 
 const instance = new UserAPI();
