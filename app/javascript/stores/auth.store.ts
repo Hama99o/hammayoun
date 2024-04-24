@@ -31,6 +31,9 @@ export const useAuthStore = defineStore('auth.store', {
         this.user = null;
       });
     },
+    forgotPassword(email: string) {
+      AuthService.forgotPassword(email)
+    },
     register(user: IRegisterUser) {
       return AuthService.register(user);
     }

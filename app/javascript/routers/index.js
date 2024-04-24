@@ -4,6 +4,8 @@ import AuthService from '@/services/auth.service';
 const Index = () => import('@/views/Home.vue');
 const About = () => import('@/views/AboutPage.vue');
 const Login = () => import('@/views/LoginPage.vue');
+const ForgetPassword = () => import('@/views/ForgetPassword.vue');
+
 const Logout = () => import('@/views/Logout.vue');
 const Signup = () => import('@/views/SignupPage.vue');
 const Users = () => import('@/views/users/Index.vue');
@@ -34,6 +36,13 @@ const routes = [
     name: 'login',
     components: {
       default: Login,
+    },
+  },
+  {
+    path: '/forget_password',
+    name: 'forget_password',
+    components: {
+      default: ForgetPassword,
     },
   },
   {

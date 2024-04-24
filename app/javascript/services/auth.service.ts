@@ -1,7 +1,7 @@
 import { storeToRefs } from 'pinia';
 import { http, setHTTPHeader } from './http.service';
 import { IUserLogin, IRegisterUser } from '@/types/general';
-import { login, logout, register } from '@/apis/auth.api';
+import { login, logout, register,forgotPassword } from '@/apis/auth.api';
 import { useUserStore } from '@/stores/user.store';
 
 class AuthService {
@@ -23,6 +23,10 @@ class AuthService {
       delete http.defaults.headers.common['Authorization'];
       this.clearCache();
     });
+  }
+
+  async forgotPassword(email: string) {
+    return forgotPassword(email)
   }
 
   async register(user: IRegisterUser) {

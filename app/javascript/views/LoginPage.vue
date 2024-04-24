@@ -67,7 +67,7 @@ onMounted(() => {
 });
 
 const resetPassword = () => {
-  router.push({ name: 'index' });
+  router.push({ name: 'forget_password' });
 };
 
 
