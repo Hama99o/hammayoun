@@ -10,6 +10,6 @@
 #
 FactoryBot.define do
   factory :note_tag, class: "NoteApp::Tag" do
-    name { Faker::Lorem.word }
+    sequence(:name) { |n| Faker::Lorem.word + "#{n}" }
   end
 end

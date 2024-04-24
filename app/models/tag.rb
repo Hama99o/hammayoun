@@ -13,6 +13,9 @@ class Tag < ApplicationRecord
   acts_as_favoritable
   acts_as_favoritor
 
+  # Validation to ensure name is present
+  validates :name, presence: true
+
   pg_search_scope :search_tags,
                   against: [:name],
                   using: {

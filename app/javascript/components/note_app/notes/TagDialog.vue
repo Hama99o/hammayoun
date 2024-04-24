@@ -35,7 +35,7 @@
                 </v-list-item-content>
               </template>
               <template #no-data>
-                <v-list-item-content>
+                <v-list-item-content v-if="searchText.length" >
                   <div class="ml-3 px-4 bg-grey rounded w-fit cursor-pointer " @click="createNewTag(note, searchText)">+ Create "{{searchText}}"</div>
                 </v-list-item-content>
               </template>

@@ -11,6 +11,7 @@
 
 # Create 50 tags
 50.times { FactoryBot.create(:tag) }
+50.times { FactoryBot.create(:note_tag) }
 
 # Create 3 users
 users = FactoryBot.create_list(:user, 20)
