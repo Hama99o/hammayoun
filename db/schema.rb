@@ -68,12 +68,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_24_163904) do
 
   create_table "email_records", force: :cascade do |t|
     t.string "email"
-    t.string "model_name"
+    t.string "record_type"
     t.bigint "record_id"
-    t.jsonb "additional_info", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email", "model_name", "record_id"], name: "index_email_records_on_email_and_model_name_and_record_id", unique: true
+    t.index ["email", "record_type", "record_id"], name: "index_email_records_on_email_and_record_type_and_record_id", unique: true
+    t.index ["record_type", "record_id"], name: "index_email_records_on_record"
   end
 
   create_table "favorites", force: :cascade do |t|
