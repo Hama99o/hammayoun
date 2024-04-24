@@ -10,6 +10,6 @@
 #
 FactoryBot.define do
   factory :note_tag, class: "NoteApp::Tag" do
-    name { Faker::Book.title }
+    name { Faker::Lorem.word }
   end
 end

@@ -17,7 +17,7 @@
 #  index_note_app_notes_on_owner_id  (owner_id)
 #
 FactoryBot.define do
-  factory :note_app_note, class: 'NoteApp::Note' do
+  factory :note, class: 'NoteApp::Note' do
     title { Faker::Book.title }
     description { Faker::Lorem.paragraph }
     status { :published }
