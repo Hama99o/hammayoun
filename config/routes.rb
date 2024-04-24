@@ -27,6 +27,8 @@ Rails.application.routes.draw do
         collection do
           get :activated_users
           put :reset_password
+          put :reset_password_confirmation
+
         end
       end
 

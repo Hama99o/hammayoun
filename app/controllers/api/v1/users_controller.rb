@@ -26,6 +26,25 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  def reset_password
+    user = User.where(status: :active).find_by(email: params.require(:email).strip.downcase)
+    if user.present?
+      user.reset_password!
+      head :ok
+    else
+      render json: { message: "Email does not exist" }, status: :unprocessable_entity
+    end
+  end
+
+  def reset_password_confirmation
+    @token = params.require(:token)
+    @user = User.find_by(reset_password_token: @token)
+    raise Pundit::NotAuthorizedError, "token invalid" if @user.nil?
+    @password = params.require(:password)
+
+    @user.update(password: @password, reset_password_token: nil)
+  end
+
   # def create
   #   user = User.create(**user_params)
 

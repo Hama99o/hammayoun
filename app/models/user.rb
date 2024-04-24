@@ -120,4 +120,11 @@ class User < ApplicationRecord
     favorite.role = role
     favorite.save!
   end
+
+  def reset_password!
+    tokens.shift until tokens.empty? if tokens.present?
+    send(:set_reset_password_token)
+
+    UserMailer.reset_password(self).deliver_later
+  end
 end
