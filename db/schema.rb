@@ -70,6 +70,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_24_163904) do
     t.string "email"
     t.string "shareable_type"
     t.bigint "shareable_id"
+    t.jsonb "additional_info", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email", "shareable_type", "shareable_id"], name: "index_email_records_unique", unique: true

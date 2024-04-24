@@ -9,7 +9,7 @@
       <%= @note.owner.fullname %> has shared a note titled "<%= @note.title %>" with you.
     </p>
     <p>
-      To view the note, just follow this link: <%= @url %>.
+      To view the note, just follow this link:  <a href="<%= @link %>" ><%= @note.title %></a>.
     </p>
     <p>Thanks for using our service!</p>
   </body>

@@ -79,22 +79,30 @@ class Api::V1::NoteApp::NotesController < ApplicationController
     note = authorize(NoteApp::Note.find(note_id))
 
 
-    unless user
-      EmailRecord.create(
-        email:,
-        shareable: note
-      )
-    end
-
-    return render json: { error: 'User is already the owner' }, status: :not_found if user == note.owner
-    return render json: { error: 'User is already invited' }, status: :not_found if user.favorites.where(favoritable_id: note_id, scope: :favorite_note).present?
-
     if user_action == 'add'
-      if user.favorite_with_role(note, scope: :favorite_note, role: role)
+      if user.nil?
+        EmailRecord.find_or_create_by(
+          email:,
+          shareable: note,
+          additional_info: {
+            role:
+          }
+        )
+        NoteMailer.share_note(note, email).deliver_now
         render json: { note: NoteApp::NoteSerializer.render_as_json(note, current_user: current_user) }, status: :ok
       else
-        render json: { error: "Failed to add user" }, status: :unprocessable_entity
+        return render json: { error: 'User is already the owner' }, status: :not_found if user == note.owner
+        return render json: { error: 'User is already invited' }, status: :not_found if user.favorites.where(favoritable_id: note_id, scope: :favorite_note).present?
+
+        if user.favorite_with_role(note, scope: :favorite_note, role: role)
+          NoteMailer.share_note(note, email)
+
+          render json: { note: NoteApp::NoteSerializer.render_as_json(note, current_user: current_user) }, status: :ok
+        else
+          render json: { error: "Failed to add user" }, status: :unprocessable_entity
+        end
       end
+
     elsif user_action == 'remove'
       user.unfavorite(note, scope: :favorite_note)
       render json: { note: NoteApp::NoteSerializer.render_as_json(note, current_user: current_user) }, status: :ok

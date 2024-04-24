@@ -2,12 +2,13 @@
 #
 # Table name: email_records
 #
-#  id             :bigint           not null, primary key
-#  email          :string
-#  shareable_type :string
-#  shareable_id   :bigint
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
+#  id              :bigint           not null, primary key
+#  email           :string
+#  shareable_type  :string
+#  shareable_id    :bigint
+#  additional_info :jsonb
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 # Indexes
 #

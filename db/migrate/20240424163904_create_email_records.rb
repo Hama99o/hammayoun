@@ -3,6 +3,7 @@ class CreateEmailRecords < ActiveRecord::Migration[7.0]
     create_table :email_records do |t|
       t.string :email
       t.references :shareable, polymorphic: true, index: true
+      t.jsonb :additional_info, default: {}
 
       t.timestamps
     end

@@ -2,12 +2,13 @@
 #
 # Table name: email_records
 #
-#  id             :bigint           not null, primary key
-#  email          :string
-#  shareable_type :string
-#  shareable_id   :bigint
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
+#  id              :bigint           not null, primary key
+#  email           :string
+#  shareable_type  :string
+#  shareable_id    :bigint
+#  additional_info :jsonb
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 # Indexes
 #
@@ -17,9 +18,7 @@
 class EmailRecord < ApplicationRecord
   belongs_to :shareable, polymorphic: true
 
-    # # Custom attribute setter for shareable
-    # def shareable=(object)
-    #   self.shareable_type = object.class.name
-    #   self.shareable_id = object.id
-    # end
+  store_accessor :additional_info,
+                 :role
+
 end
