@@ -68,12 +68,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_24_163904) do
 
   create_table "email_records", force: :cascade do |t|
     t.string "email"
-    t.string "record_type"
-    t.bigint "record_id"
+    t.string "shareable_type"
+    t.bigint "shareable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email", "record_type", "record_id"], name: "index_email_records_on_email_and_record_type_and_record_id", unique: true
-    t.index ["record_type", "record_id"], name: "index_email_records_on_record"
+    t.index ["email", "shareable_type", "shareable_id"], name: "index_email_records_unique", unique: true
+    t.index ["shareable_type", "shareable_id"], name: "index_email_records_on_shareable"
   end
 
   create_table "favorites", force: :cascade do |t|

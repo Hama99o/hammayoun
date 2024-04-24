@@ -2,31 +2,24 @@
 #
 # Table name: email_records
 #
-#  id          :bigint           not null, primary key
-#  email       :string
-#  record_type :string
-#  record_id   :bigint
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id             :bigint           not null, primary key
+#  email          :string
+#  shareable_type :string
+#  shareable_id   :bigint
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
 #
 # Indexes
 #
-#  index_email_records_on_email_and_record_type_and_record_id  (email,record_type,record_id) UNIQUE
-#  index_email_records_on_record                               (record_type,record_id)
+#  index_email_records_on_shareable  (shareable_type,shareable_id)
+#  index_email_records_unique        (email,shareable_type,shareable_id) UNIQUE
 #
 class EmailRecord < ApplicationRecord
+  belongs_to :shareable, polymorphic: true
 
-  # Method to find the associated record
-  def associated_record
-    # Get the class name from the model_name attribute and convert it to a class constant
-    model_class = model_name.constantize
-
-    # Find the record in the associated model
-    record = model_class.find(record_id)
-
-    return record
-  rescue NameError, ActiveRecord::RecordNotFound
-    # Handle if the model class or record is not found
-    return nil
-  end
+    # # Custom attribute setter for shareable
+    # def shareable=(object)
+    #   self.shareable_type = object.class.name
+    #   self.shareable_id = object.id
+    # end
 end
