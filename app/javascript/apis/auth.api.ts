@@ -14,6 +14,9 @@ export const forgotPassword = (email: string): Promise<AxiosResponse> => {
   return http.put('api/v1/users/reset_password', email);
 };
 
+export const resetPassword = (data: object): Promise<AxiosResponse> => {
+  return http.put('api/v1/users/reset_password_confirmation', data);
+};
 
 export const register = (user: IRegisterUser): Promise<AxiosResponse> => {
   return http.post('users/signup', { user });

@@ -4,6 +4,7 @@ class Api::V1::UsersController < ApplicationController
 
   before_action :user, only: [:show, :update, :destroy]
   before_action :users, only: [:index, :activated_users]
+  skip_before_action :authenticate_user!, only: [:reset_password, :reset_password_confirmation]
 
   def index
     @users = @users

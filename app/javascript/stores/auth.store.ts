@@ -34,6 +34,9 @@ export const useAuthStore = defineStore('auth.store', {
     forgotPassword(email: string) {
       AuthService.forgotPassword(email)
     },
+    resetPassword(data: object) {
+      AuthService.resetPassword(data)
+    },
     register(user: IRegisterUser) {
       return AuthService.register(user);
     }

@@ -33,26 +33,33 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { ref } from 'vue';
 import { IUserResetPassword } from '@/types/general';
 import { showToast } from '@/utils/showToast';
 import { useAuthStore } from '@/stores/auth.store';
+import { useRoute, useRouter } from 'vue-router';
 
 const authStore = useAuthStore();
+const route = useRoute();
+const router = useRouter();
 
-const user = reactive<IUserResetPassword>({
+const user = ref({
   password: '',
   confirmPassword: '',
 });
 
 const submit = () => {
-  authStore
-    .resetPassword(user)
-    .then(() => {
-      showToast('Password successfully reset!', 'success');
-    })
-    .catch((error) => {
-      showToast(error, 'error');
-    });
+  const data = {
+    password: user.value.password,
+    token: route.query.reset_password_token
+  }
+
+  try {
+    authStore.resetPassword(data)
+    router.push({ name: 'login' });
+    showToast('Password successfully reset!', 'success');
+  } catch (error) {
+    showToast(error, 'error');
+  }
 };
 </script>

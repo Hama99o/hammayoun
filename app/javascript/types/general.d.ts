@@ -19,3 +19,8 @@ export interface ICurrentUser {
 export interface IUserForgotPassword {
   email: string;
 }
+
+export interface IUserResetPassword {
+  password: string;
+  confirmPassword: string;
+}
