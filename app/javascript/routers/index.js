@@ -5,6 +5,7 @@ const Index = () => import('@/views/Home.vue');
 const About = () => import('@/views/AboutPage.vue');
 const Login = () => import('@/views/LoginPage.vue');
 const ForgetPassword = () => import('@/views/ForgetPassword.vue');
+const ResetPassword = () => import('@/views/ResetPassword.vue');
 
 const Logout = () => import('@/views/Logout.vue');
 const Signup = () => import('@/views/SignupPage.vue');
@@ -43,6 +44,13 @@ const routes = [
     name: 'forget_password',
     components: {
       default: ForgetPassword,
+    },
+  },
+  {
+    path: '/reset_password',
+    name: 'reset_password',
+    components: {
+      default: ResetPassword,
     },
   },
   {
