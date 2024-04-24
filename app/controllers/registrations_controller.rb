@@ -6,6 +6,18 @@ class RegistrationsController < Devise::RegistrationsController
       if resource.persisted?
         # Call mailer to send welcome email
         UserMailer.welcome_email(resource).deliver_now
+        email_records = EmailRecord.where(email: resource.email)
+
+        email_records.each do |email_record|
+          role = email_record.additional_info['role'] || 'viewer'
+          note = email_record.shareable
+
+          if email_record.shareable_type ==  "NoteApp::Note"
+            resource.favorite_with_role(note, scope: :favorite_note, role:)
+            email_record.destroy
+          end
+
+        end
       end
     end
   end
