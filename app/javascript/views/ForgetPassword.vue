@@ -36,14 +36,12 @@ const user = reactive<IUserForgotPassword>({
   email: '',
 });
 
-const submit = () => {
-  authStore
-    .forgotPassword(user)
-    .then(() => {
-      showToast('Password reset email sent!', 'success');
-    })
-    .catch((error) => {
-      showToast(error, 'error');
-    });
+const submit = async() => {
+  try {
+    await authStore.forgotPassword(user)
+    showToast('Password reset email sent!', 'success');
+  } catch (error) {
+    showToast(error, 'error');
+  }
 };
 </script>
