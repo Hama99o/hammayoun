@@ -69,16 +69,22 @@ class Api::V1::NoteApp::NotesController < ApplicationController
     }, status: :ok
   end
 
-  def invite_user_toggle
+  def share_with_user_toggle
     email = params.require(:email)
     user_action = params.require(:user_action)
     role = params.require(:role)
     note_id = params.require(:note_id)
 
     user = User.find_by(email: email)
-    return render json: { error: 'User not found' }, status: :not_found unless user
-
     note = authorize(NoteApp::Note.find(note_id))
+
+
+    unless user
+      EmailRecord.create(
+        email:,
+        shareable: note
+      )
+    end
 
     return render json: { error: 'User is already the owner' }, status: :not_found if user == note.owner
     return render json: { error: 'User is already invited' }, status: :not_found if user.favorites.where(favoritable_id: note_id, scope: :favorite_note).present?

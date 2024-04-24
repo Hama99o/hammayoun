@@ -12,7 +12,7 @@ Rails.application.routes.draw do
             delete :destroy_permanently
           end
 
-          put :invite_user_toggle
+          put :share_with_user_toggle
           put :toggle_tag
           post :create_and_assign_tag
           collection do

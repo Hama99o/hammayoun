@@ -22,7 +22,7 @@ class NoteApp::NotePolicy < ApplicationPolicy
     show?
   end
 
-  def invite_user_toggle?
+  def share_with_user_toggle?
     true
   end
 

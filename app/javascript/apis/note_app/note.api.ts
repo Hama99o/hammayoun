@@ -72,7 +72,7 @@ class NoteAPI {
   }
   async inviteUserToggle(id: number, data: {}) {
     const headers = { 'Content-Type': 'multipart/form-data' };
-    const res = await http.put(`/api/v1/note_app/notes/${id}/invite_user_toggle`, data, { headers });
+    const res = await http.put(`/api/v1/note_app/notes/${id}/share_with_user_toggle`, data, { headers });
     return res.data;
   }
   async fetchTags(search = '') {
