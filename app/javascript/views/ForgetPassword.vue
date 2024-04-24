@@ -38,7 +38,7 @@ const user = reactive<IUserForgotPassword>({
 
 const submit = async() => {
   try {
-    await authStore.forgotPassword(user)
+    authStore.forgotPassword(user)
     showToast('Password reset email sent!', 'success');
   } catch (error) {
     showToast(error, 'error');
