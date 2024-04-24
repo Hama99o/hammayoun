@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: note_app_shares
@@ -15,6 +17,5 @@
 #
 FactoryBot.define do
   factory :note_app_share, class: 'NoteApp::Share' do
-    
   end
 end

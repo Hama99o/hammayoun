@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: favorites
@@ -26,6 +28,5 @@
 #
 FactoryBot.define do
   factory :favorite do
-    
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: note_app_reminders
@@ -17,6 +19,5 @@
 #
 FactoryBot.define do
   factory :note_app_reminder, class: 'NoteApp::Reminder' do
-    
   end
 end

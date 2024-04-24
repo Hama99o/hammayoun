@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: note_app_notes
@@ -21,6 +23,6 @@ FactoryBot.define do
     title { Faker::Book.title }
     description { Faker::Lorem.paragraph }
     status { :published }
-    association :owner, factory: :user
+    owner factory: %i[user]
   end
 end

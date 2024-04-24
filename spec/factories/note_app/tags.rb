@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: tags
@@ -9,7 +11,7 @@
 #  updated_at :datetime         not null
 #
 FactoryBot.define do
-  factory :note_tag, class: "NoteApp::Tag" do
-    sequence(:name) { |n| Faker::Lorem.word + "#{n}" }
+  factory :note_tag, class: 'NoteApp::Tag' do
+    sequence(:name) { |n| Faker::Lorem.word + n.to_s }
   end
 end

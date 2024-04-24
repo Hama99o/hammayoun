@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: tags
@@ -10,6 +12,6 @@
 #
 FactoryBot.define do
   factory :tag do
-    sequence(:name) { |n| Faker::Lorem.word + "#{n}" }
+    sequence(:name) { |n| Faker::Lorem.word + n.to_s }
   end
 end
