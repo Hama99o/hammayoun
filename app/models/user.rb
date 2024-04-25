@@ -111,13 +111,6 @@ class User < ApplicationRecord
     end
   end
 
-  def favorite_with_role(favoritable, options = {})
-    role = options.delete(:role)
-    favorite = favorites.find_or_initialize_by(favoritable: favoritable, scope: options[:scope])
-    favorite.role = role
-    favorite.save!
-  end
-
   def reset_password!
     tokens.shift until tokens.empty? if tokens.present?
     send(:set_reset_password_token)

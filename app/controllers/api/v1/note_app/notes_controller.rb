@@ -45,7 +45,8 @@ class Api::V1::NoteApp::NotesController < ApplicationController
   def create_and_assign_tag
     note = NoteApp::Note.find(params[:note_id])
     tag = NoteApp::Tag.create(name: params[:text])
-    if note.favorite(tag, scope: :note_tag)
+    
+    if Tagging.create(tag:, taggable: note)
       render json: {
         tag: TagSerializer.render_as_json(tag, current_user: current_user)
       }, status: :ok
@@ -58,10 +59,10 @@ class Api::V1::NoteApp::NotesController < ApplicationController
     tag = NoteApp::Tag.find(params[:tag_id])
     note = NoteApp::Note.find(params[:note_id])
 
-    if note.favorited?(tag, scope:  :note_tag)
-      note.unfavorite(tag, scope: :note_tag)
+    if Tagging.find_by(tag:, taggable: note).present?
+      Tagging.find_by(tag:, taggable: note)&.destroy
     else
-      note.favorite(tag, scope: :note_tag)
+      Tagging.create(tag:, taggable: note)
     end
 
     render json: {

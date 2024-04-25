@@ -20,8 +20,8 @@ class NoteApp::Note < ApplicationRecord
   belongs_to :owner, class_name: "User"
   has_many :shares, class_name: 'NoteApp::Share', dependent: :destroy
   has_many :shared_with_users, through: :shares
-  
-  before_destroy :delete_note_relations
+  has_many :taggings, as: :taggable, dependent: :destroy
+  has_many :tags, through: :taggings
 
   acts_as_favoritable
   acts_as_favoritor
@@ -47,14 +47,5 @@ class NoteApp::Note < ApplicationRecord
                   using: {
                     tsearch: { prefix: true }
                   }
-  def tags
-    NoteApp::Tag.where(id: favorites.where(scope: :note_tag).pluck(:favoritable_id))
-  end
 
-  def delete_note_relations
-    Favorite.where(
-      favoritor_type: "NoteApp::Note",
-      scope: :note_tag
-    ).destroy_all
-  end
 end

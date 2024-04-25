@@ -24,7 +24,6 @@ class NoteApp::NoteSerializer < ApplicationSerializer
   field :is_shared do |note, options|
     current_user = options[:current_user]
     next unless current_user.present?
-    note.favorited.where(favoritor_id: current_user.id).present?
     note.shares.find_by(shared_with_user: current_user)&.present?
   end
 
