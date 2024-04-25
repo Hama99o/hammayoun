@@ -23,7 +23,8 @@
     </div>
   </div>
 
-  <note-table :notes="notes" />
+  <notes-index-option :notes="notes" />
+  <!-- <note-card :notes="notes" /> -->
   <v-pagination
     v-if="pagination"
     :model-value="pagination.current_page"
@@ -46,7 +47,8 @@
 </template>
 
 <script setup>
-import NoteTable from '@/components/note_app/notes/Table.vue';
+import NotesIndexOption from '@/components/note_app/notes/NotesIndexOption.vue';
+import NoteCard from '@/components/note_app/notes/Card.vue';
 import { storeToRefs } from 'pinia';
 import { useNoteStore } from '@/stores/note_app/note.store';
 import { onMounted, ref } from 'vue';
