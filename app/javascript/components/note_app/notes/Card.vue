@@ -1,15 +1,20 @@
 <template>
   <v-row dense class="mt-10">
-    <v-col v-for="(item, i) in notes" :key="i" cols="12" md="3">
+    <v-col v-for="(item, i) in notes" :key="i" cols="12" md="4">
       <v-card
         variant="elevated"
         class="mx-auto my-5"
         color="surface-variant"
         max-width="344"
-        :subtitle="item.description"
         :title="item.title"
         @click="emit('open-note-dialog', item)"
         >
+        <template v-slot:subtitle>
+          <div class="w-full h-full whitespace-normal line-clamp-7">
+            {{ item.description }}
+          </div>
+        </template>
+
         <template v-slot:actions>
           <v-menu >
             <template v-slot:activator="{ props }">
