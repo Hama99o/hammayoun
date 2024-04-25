@@ -3,9 +3,11 @@
     <v-navigation-drawer  class="!flex md:!hidden" v-model="sidebar" app>
       <v-list lines="one">
         <v-list-item
-        v-for="item in menuItems"
-        :key="item.title"
-        :to="item.routeName"
+          v-for="item in menuItems"
+          :key="item.title"
+          :to="{
+            name: item.routeName,
+          }"
 
         >
         <v-list-tile-action>

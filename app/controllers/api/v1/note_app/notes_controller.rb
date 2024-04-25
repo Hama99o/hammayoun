@@ -3,11 +3,15 @@ class Api::V1::NoteApp::NotesController < ApplicationController
   before_action :note, only: [:show, :update, :destroy, :restore, :destroy_permanently, :reminder]
 
   def index
-    note_index(:published)
+    notes = current_user.all_notes.where(status: :published)
+
+    note_index(notes)
   end
 
   def trashes
-    note_index(:trashed)
+    notes = current_user.notes.where(status: :trashed)
+
+    note_index(notes)
   end
 
   def show
@@ -164,8 +168,7 @@ class Api::V1::NoteApp::NotesController < ApplicationController
     @note = NoteApp::Note.find(params.require(:id))
   end
 
-  def note_index(status)
-    notes = current_user.all_notes.where(status:)
+  def note_index(notes)
     notes = notes.search_notes(params[:search]) if params[:search].present?
 
     paginate_render(
