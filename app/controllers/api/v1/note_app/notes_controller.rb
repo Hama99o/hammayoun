@@ -45,7 +45,7 @@ class Api::V1::NoteApp::NotesController < ApplicationController
   def create_and_assign_tag
     note = NoteApp::Note.find(params[:note_id])
     tag = NoteApp::Tag.create(name: params[:text])
-    
+
     if Tagging.create(tag:, taggable: note)
       render json: {
         tag: TagSerializer.render_as_json(tag, current_user: current_user)
@@ -89,14 +89,14 @@ class Api::V1::NoteApp::NotesController < ApplicationController
             role:
           }
         )
-        NoteMailer.share_note(note, email).deliver_now
+        NoteMailer.share_note(note, email).deliver_later
         render json: { note: NoteApp::NoteSerializer.render_as_json(note, current_user: current_user) }, status: :ok
       else
         return render json: { error: 'User is already the owner' }, status: :not_found if user == note.owner
         return render json: { error: 'User is already invited' }, status: :not_found if note.shared_with_users.where(id: user.id).present?
 
         if NoteApp::Share.create(shared_with_user: user, note:, role:)
-          NoteMailer.share_note(note, email)
+          NoteMailer.share_note(note, email).deliver_later
 
           render json: { note: NoteApp::NoteSerializer.render_as_json(note, current_user: current_user) }, status: :ok
         else

@@ -2,7 +2,7 @@ class NoteMailer < ApplicationMailer
   def share_note(note, email)
     @note = note
     @email = email
-    @link = email_redirect_to_front("/note_app/notes/#{@note.id}")
+    @link = email_redirect_to_front("/note_app/notes?note_id=#{@note.id}")
     mail(to: @email, subject: "You've received a shared note")
   end
 

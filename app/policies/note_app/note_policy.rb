@@ -15,14 +15,14 @@ class NoteApp::NotePolicy < ApplicationPolicy
   end
 
   def update?
-    return user == record.owner
-    role = record.shares.find(shared_with_user: user).role
+    return true if user == record.owner
+    role = record.shares.find_by(shared_with_user: user).role
     ['contributor', 'administrator'].include?(role)
   end
 
   def destroy?
-    return user == record.owner
-    role = record.shares.find(shared_with_user: user).role
+    return true if user == record.owner
+    role = record.shares.find_by(shared_with_user: user).role
     'administrator' == role
   end
 

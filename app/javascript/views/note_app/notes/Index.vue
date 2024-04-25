@@ -52,11 +52,14 @@ import { useNoteStore } from '@/stores/note_app/note.store';
 import { onMounted, ref } from 'vue';
 import OpenNote from '@/components/note_app/notes/OpenNote.vue';
 import NoteTrashes from '@/components/note_app/notes/NoteTrashes.vue';
+import { useRoute, useRouter } from 'vue-router';
 
-const { fetchNotes, fetchTrashesNotes, resetStates, createNote } = useNoteStore();
+const { fetchNotes, fetchTrashesNotes, resetStates, createNote, fetchNote } = useNoteStore();
 
 const { notes, pagination, page, search } = storeToRefs(useNoteStore());
 
+const route = useRoute()
+const router = useRouter()
 
 const selectedNote = ref(null)
 const isNoteOpened = ref(null)
@@ -67,6 +70,12 @@ onMounted(async () => {
     await resetStates()
     await fetchNotes();
     await fetchTrashesNotes();
+
+    if (route?.query?.note_id) {
+      const note = await fetchNote(route?.query?.note_id)
+      openNoteDialog(note)
+    }
+
   } catch (error) {
     console.log(error);
   }
@@ -77,7 +86,7 @@ const openNoteDialog = (note) => {
   isNoteOpened.value.isOpen = true
 }
 
-const handleClick = (note) => {
+const handleClick = () => {
   isNoteTrashesDialogOpened.value.isActive = true
 }
 

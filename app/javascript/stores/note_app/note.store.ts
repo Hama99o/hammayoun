@@ -39,10 +39,10 @@ export const useNoteStore = defineStore({
       this.loading = false;
     },
     async fetchNote(id: number) {
-      await this.resetStates();
       const res = await NoteAPI.fetchNote(id);
       this.note = res.note;
       this.loading = false;
+      return res.note
     },
     async updateNote(id: number, data: {}) {
       const res = await NoteAPI.updateNote(id, data);

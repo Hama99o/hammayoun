@@ -91,6 +91,7 @@ import { showToast } from '@/utils/showToast';
 import { storeToRefs } from 'pinia';
 import { usePopUpStore } from "@/stores/pop-up.store";
 import TagDialog from '@/components/note_app/notes/TagDialog.vue';
+import { useRouter } from 'vue-router';
 
 const props = defineProps({
   note: { type: Object, default: () => {} },
@@ -99,6 +100,7 @@ const props = defineProps({
 const { updateNote, deleteNote, inviteUserToggle } = useNoteStore();
 const { notes, tags } = storeToRefs(useNoteStore());
 const { openPopUp, closePopUp } = usePopUpStore();
+const router = useRouter()
 
 const selectedNoteForTag = ref(null)
 const inviteUser = ref(null)
@@ -158,7 +160,6 @@ const updateCurrentNote = debounce(async() => {
       }
     })
   } catch (error) {
-    console.log(error, 'hiiiiiii');
     showToast(error.message, 'error');
   }
 }, 200)
@@ -167,6 +168,19 @@ watch(props, (newNote, oldNote) => {
   if (newNote) {
     title.value = newNote.note.title
     description.value = newNote.note.description
+  }
+});
+
+watch(isOpen, (newNote, oldNote) => {
+  if (newNote) {
+    router.push({
+      name: 'notes',
+      query: { note_id: props.note.id }
+    })
+  } else {
+    router.push({
+      name: 'notes'
+    })
   }
 });
 
