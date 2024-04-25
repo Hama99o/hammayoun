@@ -92,9 +92,9 @@ class Api::V1::NoteApp::NotesController < ApplicationController
         render json: { note: NoteApp::NoteSerializer.render_as_json(note, current_user: current_user) }, status: :ok
       else
         return render json: { error: 'User is already the owner' }, status: :not_found if user == note.owner
-        return render json: { error: 'User is already invited' }, status: :not_found if user.favorites.where(favoritable_id: note_id, scope: :favorite_note).present?
+        return render json: { error: 'User is already invited' }, status: :not_found if note.shared_with_users.where(id: user.id).present?
 
-        if user.favorite_with_role(note, scope: :favorite_note, role: role)
+        if NoteApp::Share.create(shared_with_user: user, note:, role:)
           NoteMailer.share_note(note, email)
 
           render json: { note: NoteApp::NoteSerializer.render_as_json(note, current_user: current_user) }, status: :ok
@@ -104,7 +104,7 @@ class Api::V1::NoteApp::NotesController < ApplicationController
       end
 
     elsif user_action == 'remove'
-      user.unfavorite(note, scope: :favorite_note)
+      NoteApp::Share.find_by(shared_with_user: user, note:)&.destroy
       render json: { note: NoteApp::NoteSerializer.render_as_json(note, current_user: current_user) }, status: :ok
     else
       render json: { error: "Invalid action: #{user_action}" }, status: :unprocessable_entity

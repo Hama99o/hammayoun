@@ -18,6 +18,9 @@
 #
 class NoteApp::Note < ApplicationRecord
   belongs_to :owner, class_name: "User"
+  has_many :shares, class_name: 'NoteApp::Share', dependent: :destroy
+  has_many :shared_with_users, through: :shares
+  
   before_destroy :delete_note_relations
 
   acts_as_favoritable

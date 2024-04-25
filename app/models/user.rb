@@ -43,6 +43,9 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class User < ApplicationRecord
+  has_many :shares, class_name: 'NoteApp::Share', foreign_key: 'shared_with_user_id', dependent: :destroy
+  has_many :shared_notes, through: :shares, source: :note, class_name: 'NoteApp::Note', foreign_key: 'note_id'
+
   include Devise::JWT::RevocationStrategies::Allowlist
   include Rails.application.routes.url_helpers
 
@@ -82,15 +85,9 @@ class User < ApplicationRecord
     "#{firstname&.titleize} #{lastname&.upcase}"
   end
 
-  def favorite_notes
-    NoteApp::Note.where(
-      id: favorites.favorite_note_list.map(&:favoritable_id)
-    )
-  end
-
   def all_notes
     NoteApp::Note.where(
-      id: favorite_notes.ids + notes.ids
+      id: shared_notes.ids + notes.ids
     )
   end
 

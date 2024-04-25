@@ -7,7 +7,7 @@ class NoteApp::NotePolicy < ApplicationPolicy
   end
 
   def show?
-    user == record.owner || record.favorited.where(scope: :favorite_note, favoritor_id: user.id)
+    user == record.owner || record.shared_with_users.where(id: user.id).present?
   end
 
   def create?

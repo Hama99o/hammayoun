@@ -7,6 +7,7 @@
 #  id                  :bigint           not null, primary key
 #  note_id             :bigint
 #  shared_with_user_id :bigint
+#  role                :integer          default(0), not null
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #

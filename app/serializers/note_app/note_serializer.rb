@@ -33,18 +33,18 @@ class NoteApp::NoteSerializer < ApplicationSerializer
     if current_user == note.owner
       :owner
     else
-      note.favorited.find_by(favoritor_id: current_user.id, scope: :favorite_note).role
+      note.shares.find_by(shared_with_user: current_user)&.role
     end
   end
 
   field :shared_users do |note, options|
-    users = User.where(id: note.favorited.where(scope: :favorite_note).pluck(:favoritor_id))
+    users = note.shared_with_users
     next [] unless users.present?
     UserSerializer.render_as_hash(users)
   end
 
   field :shared_count do |note, options|
-    User.where(id: note.favorited.where(scope: :favorite_note).pluck(:favoritor_id)).count
+    note.shared_with_users.count
   end
 
   field :tags do |note, options|

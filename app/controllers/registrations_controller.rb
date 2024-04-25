@@ -13,7 +13,7 @@ class RegistrationsController < Devise::RegistrationsController
           note = email_record.shareable
 
           if email_record.shareable_type ==  "NoteApp::Note"
-            resource.favorite_with_role(note, scope: :favorite_note, role:)
+            NoteApp::Share.create(shared_with_user: resource, note:, role:)
             email_record.destroy
           end
 

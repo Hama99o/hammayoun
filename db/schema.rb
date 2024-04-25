@@ -136,6 +136,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_24_163904) do
   create_table "note_app_shares", force: :cascade do |t|
     t.bigint "note_id"
     t.bigint "shared_with_user_id"
+    t.integer "role", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["note_id"], name: "index_note_app_shares_on_note_id"
