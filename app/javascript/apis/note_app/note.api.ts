@@ -2,28 +2,16 @@ import { http } from '@/services/http.service';
 
 class NoteAPI {
   async fetchNotes(page = 1, search = '') {
-    try {
-      const res = await http.get(`/api/v1/note_app/notes?page=${page}&search=${search}`);
-      return res.data;
-    } catch (error) {
-      return error;
-    }
+    const res = await http.get(`/api/v1/note_app/notes?page=${page}&search=${search}`);
+    return res.data;
   }
   async fetchTrashesNotes(page = 1, search = '') {
-    try {
-      const res = await http.get(`/api/v1/note_app/notes/trashes?page=${page}&search=${search}`);
-      return res.data;
-    } catch (error) {
-      return error;
-    }
+    const res = await http.get(`/api/v1/note_app/notes/trashes?page=${page}&search=${search}`);
+    return res.data;
   }
   async fetchNote(id: number) {
-    try {
-      const res = await http.get(`/api/v1/note_app/notes/${id}`);
-      return res.data;
-    } catch (error) {
-      return error;
-    }
+    const res = await http.get(`/api/v1/note_app/notes/${id}`);
+    return res.data;
   }
   async updateNote(id: number, data: {}) {
     const headers = { 'Content-Type': 'multipart/form-data' };
@@ -31,40 +19,24 @@ class NoteAPI {
     return res.data;
   }
   async createNote(data: {}) {
-    try {
-      const headers = { 'Content-Type': 'multipart/form-data' };
-      const res = await http.post('/api/v1/note_app/notes/', data, { headers });
-      return res.data;
-    } catch (error) {
-      return error;
-    }
+    const headers = { 'Content-Type': 'multipart/form-data' };
+    const res = await http.post('/api/v1/note_app/notes/', data, { headers });
+    return res.data;
   }
   async deleteNote(id: number) {
-    try {
-      const headers = { 'Content-Type': 'multipart/form-data' };
-      const res = await http.delete(`/api/v1/note_app/notes/${id}`);
-      return res.data;
-    } catch (error) {
-      return error;
-    }
+    const headers = { 'Content-Type': 'multipart/form-data' };
+    const res = await http.delete(`/api/v1/note_app/notes/${id}`);
+    return res.data;
   }
   async noteDeletePermanently(id: number) {
-    try {
-      const headers = { 'Content-Type': 'multipart/form-data' };
-      const res = await http.delete(`/api/v1/note_app/notes/${id}/destroy_permanently`);
-      return res.data;
-    } catch (error) {
-      return error;
-    }
+    const headers = { 'Content-Type': 'multipart/form-data' };
+    const res = await http.delete(`/api/v1/note_app/notes/${id}/destroy_permanently`);
+    return res.data;
   }
   async noteRestore(id: number) {
-    try {
-      const headers = { 'Content-Type': 'multipart/form-data' };
-      const res = await http.put(`/api/v1/note_app/notes/${id}/restore`);
-      return res.data;
-    } catch (error) {
-      return error;
-    }
+    const headers = { 'Content-Type': 'multipart/form-data' };
+    const res = await http.put(`/api/v1/note_app/notes/${id}/restore`);
+    return res.data;
   }
   async inviteUserToggle(id: number, data: {}) {
     const headers = { 'Content-Type': 'multipart/form-data' };

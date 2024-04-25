@@ -188,10 +188,19 @@ const destroyNote = async(note) => {
       customClass: "w-[400px]",
       showClose: false,
       async confirm() {
-        await deleteNote(note.id)
-        await fetchNotes()
-        closePopUp();
-        showToast(`${note.title} note delete successfully`, 'error');
+        try {
+          await deleteNote(note.id)
+          await fetchNotes()
+          closePopUp();
+          showToast(`${note.title} note delete successfully`, 'success');
+        } catch (error) {
+          // Assuming error.message contains the error message returned from the backend
+          if (error.message.includes('not allowed')) {
+            showToast(`Unable to delete "${note.title}". This note may be associated with other user and cannot be deleted.`, 'error');
+          } else {
+            showToast(`There was a problem deleting "${note.title}".`, 'error');
+          }
+        }
       },
     });
   } catch (error) {
