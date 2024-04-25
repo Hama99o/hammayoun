@@ -113,7 +113,7 @@ class Api::V1::NoteApp::NotesController < ApplicationController
 
   def update
     if authorize(@note).update(**note_params)
-      render json: { note: NoteApp::NoteSerializer.render_as_hash(@not, current_user: current_user) }, status: :ok
+      render json: { note: NoteApp::NoteSerializer.render_as_hash(@note, current_user: current_user) }, status: :ok
     else
       render_unprocessable_entity(@note)
     end
