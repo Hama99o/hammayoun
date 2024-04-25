@@ -26,13 +26,9 @@ class NoteAPI {
     }
   }
   async updateNote(id: number, data: {}) {
-    try {
-      const headers = { 'Content-Type': 'multipart/form-data' };
-      const res = await http.put(`/api/v1/note_app/notes/${id}`, data, { headers });
-      return res.data;
-    } catch (error) {
-      return error;
-    }
+    const headers = { 'Content-Type': 'multipart/form-data' };
+    const res = await http.put(`/api/v1/note_app/notes/${id}`, data, { headers });
+    return res.data;
   }
   async createNote(data: {}) {
     try {

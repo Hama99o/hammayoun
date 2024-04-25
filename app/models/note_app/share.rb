@@ -21,8 +21,7 @@ class NoteApp::Share < ApplicationRecord
   enum role: {
     viewer: 0,   # Can only view
     contributor: 1,   # Can view and contribute (update)
-    administrator: 2,   # Can delete, invite, update, and view
-    owner: 3   # Highest level of access, can perform all actions including managing administrators
+    administrator: 2   # Can delete, invite, update, and view Highest level of access, can perform all actions including managing administrators
   }
 
 end

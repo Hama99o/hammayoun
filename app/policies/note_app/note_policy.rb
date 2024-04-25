@@ -15,22 +15,26 @@ class NoteApp::NotePolicy < ApplicationPolicy
   end
 
   def update?
-    show?
+    return user == record.owner
+    role = record.shares.find(shared_with_user: user).role
+    ['contributor', 'administrator'].include?(role)
   end
 
   def destroy?
-    show?
+    return user == record.owner
+    role = record.shares.find(shared_with_user: user).role
+    'administrator' == role
   end
 
   def share_with_user_toggle?
-    true
+    destroy?
   end
 
   def restore?
-    show?
+    destroy?
   end
 
   def destroy_permanently?
-    show?
+    destroy?
   end
 end

@@ -149,14 +149,18 @@ const destroyNote = async(note) => {
 };
 
 const updateCurrentNote = debounce(async() => {
-  await updateNote(props.note.id, { title: title.value, description: description.value })
-  notes.value.forEach((n) => {
-    if (n.id === props.note.id) {
-      n.title = title.value
-      n.description = description.value
-    }
-  })
-
+  try {
+    await updateNote(props.note.id, { title: title.value, description: description.value })
+    notes.value.forEach((n) => {
+      if (n.id === props.note.id) {
+        n.title = title.value
+        n.description = description.value
+      }
+    })
+  } catch (error) {
+    console.log(error, 'hiiiiiii');
+    showToast(error.message, 'error');
+  }
 }, 200)
 
 watch(props, (newNote, oldNote) => {
