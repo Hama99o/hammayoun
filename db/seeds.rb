@@ -16,7 +16,7 @@ users.push(FactoryBot.create(:user, firstname: 'hama', lastname: 'safi', access_
 50.times { FactoryBot.create(:note_tag) }
 
 # Create 3 users
-users = users + FactoryBot.create_list(:user, 20)
+users = users + FactoryBot.create_list(:user, 20, password: 'Admin12345')
 
 
 # Create 10 notes for each user

@@ -3,7 +3,8 @@
   <div>
     <p class="my-5 text-4xl leading-10 text-center">
       Users
-  </p>
+    </p>
+
     <v-text-field
       v-model="search"
       color="primary"

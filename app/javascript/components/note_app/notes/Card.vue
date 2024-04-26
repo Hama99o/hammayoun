@@ -31,7 +31,13 @@
               <v-chip
               class="ma-2"
                 >
-              <!-- prepend-icon="mdi-account-circle" -->
+                <user-avatar
+                  class="h-10 w-10 mr-1"
+                  size="sm"
+                  :avatar="user?.avatar"
+                  :firstname="user?.lastname"
+                  :lastname="user?.firstname"
+                />
 
                 {{ user.fullname }}
               </v-chip>
@@ -78,6 +84,7 @@
 <script setup>
 import { onMounted, ref, computed } from 'vue';
 import { useNoteStore } from '@/stores/note_app/note.store';
+import UserAvatar from '@/components/tools/Avatar.vue';
 
 const emit = defineEmits(['open-invite-user-dialog', 'open-tag-dialog', 'open-note-dialog', 'destroy-note']);
 
