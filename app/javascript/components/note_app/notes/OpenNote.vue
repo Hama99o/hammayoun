@@ -15,13 +15,13 @@
           </div>
 
           <div>
-
             <v-textarea
               v-model="description"
               label="Description"
               @update:model-value="updateCurrentNote"
             ></v-textarea>
           </div>
+
           <div class="flex flex-wrap">
             <div  v-for="tag in tags.filter((x) => note.tag_ids.includes(x.id))" :key="tag.id">
               <v-chip
@@ -33,6 +33,19 @@
               </v-chip>
             </div>
           </div>
+
+          <div class="flex flex-wrap">
+            <div  v-for="user in note.shared_users" :key="user.id">
+              <v-chip
+              class="ma-2"
+                >
+              <!-- prepend-icon="mdi-account-circle" -->
+
+                {{ user.fullname }}
+              </v-chip>
+            </div>
+          </div>
+
           <!-- Buttons -->
           <div class="flex  !justify-between">
             <v-menu >

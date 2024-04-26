@@ -25,6 +25,18 @@
               </v-chip>
             </div>
           </div>
+
+          <div class="flex flex-wrap">
+            <div  v-for="user in item.shared_users" :key="user.id">
+              <v-chip
+              class="ma-2"
+                >
+              <!-- prepend-icon="mdi-account-circle" -->
+
+                {{ user.fullname }}
+              </v-chip>
+            </div>
+          </div>
         </template>
 
         <template v-slot:actions>
