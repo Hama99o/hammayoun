@@ -98,6 +98,7 @@ const listViewColor = computed(() => {
     return 'mdi-table'
   }
 })
+
 const openNoteDialog = (note) => {
   selectedNote.value = note
   isNoteOpened.value.isOpen = true

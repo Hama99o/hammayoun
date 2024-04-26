@@ -1,11 +1,11 @@
 <template>
   <v-row dense class="mt-10">
-    <v-col v-for="(item, i) in notes" :key="i" cols="12" md="3">
+    <v-col v-for="(item, i) in notes" :key="i" cols="12" :md="cardmd">
       <v-card
         variant="elevated"
-        class="mx-auto my-5 h-full"
+        class="mx-auto h-full my-5 h-full"
         color="surface-variant"
-        max-width="344"
+        :max-width="'700'"
         :title="item.title"
         @click="emit('open-note-dialog', item)"
         >
@@ -52,11 +52,30 @@
 </template>
 
 <script setup>
+import { onMounted, ref, computed } from 'vue';
 const emit = defineEmits(['open-invite-user-dialog', 'open-tag-dialog', 'open-note-dialog', 'destroy-note']);
 
 const props = defineProps({
   notes: { type: Array, default: () => [] },
+  noteIndexType: { type: String }
 });
 
+
+const cardMaxWidth = computed(() => {
+  if (props.noteIndexType == 'card_grid') {
+    return '644'
+  } else {
+    return '344'
+  }
+})
+
+
+const cardmd = computed(() => {
+  if (props.noteIndexType == 'card_grid') {
+    return '3'
+  } else {
+    return '12'
+  }
+})
 
 </script>

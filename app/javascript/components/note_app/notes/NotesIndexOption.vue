@@ -13,6 +13,7 @@
     <note-card
       v-else
       :notes="notes"
+      :note-index-type="noteIndexType"
       @open-invite-user-dialog="openInviteUserDialog"
       @open-tag-dialog="openTagDialog"
       @open-note-dialog="openNoteDialog"
