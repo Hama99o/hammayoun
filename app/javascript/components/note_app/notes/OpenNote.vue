@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog max-width="700" v-model="isOpen">
+    <v-dialog max-width="900" v-model="isOpen">
       <template #default>
         <div class="w-full flex flex-col p-6 gap-8 bg-surface-variant ">
 
@@ -64,7 +64,7 @@
               </v-list>
             </v-menu>
             <v-icon
-              color="fakeBlack"
+              color="white"
               class="text-xl hover:bg-red-200 p-3"
               icon="mdi mdi-close"
               @click="isOpen = false"
