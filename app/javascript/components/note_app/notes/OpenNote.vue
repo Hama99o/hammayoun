@@ -2,7 +2,7 @@
   <div>
     <v-dialog max-width="700" v-model="isOpen">
       <template #default>
-        <div class="w-full flex flex-col p-6 gap-8 bg-white">
+        <div class="w-full flex flex-col p-6 gap-8 bg-surface-variant ">
 
           <div>
             <v-text-field
