@@ -39,7 +39,13 @@
               <v-chip
               class="ma-2"
                 >
-              <!-- prepend-icon="mdi-account-circle" -->
+                <user-avatar
+                  class="h-10 w-10 mr-1"
+                  size="sm"
+                  :avatar="user?.avatar"
+                  :firstname="user?.lastname"
+                  :lastname="user?.firstname"
+                />
 
                 {{ user.fullname }}
               </v-chip>
@@ -109,6 +115,7 @@ import { storeToRefs } from 'pinia';
 import { usePopUpStore } from "@/stores/pop-up.store";
 import TagDialog from '@/components/note_app/notes/TagDialog.vue';
 import { useRouter } from 'vue-router';
+import UserAvatar from '@/components/tools/Avatar.vue';
 
 const props = defineProps({
   note: { type: Object, default: () => {} },
