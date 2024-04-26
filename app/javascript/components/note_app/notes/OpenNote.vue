@@ -22,13 +22,17 @@
               @update:model-value="updateCurrentNote"
             ></v-textarea>
           </div>
-          Tags:
           <div class="flex flex-wrap">
-            <div  v-for="tag in tags.filter((x) => note.tag_ids.includes(x.id))" :key="tag.id" class="w-fit text-sm flex rounded-full px-2 m-1 bg-grey ">
-              #{{ tag.name }}
+            <div  v-for="tag in tags.filter((x) => note.tag_ids.includes(x.id))" :key="tag.id">
+              <v-chip
+                class="ma-1"
+                closable
+                @click:close="toggleTagToNote(tag)"
+                >
+                {{ tag.name }}
+              </v-chip>
             </div>
           </div>
-
           <!-- Buttons -->
           <div class="flex  !justify-between">
             <v-menu >
@@ -97,7 +101,7 @@ const props = defineProps({
   note: { type: Object, default: () => {} },
 });
 
-const { updateNote, deleteNote, inviteUserToggle } = useNoteStore();
+const { updateNote, deleteNote, inviteUserToggle, toggleTag } = useNoteStore();
 const { notes, tags } = storeToRefs(useNoteStore());
 const { openPopUp, closePopUp } = usePopUpStore();
 const router = useRouter()
@@ -124,6 +128,14 @@ const openTagDialog = (note) => {
   selectedNoteForTag.value = note
   isTagDialogOpened.value.isActive = true
 }
+
+const toggleTagToNote = async(tag) => {
+  try {
+    toggleTag(props.note.id, tag.id)
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const destroyNote = async(note) => {
   try {

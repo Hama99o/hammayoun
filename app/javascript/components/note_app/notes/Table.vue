@@ -75,9 +75,17 @@
             @click="emit('open-note-dialog', item)"
             class="w-full h-full cursor-pointer flex align-center"
           >
-            <div  v-for="tag in item.tags.slice(0, 2)" :key="tag.id" class=" inline-block flex flex-nowrap rounded-full px-2  bg-grey">
-              #{{ tag.name }}
+            <div  v-for="tag in item.tags.slice(0, 2)" :key="tag.id" >
+              <v-chip
+                class="ma-1 !text-sm"
+                closable
+                @click:close="toggleTagToNote(item, tag)"
+                >
+                {{ tag.name }}
+              </v-chip>
             </div>
+
+
             <span v-if="item.tags.length > 2">
               ...
             </span>
@@ -121,11 +129,21 @@
 </template>
 
 <script setup>
+import { useNoteStore } from '@/stores/note_app/note.store';
+
+const { toggleTag } = useNoteStore();
 const emit = defineEmits(['open-invite-user-dialog', 'open-note-dialog', 'open-note-dialog', 'destroy-note']);
 
 const props = defineProps({
   notes: { type: Array, default: () => [] },
 });
 
+const toggleTagToNote = async(note, tag) => {
+  try {
+    toggleTag(note.id, tag.id)
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 </script>

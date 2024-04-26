@@ -13,6 +13,18 @@
           <div class="whitespace-normal line-clamp-6">
             {{ item.description }}
           </div>
+
+          <div class="flex flex-wrap mt-5">
+            <div  v-for="tag in item.tags.filter((x) => item.tag_ids.includes(x.id))" :key="tag.id">
+              <v-chip
+                class="ma-1"
+                closable
+                @click:close="toggleTagToNote(item, tag)"
+                >
+                {{ tag.name }}
+              </v-chip>
+            </div>
+          </div>
         </template>
 
         <template v-slot:actions>
@@ -53,6 +65,8 @@
 
 <script setup>
 import { onMounted, ref, computed } from 'vue';
+import { useNoteStore } from '@/stores/note_app/note.store';
+
 const emit = defineEmits(['open-invite-user-dialog', 'open-tag-dialog', 'open-note-dialog', 'destroy-note']);
 
 const props = defineProps({
@@ -60,6 +74,7 @@ const props = defineProps({
   noteIndexType: { type: String }
 });
 
+const { toggleTag } = useNoteStore();
 
 const cardMaxWidth = computed(() => {
   if (props.noteIndexType == 'card_grid') {
@@ -77,5 +92,13 @@ const cardmd = computed(() => {
     return '12'
   }
 })
+
+const toggleTagToNote = async(note, tag) => {
+  try {
+    toggleTag(note.id, tag.id)
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 </script>
