@@ -1,14 +1,17 @@
 <template>
   <div>
-    <!-- <note-table
-     :notes="notes"
-     @open-invite-user-dialog="openInviteUserDialog"
-     @open-tag-dialog="openTagDialog"
-     @open-note-dialog="openNoteDialog"
-     @destroy-note="destroyNote"
-    /> -->
+    <note-table
+      v-if="noteIndexType == 'table'"
+      :notes="notes"
+      note-index-type
+      @open-invite-user-dialog="openInviteUserDialog"
+      @open-tag-dialog="openTagDialog"
+      @open-note-dialog="openNoteDialog"
+      @destroy-note="destroyNote"
+    />
 
     <note-card
+      v-else
       :notes="notes"
       @open-invite-user-dialog="openInviteUserDialog"
       @open-tag-dialog="openTagDialog"
@@ -51,6 +54,7 @@ const { openPopUp, closePopUp } = usePopUpStore();
 
 const props = defineProps({
   notes: { type: Array, default: () => [] },
+  noteIndexType: { type: String },
 });
 
 const selectedNote = ref(null)

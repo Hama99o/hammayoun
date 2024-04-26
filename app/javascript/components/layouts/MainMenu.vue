@@ -138,6 +138,7 @@ const { currentUser } = storeToRefs(useUserStore());
 onMounted(async () => {
   try {
     if (AuthService.getUser()?.id) {
+      console.log('ehehehhe')
       await fetchCurrentUser(AuthService.getUser()?.id);
       localStorage.setItem('user', JSON.stringify(currentUser?.value));
 

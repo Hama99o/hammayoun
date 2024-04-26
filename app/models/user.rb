@@ -33,6 +33,7 @@
 #  strikes_count          :integer          default(0)
 #  agreed_to_terms        :boolean
 #  applications           :jsonb
+#  data                   :jsonb
 #  current_application    :integer          default(0)
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
@@ -64,9 +65,18 @@ class User < ApplicationRecord
                     tsearch: { prefix: true }
                   }
 
+  # Possible values for the note_index_type attribute:
+  # - "table": Display notes in a table format
+  # - "card_grid": Display notes in a grid of cards
+  # - "card_list": Display notes in a list of cards
+  store_accessor :data,
+                 :note_index_type
+
   validates :email, presence: true
   validates :firstname, presence: true
   validates :lastname, presence: true
+
+  before_create :set_default_value_of_data
 
   has_one_attached :photo
 
@@ -80,6 +90,10 @@ class User < ApplicationRecord
     inactive: 0,
     active: 1
   }
+
+  def set_default_value_of_data
+    self.note_index_type ||= 'table'
+  end
 
   def fullname
     "#{firstname&.titleize} #{lastname&.upcase}"

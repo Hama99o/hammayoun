@@ -33,6 +33,7 @@
 #  strikes_count          :integer          default(0)
 #  agreed_to_terms        :boolean
 #  applications           :jsonb
+#  data                   :jsonb
 #  current_application    :integer          default(0)
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
@@ -44,7 +45,7 @@
 #
 class UserSerializer < ApplicationSerializer
   identifier :id
-  fields :email, :access_level, :lang, :status, :birth_date
+  fields :email, :access_level, :lang, :status, :birth_date, :note_index_type
 
   field :fullname do |object|
     object.fullname.presence

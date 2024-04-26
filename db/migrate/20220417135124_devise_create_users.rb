@@ -45,6 +45,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       t.integer :strikes_count, default: 0
       t.boolean :agreed_to_terms
       t.jsonb :applications
+      t.jsonb :data
       t.integer :current_application, default: 0
 
       ## Lockable

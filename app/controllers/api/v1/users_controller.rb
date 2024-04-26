@@ -96,6 +96,7 @@ class Api::V1::UsersController < ApplicationController
       :gender,
       :language,
       :access_level,
+      :note_index_type,
       :photo
     )
   end

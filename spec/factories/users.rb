@@ -33,6 +33,7 @@
 #  strikes_count          :integer          default(0)
 #  agreed_to_terms        :boolean
 #  applications           :jsonb
+#  data                   :jsonb
 #  current_application    :integer          default(0)
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null

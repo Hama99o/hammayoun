@@ -197,6 +197,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_25_093031) do
     t.integer "strikes_count", default: 0
     t.boolean "agreed_to_terms"
     t.jsonb "applications"
+    t.jsonb "data"
     t.integer "current_application", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
