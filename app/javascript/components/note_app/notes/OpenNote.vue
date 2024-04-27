@@ -95,6 +95,7 @@
         </div>
       </template>
     </v-dialog>
+
     <invite-user
       ref="inviteUser"
       @add-user="inviteUserWithEmail"

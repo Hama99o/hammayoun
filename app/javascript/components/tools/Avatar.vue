@@ -2,11 +2,13 @@
   <v-avatar
     v-if="display_avatar"
     :image="avatar"
+    start
     :size="sizeList[size]"
   />
 
   <v-avatar
     v-else-if="firstname"
+    start
     :color="
       colors[
         firstname.charAt(0).toUpperCase() === firstname.charAt(0)

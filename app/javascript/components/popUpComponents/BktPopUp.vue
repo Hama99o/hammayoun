@@ -13,12 +13,13 @@ import { storeToRefs } from "pinia";
 import { usePopUpStore } from "@/stores/pop-up.store";
 import PopUpSkeleton from "./PopUpSkeleton.vue";
 import PopUpValidation from "./PopUpValidation.vue";
-
+import PopUpShareUserConfig from "./PopUpShareUserConfig.vue";
 
 export default {
   components: {
     PopUpSkeleton,
-    PopUpValidation
+    PopUpValidation,
+    PopUpShareUserConfig
   },
   setup() {
     const { data } = storeToRefs(usePopUpStore());

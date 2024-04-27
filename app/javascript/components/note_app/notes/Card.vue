@@ -26,11 +26,14 @@
             </div>
           </div>
 
+
           <div class="flex flex-wrap">
             <div  v-for="user in item.shared_users" :key="user.id">
               <v-chip
-                @click="testing(user, item)"
+                @click.stop="testing(user, item)"
                 class="ma-2"
+                link
+                pill
               >
                 <user-avatar
                   class="h-10 w-10 mr-1"
@@ -83,19 +86,21 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 import { useNoteStore } from '@/stores/note_app/note.store';
 import UserAvatar from '@/components/tools/Avatar.vue';
+import { usePopUpStore } from "@/stores/pop-up.store";
+import { showToast } from '@/utils/showToast';
 
+const { openPopUp, closePopUp } = usePopUpStore();
 const emit = defineEmits(['open-invite-user-dialog', 'open-tag-dialog', 'open-note-dialog', 'destroy-note']);
-
+const test = ref(true)
 const props = defineProps({
   notes: { type: Array, default: () => [] },
   noteIndexType: { type: String }
 });
 
 const { toggleTag } = useNoteStore();
-
 const cardMaxWidth = computed(() => {
   if (props.noteIndexType == 'card_grid') {
     return '644'
@@ -122,7 +127,22 @@ const toggleTagToNote = async(note, tag) => {
 
 const testing = async(user, note) => {
   try {
-    console.log(user.id)
+    openPopUp({
+      componentName: "pop-up-validation",
+      title: ("Are you sure you want to delete this note ?"),
+      textClose: "No, cancel",
+      textConfirm: "Yes, delete this note",
+      textLoading: "Deleting ...",
+      icon: "mdi-trash-can-outline",
+      color: "red",
+      customClass: "w-[400px]",
+      showClose: false,
+      async confirm() {
+
+        closePopUp();
+        showToast(`${note.title} note delete successfully`, 'error');
+      },
+    });
   } catch (error) {
     console.log(error);
   }
