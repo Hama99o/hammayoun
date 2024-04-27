@@ -37,8 +37,8 @@
           <div class="flex flex-wrap">
             <div  v-for="user in note.shared_users" :key="user.id">
               <v-chip
-              class="ma-2"
-                >
+                class="ma-2"
+              >
                 <user-avatar
                   class="h-10 w-10 mr-1"
                   size="sm"
@@ -58,6 +58,7 @@
               <template v-slot:activator="{ props }">
                 <v-icon icon="mdi-dots-vertical" v-bind="props"></v-icon>
               </template>
+
               <v-list class="py-0">
                 <div class="flex flex-col">
                   <div
@@ -73,6 +74,7 @@
                   >
                     Delete Note
                   </div>
+
                   <div
                     class="cursor-pointer hover:bg-grey px-5 py-2"
                     @click.prevent="openTagDialog(note)"

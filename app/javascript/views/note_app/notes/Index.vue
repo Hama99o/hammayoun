@@ -5,6 +5,7 @@
       <h1>Notes</h1>
       <v-icon @click="createNewNote" icon="mdi mdi-plus  hover:!bg-very-light-grey " class="cursor-pointer create-note-btn"/>
     </div>
+
     <div class="flex ">
       <v-text-field
         v-model="search"
@@ -17,9 +18,11 @@
         :label="'Search'"
         @update:model-value="searchNote"
       />
+
       <v-btn class="bg-red-500 hover:bg-red-100 ml-4" dark @click="handleClick">
         <span class="mdi mdi-trash-can-outline"></span>
       </v-btn>
+      
       <v-btn @click="toggleView" dark class="bg-red-500 hover:bg-red-100 ml-4" >
         <v-icon size="32" :icon=" listViewColor"/>
       </v-btn>

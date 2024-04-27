@@ -20,6 +20,7 @@
           @delete-picture="uploadAvatar(null)"
         />
       </div>
+      
       <v-form fast-fail @submit.prevent="submit">
         <v-text-field
           v-model="user.firstname"

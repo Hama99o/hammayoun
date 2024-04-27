@@ -30,11 +30,13 @@
             <p class="ml-1 flex basis-1/3 truncate">
               Title: {{ trashesNote.title }}
             </p>
+
             <p
               class="min-w-[92px]"
             >
               Deleted at: {{ moment(trashesNote.deleted_at, "YYYY-MM-DD HH:mm:ss [UTC]").format("dddd Do MMMM, h:mm a") }}
             </p>
+
             <v-tooltip text="Restore note" location="top">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind="props" icon="mdi mdi-restore" @click="trashNoteRestore(trashesNote)"></v-icon>

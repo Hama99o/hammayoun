@@ -80,7 +80,7 @@
                 class="ma-1 !text-sm"
                 closable
                 @click:close="toggleTagToNote(item, tag)"
-                >
+              >
                 {{ tag.name }}
               </v-chip>
             </div>

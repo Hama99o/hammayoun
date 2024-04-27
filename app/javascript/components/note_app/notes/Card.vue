@@ -8,7 +8,7 @@
         :max-width="'700'"
         :title="item.title"
         @click="emit('open-note-dialog', item)"
-        >
+      >
         <template v-slot:subtitle>
           <div class="whitespace-normal line-clamp-6">
             {{ item.description }}
@@ -20,7 +20,7 @@
                 class="ma-1"
                 closable
                 @click:close="toggleTagToNote(item, tag)"
-                >
+              >
                 {{ tag.name }}
               </v-chip>
             </div>
@@ -29,8 +29,8 @@
           <div class="flex flex-wrap">
             <div  v-for="user in item.shared_users" :key="user.id">
               <v-chip
-              class="ma-2"
-                >
+                class="ma-2"
+              >
                 <user-avatar
                   class="h-10 w-10 mr-1"
                   size="sm"
