@@ -128,8 +128,10 @@ const toggleTagToNote = async(note, tag) => {
 const testing = async(user, note) => {
   try {
     openPopUp({
-      componentName: "pop-up-validation",
-      title: ("Are you sure you want to delete this note ?"),
+      componentName: "pop-up-share-user-config",
+      title: ("update user rights on selected note"),
+      user: user,
+      note: note,
       textClose: "No, cancel",
       textConfirm: "Yes, delete this note",
       textLoading: "Deleting ...",
