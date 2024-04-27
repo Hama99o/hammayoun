@@ -103,7 +103,6 @@ const cardMaxWidth = computed(() => {
   }
 })
 
-
 const cardmd = computed(() => {
   if (props.noteIndexType == 'card_grid') {
     return '3'
