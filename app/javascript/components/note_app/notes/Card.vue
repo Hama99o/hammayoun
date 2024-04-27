@@ -29,6 +29,7 @@
           <div class="flex flex-wrap">
             <div  v-for="user in item.shared_users" :key="user.id">
               <v-chip
+                @click="testing(user, item)"
                 class="ma-2"
               >
                 <user-avatar
@@ -82,7 +83,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from 'vue';
+import { computed } from 'vue';
 import { useNoteStore } from '@/stores/note_app/note.store';
 import UserAvatar from '@/components/tools/Avatar.vue';
 
@@ -114,6 +115,14 @@ const cardmd = computed(() => {
 const toggleTagToNote = async(note, tag) => {
   try {
     toggleTag(note.id, tag.id)
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const testing = async(user, note) => {
+  try {
+    console.log(user.id)
   } catch (error) {
     console.log(error);
   }
