@@ -13,6 +13,8 @@ Rails.application.routes.draw do
           end
 
           put :share_with_user_toggle
+          put :update_shared_user_rights
+
           put :toggle_tag
           post :create_and_assign_tag
           collection do

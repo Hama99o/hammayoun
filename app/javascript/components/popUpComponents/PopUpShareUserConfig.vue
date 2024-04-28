@@ -4,29 +4,9 @@
 
       <div class="w-full flex flex-col p-6 gap-8 bg-white">
         <!-- Icon and text -->
-        <div
-          class='w-full flex flex-col text-center justify-center items-center mb-2'>
-          <div
-            class="cursor-pointer absolute right-5 top-8"
-            @click="closePopUp"
-          >
-            <v-icon
-              icon="mdi mdi-close"
-              width="24"
-              height="24"
-              color="darkGrey"
-            />
-          </div>
-        </div>
+
 
         <div class="flex flex-col  align-center">
-          <v-icon
-            icon="mdi mdi-trash-can-outline"
-            width="32"
-            height="32"
-            color="darkGrey"
-          />
-
           <p
             v-for="text in title"
             :key="text"

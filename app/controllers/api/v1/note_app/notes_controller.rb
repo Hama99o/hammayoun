@@ -20,14 +20,31 @@ class Api::V1::NoteApp::NotesController < ApplicationController
     }, status: :ok
   end
 
+  def update_shared_user_rights
+    user = User.find(params.require(:user_id))
+    role = params.require(:role)
+    note = NoteApp::Note.find(params.require(:note_id))
+    share = note.shares.find_by(shared_with_user: user)
+
+    if role && share.update(role:)
+      render json: {
+        note: NoteApp::NoteSerializer.render_as_json(note, current_user: current_user)
+      }
+    else
+      render json: { error: "Failed to change user right on selected note" }, status: :unprocessable_entity
+    end
+  end
+
   def set_reminder
     note = Note.find(params[:id])
     reminder_date_time = DateTime.parse(params[:reminder_date_time])
 
-    if reminder_date_time && NoteReminderWorker.perform_at(reminder_date_time, @note.id, current_user.id)
-      render json: { message: "Reminder set successfully" }, status: :ok
+    if Tagging.create(tag:, taggable: note)
+      render json: {
+        tag: TagSerializer.render_as_json(tag, current_user: current_user)
+      }, status: :ok
     else
-      render json: { error: "Failed to set reminder" }, status: :unprocessable_entity
+      render json: { error: "Failed to create and assign tag" }, status: :unprocessable_entity
     end
   end
 

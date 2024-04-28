@@ -29,7 +29,7 @@
             <v-autocomplete
               v-model="role"
               label="role"
-              :items="['viewer', 'contributor', 'administrator', 'owner']"
+              :items="['viewer', 'contributor', 'administrator']"
             ></v-autocomplete>
 
             <v-text-field

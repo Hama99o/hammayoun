@@ -129,7 +129,7 @@ const testing = async(user, note) => {
   try {
     openPopUp({
       componentName: "pop-up-share-user-config",
-      title: ("update user rights on selected note"),
+      title: ("Collaborators"),
       user: user,
       note: note,
       textClose: "No, cancel",
