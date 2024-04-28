@@ -22,8 +22,8 @@
           />
         </div>
 
-        <div v-for="user in data?.note.shared_users" :key="user.id">
-          <div class="flex justify-between hover:bg-grey">
+        <div v-for="user in data?.note.shared_users" :key="user.id" class="hover:bg-grey">
+          <div class="flex justify-between">
 
             <p>
               <user-avatar
@@ -51,7 +51,7 @@
               </template>
 
               <v-list>
-                <v-list-item v-for="(item, index) in roles" :key="index" :value="index">
+                <v-list-item v-for="(item, index) in roles" :key="index" :value="index" class="hover:bg-grey" >
                   <v-list-item-title @click="test(item)">{{ item.title }}</v-list-item-title>
                 </v-list-item>
               </v-list>
