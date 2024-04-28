@@ -5,7 +5,6 @@
       <div class="w-full flex flex-col p-6 gap-8 bg-white">
         <!-- Icon and text -->
 
-
         <div class="flex flex-col  align-center">
           <p
             v-for="text in title"
