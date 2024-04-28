@@ -94,7 +94,7 @@ class Api::V1::NoteApp::NotesController < ApplicationController
   def share_with_user_toggle
     email = params.require(:email)
     user_action = params.require(:user_action)
-    role = params.require(:role)
+    role = params[:role]
     note_id = params.require(:note_id)
 
     user = User.find_by(email: email)

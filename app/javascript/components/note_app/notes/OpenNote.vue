@@ -89,7 +89,6 @@
               class="text-xl hover:bg-red-200 p-3"
               icon="mdi mdi-close"
               @click="isOpen = false"
-
             />
           </div>
         </div>

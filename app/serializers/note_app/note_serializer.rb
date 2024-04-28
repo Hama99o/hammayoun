@@ -40,7 +40,7 @@ class NoteApp::NoteSerializer < ApplicationSerializer
   field :shared_users do |note, options|
     users = note.shared_with_users
     next [] unless users.present?
-    UserSerializer.render_as_hash(users)
+    UserSerializer.render_as_hash(users, view: :note_rights, note:)
   end
 
   field :shared_count do |note, options|

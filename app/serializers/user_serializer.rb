@@ -66,4 +66,11 @@ class UserSerializer < ApplicationSerializer
   field :avatar do |object|
     object.get_photo_url.presence if object.photo.attached?
   end
+
+  view :note_rights do
+    field :note_role do |user, options|
+      note = options[:note]
+      note.shares.find_by(shared_with_user: user)&.role
+    end
+  end
 end

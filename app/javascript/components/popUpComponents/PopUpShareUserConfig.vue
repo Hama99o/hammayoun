@@ -1,11 +1,12 @@
 <template>
-  <v-dialog max-width="500" v-model="data.open">
+  <v-dialog max-width="800" v-model="data.open">
     <template #default>
 
       <div class="w-full flex flex-col p-6 gap-8 bg-white">
         <!-- Icon and text -->
 
-        <div class="flex flex-col  align-center">
+        <div class="flex justify-between  align-center mb-5">
+          <p></p>
           <p
             v-for="text in title"
             :key="text"
@@ -13,53 +14,43 @@
           >
             {{ $t(text) }}
           </p>
+          <v-icon
+            color="black"
+            class="text-xl hover:bg-red-200 p-3"
+            icon="mdi mdi-close"
+            @click="closePopUp"
+          />
         </div>
 
-        <!-- Buttons -->
-        <div class="flex flex-col items-start gap-3 self-stretch lg:!flex-row">
-          <div
-            v-if="data.textClose && data.textConfirm"
-            class="w-full flex flex-col justify-center sm:flex-row gap-x-3 px-1.5"
-          >
-            <v-btn
-              variant="outlined"
+        <div v-for="user in data?.note.shared_users" :key="user.id">
+          <div class="flex justify-between hover:bg-grey">
+            <user-avatar
+              class="h-10 w-10 mr-1"
+              size="sm"
+              :avatar="user?.avatar"
+              :firstname="user?.lastname"
+              :lastname="user?.firstname"
+            />
+
+            <p>
+              {{ user.fullname }}
+            </p>
+
+            <p>
+              {{ user.email }}
+            </p>
+
+            <p>
+              {{ user.note_role }}
+            </p>
+
+            <v-icon
               color="black"
-              class="text-fakeBlack border-darkGrey border-1 normal-case font-medium w-full sm:w-1/2 text-xs mb-3 sm:!mb-0"
-              @click="data.sendWithoutEmail ? data.sendWithoutEmail() : closePopUp()"
-            >
-              {{ $t(data.textClose) }}
-            </v-btn>
-
-            <v-btn
-              v-if="data.color === 'blue'"
-              variant="outlined"
-              class="text-white bg-primary normal-case font-medium w-full sm:w-1/2 text-xs"
-              :color="data.color"
-              @click="data.sendWithEmail ? data.sendWithEmail() : confirmPopUp()"
-            >
-              {{ $t(data.textConfirm) }}
-            </v-btn>
-
-            <v-btn
-              v-else-if="data.color === 'red'"
-              variant="outlined"
-              class="text-white bg-negativeRed normal-case font-medium w-full sm:w-1/2 text-xs"
-              :color="data.color"
-              @click="confirmPopUp"
-            >
-              {{ $t(data.textConfirm) }}
-            </v-btn>
-
-            <v-btn
-              v-else
-              variant="flat"
-              class="text-white normal-case font-medium w-full sm:w-1/2 text-xs"
-              :color="data.color"
-              @click="confirmPopUp"
-            >
-              {{ $t(data.textConfirm) }}
-            </v-btn>
-          </div>
+              class="text-xl hover:bg-red-200 p-3 mx-5"
+              icon="mdi mdi-close"
+              @click="removeCollaborator(user)"
+            />
+           </div>
         </div>
       </div>
     </template>
@@ -70,10 +61,25 @@
 import { storeToRefs } from "pinia";
 import { usePopUpStore } from "@/stores/pop-up.store";
 import PopUpSkeleton from "./PopUpSkeleton.vue";
+import UserAvatar from '@/components/tools/Avatar.vue';
+import { useNoteStore } from '@/stores/note_app/note.store';
 
+const { inviteUserToggle } = useNoteStore();
 const { data } = storeToRefs(usePopUpStore());
-const { confirmPopUp, closePopUp } = usePopUpStore();
+const { closePopUp } = usePopUpStore();
 
 const title = data.value.title.split("<br/>")
 const subtitle = data.value.subtitle?.split("<br/>")
+const removeCollaborator = async(user) => {
+  try {
+    const params = {
+      email: user?.email,
+      user_action: 'remove'
+    }
+    await inviteUserToggle(data.value?.note?.id, params)
+    data.value.note.shared_users = data.value?.note?.shared_users.filter((shared_user) => shared_user.id !== user.id)
+  } catch (errorMessage) {
+    showToast(errorMessage.error, 'error');
+  }
+}
 </script>
