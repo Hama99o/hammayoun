@@ -24,15 +24,16 @@
 
         <div v-for="user in data?.note.shared_users" :key="user.id">
           <div class="flex justify-between hover:bg-grey">
-            <user-avatar
-              class="h-10 w-10 mr-1"
-              size="sm"
-              :avatar="user?.avatar"
-              :firstname="user?.lastname"
-              :lastname="user?.firstname"
-            />
 
             <p>
+              <user-avatar
+                class="h-10 w-10 mr-1"
+                size="sm"
+                :avatar="user?.avatar"
+                :firstname="user?.lastname"
+                :lastname="user?.firstname"
+              />
+
               {{ user.fullname }}
             </p>
 
@@ -40,9 +41,21 @@
               {{ user.email }}
             </p>
 
-            <p>
-              {{ user.note_role }}
-            </p>
+
+            <v-menu>
+              <template v-slot:activator="{ props }">
+                <p class="flex item-center cursor-pointer" v-bind="props">
+                  {{ user.note_role }} <span class="ml-2 mdi mdi-menu-down-outline"></span>
+                </p>
+
+              </template>
+
+              <v-list>
+                <v-list-item v-for="(item, index) in roles" :key="index" :value="index">
+                  <v-list-item-title @click="test(item)">{{ item.title }}</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
 
             <v-icon
               color="black"
@@ -63,10 +76,17 @@ import { usePopUpStore } from "@/stores/pop-up.store";
 import PopUpSkeleton from "./PopUpSkeleton.vue";
 import UserAvatar from '@/components/tools/Avatar.vue';
 import { useNoteStore } from '@/stores/note_app/note.store';
+import { ref } from 'vue';
 
 const { inviteUserToggle } = useNoteStore();
 const { data } = storeToRefs(usePopUpStore());
 const { closePopUp } = usePopUpStore();
+
+const roles = ref([
+        { title: 'viewer' },
+        { title: 'contributor' },
+        { title: 'administrator' }
+      ])
 
 const title = data.value.title.split("<br/>")
 const subtitle = data.value.subtitle?.split("<br/>")
@@ -81,5 +101,9 @@ const removeCollaborator = async(user) => {
   } catch (errorMessage) {
     showToast(errorMessage.error, 'error');
   }
+}
+
+const test = (item) => {
+  console.log(item.title)
 }
 </script>
