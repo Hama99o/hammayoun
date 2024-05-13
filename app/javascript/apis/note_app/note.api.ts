@@ -43,6 +43,11 @@ class NoteAPI {
     const res = await http.put(`/api/v1/note_app/notes/${id}/share_with_user_toggle`, data, { headers });
     return res.data;
   }
+  async updateSharedUserRights(id: number, data: {}) {
+    const headers = { 'Content-Type': 'multipart/form-data' };
+    const res = await http.put(`/api/v1/note_app/notes/${id}/update_shared_user_rights`, data, { headers });
+    return res.data;
+  }
   async fetchTags(search = '') {
     const headers = { 'Content-Type': 'multipart/form-data' };
     const res = await http.get(`/api/v1/note_app/notes/tags?search=${search}`, { headers });

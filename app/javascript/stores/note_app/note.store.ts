@@ -72,6 +72,10 @@ export const useNoteStore = defineStore({
       await NoteAPI.inviteUserToggle(id, data);
       await this.fetchNotes()
     },
+    async updateSharedUserRights(id: number, data: {}) {
+      await NoteAPI.updateSharedUserRights(id, data);
+      await this.fetchNotes()
+    },
     async fetchTags(search = '') {
       const res = await NoteAPI.fetchTags(search);
       this.tags = res.tags

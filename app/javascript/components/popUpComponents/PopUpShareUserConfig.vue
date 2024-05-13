@@ -52,7 +52,7 @@
 
               <v-list>
                 <v-list-item v-for="(item, index) in roles" :key="index" :value="index" class="hover:bg-grey" >
-                  <v-list-item-title @click="test(item)">{{ item.title }}</v-list-item-title>
+                  <v-list-item-title @click="updateUserRights(item, user)">{{ item.title }}</v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-menu>
@@ -78,7 +78,7 @@ import UserAvatar from '@/components/tools/Avatar.vue';
 import { useNoteStore } from '@/stores/note_app/note.store';
 import { ref } from 'vue';
 
-const { inviteUserToggle } = useNoteStore();
+const { inviteUserToggle, updateSharedUserRights } = useNoteStore();
 const { data } = storeToRefs(usePopUpStore());
 const { closePopUp } = usePopUpStore();
 
@@ -103,7 +103,20 @@ const removeCollaborator = async(user) => {
   }
 }
 
-const test = (item) => {
-  console.log(item.title)
+const updateUserRights = async(role, user) => {
+  try {
+    const params = {
+      user_id: user?.id,
+      role: role.title
+    }
+    await updateSharedUserRights(data.value?.note?.id, params)
+    data.value?.note?.shared_users.forEach((shared_user) => {
+      if (shared_user.id === user.id) {
+        shared_user.role =  null
+      }
+    })
+  } catch (errorMessage) {
+    showToast(errorMessage.error, 'error');
+  }
 }
 </script>
