@@ -15,3 +15,12 @@ export interface IRegisterUser extends IUserLogin {
 export interface ICurrentUser {
   id: number;
 }
+
+export interface IUserForgotPassword {
+  email: string;
+}
+
+export interface IUserResetPassword {
+  password: string;
+  confirmPassword: string;
+}

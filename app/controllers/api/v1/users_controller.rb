@@ -4,10 +4,11 @@ class Api::V1::UsersController < ApplicationController
 
   before_action :user, only: [:show, :update, :destroy]
   before_action :users, only: [:index, :activated_users]
+  skip_before_action :authenticate_user!, only: [:reset_password, :reset_password_confirmation]
 
   def index
     @users = @users
-    @users = @users.search_user(params[:search]) if params[:search].present?
+    @users = @users.search_users(params[:search]) if params[:search].present?
     paginate_render(UserSerializer,policy_scope(@users))
 
   end
@@ -24,6 +25,25 @@ class Api::V1::UsersController < ApplicationController
     else
       render json: @user.errors.messages, status: :unprocessable_entity
     end
+  end
+
+  def reset_password
+    user = User.where(status: :active).find_by(email: params.require(:email).strip.downcase)
+    if user.present?
+      user.reset_password!
+      head :ok
+    else
+      render json: { message: "Email does not exist" }, status: :unprocessable_entity
+    end
+  end
+
+  def reset_password_confirmation
+    @token = params.require(:token)
+    @user = User.find_by(reset_password_token: @token)
+    raise Pundit::NotAuthorizedError, "token invalid" if @user.nil?
+    @password = params.require(:password)
+
+    @user.update(password: @password, reset_password_token: nil)
   end
 
   # def create
@@ -76,6 +96,7 @@ class Api::V1::UsersController < ApplicationController
       :gender,
       :language,
       :access_level,
+      :note_index_type,
       :photo
     )
   end

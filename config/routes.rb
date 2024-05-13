@@ -6,13 +6,31 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: :json} do
     namespace :v1 do
       namespace :note_app do
-        resources :notes
+        resources :notes do
+          member do
+            put :restore
+            delete :destroy_permanently
+          end
+
+          put :share_with_user_toggle
+          put :update_shared_user_rights
+
+          put :toggle_tag
+          post :create_and_assign_tag
+          collection do
+            get :tags
+            get :trashes
+
+          end
+        end
       end
 
       resources :users do
         collection do
           get :activated_users
           put :reset_password
+          put :reset_password_confirmation
+
         end
       end
 

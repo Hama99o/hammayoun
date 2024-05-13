@@ -37,6 +37,12 @@ export const useUserStore = defineStore({
       localStorage.setItem('user', JSON.stringify(res.user));
       this.currentUser = res.user;
     },
+    async forgotPassword(email: string) {
+      await UserAPI.forgotPassword(email)
+    },
+    async resetPassword(data: object) {
+      await UserAPI.resetPassword(data)
+    },
     async updateUser(id: number, data: {}) {
       const res = await UserAPI.updateUser(id, data);
       if (Number(id) === Number(this.currentUser.id)) {

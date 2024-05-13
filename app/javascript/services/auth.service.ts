@@ -25,6 +25,7 @@ class AuthService {
     });
   }
 
+
   async register(user: IRegisterUser) {
     return register(user);
   }

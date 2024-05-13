@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_11_154046) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_25_093031) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -66,14 +66,35 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_11_154046) do
     t.index ["user_id"], name: "index_allowlisted_jwts_on_user_id"
   end
 
-  create_table "favorites", force: :cascade do |t|
-    t.string "favoritable_type"
-    t.bigint "favoritable_id"
-    t.bigint "user_id"
+  create_table "email_records", force: :cascade do |t|
+    t.string "email"
+    t.string "shareable_type"
+    t.bigint "shareable_id"
+    t.jsonb "additional_info", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["email", "shareable_type", "shareable_id"], name: "index_email_records_unique", unique: true
+    t.index ["shareable_type", "shareable_id"], name: "index_email_records_on_shareable"
+  end
+
+  create_table "favorites", force: :cascade do |t|
+    t.string "favoritable_type", null: false
+    t.bigint "favoritable_id", null: false
+    t.string "favoritor_type", null: false
+    t.bigint "favoritor_id", null: false
+    t.string "scope", default: "favorite", null: false
+    t.boolean "blocked", default: false, null: false
+    t.jsonb "data"
+    t.integer "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["blocked"], name: "index_favorites_on_blocked"
+    t.index ["favoritable_id", "favoritable_type"], name: "fk_favoritables"
+    t.index ["favoritable_type", "favoritable_id", "favoritor_type", "favoritor_id", "scope"], name: "uniq_favorites__and_favoritables", unique: true
     t.index ["favoritable_type", "favoritable_id"], name: "index_favorites_on_favoritable"
-    t.index ["user_id"], name: "index_favorites_on_user_id"
+    t.index ["favoritor_id", "favoritor_type"], name: "fk_favorites"
+    t.index ["favoritor_type", "favoritor_id"], name: "index_favorites_on_favoritor"
+    t.index ["scope"], name: "index_favorites_on_scope"
   end
 
   create_table "lock_app_sensitive_infos", force: :cascade do |t|
@@ -95,6 +116,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_11_154046) do
     t.jsonb "data"
     t.string "title"
     t.text "description"
+    t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["owner_id"], name: "index_note_app_notes_on_owner_id"
@@ -114,6 +136,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_11_154046) do
   create_table "note_app_shares", force: :cascade do |t|
     t.bigint "note_id"
     t.bigint "shared_with_user_id"
+    t.integer "role", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["note_id"], name: "index_note_app_shares_on_note_id"
@@ -127,8 +150,20 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_11_154046) do
     t.index ["tag_id"], name: "index_notes_tags_on_tag_id"
   end
 
+  create_table "taggings", force: :cascade do |t|
+    t.bigint "tag_id", null: false
+    t.string "taggable_type", null: false
+    t.bigint "taggable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tag_id", "taggable_id", "taggable_type"], name: "index_taggings_on_tag_id_and_taggable_id_and_taggable_type", unique: true
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+    t.index ["taggable_type", "taggable_id"], name: "index_taggings_on_taggable"
+  end
+
   create_table "tags", force: :cascade do |t|
     t.string "name"
+    t.string "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -155,13 +190,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_11_154046) do
     t.string "job_title", default: "", null: false
     t.string "linkedin", default: "", null: false
     t.integer "access_level", default: 0, null: false
-    t.integer "status"
+    t.integer "status", default: 1, null: false
     t.string "timezone", default: "Europe/Paris"
     t.string "lang", default: "en"
     t.datetime "locked_at"
     t.integer "strikes_count", default: 0
     t.boolean "agreed_to_terms"
     t.jsonb "applications"
+    t.jsonb "data"
     t.integer "current_application", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -172,7 +208,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_11_154046) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "allowlisted_jwts", "users", on_delete: :cascade
-  add_foreign_key "favorites", "users"
   add_foreign_key "lock_app_sensitive_infos", "users"
   add_foreign_key "note_app_notes", "users", column: "owner_id"
   add_foreign_key "note_app_reminders", "note_app_notes", column: "note_id"
@@ -180,4 +215,5 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_11_154046) do
   add_foreign_key "note_app_shares", "note_app_notes", column: "note_id"
   add_foreign_key "note_app_shares", "users", column: "shared_with_user_id"
   add_foreign_key "notes_tags", "note_app_notes", column: "note_id"
+  add_foreign_key "taggings", "tags"
 end

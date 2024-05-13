@@ -26,13 +26,14 @@
 #  job_title              :string           default(""), not null
 #  linkedin               :string           default(""), not null
 #  access_level           :integer          default("employee"), not null
-#  status                 :integer
+#  status                 :integer          default("active"), not null
 #  timezone               :string           default("Europe/Paris")
 #  lang                   :string           default("en")
 #  locked_at              :datetime
 #  strikes_count          :integer          default(0)
 #  agreed_to_terms        :boolean
 #  applications           :jsonb
+#  data                   :jsonb
 #  current_application    :integer          default(0)
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
@@ -47,7 +48,7 @@ FactoryBot.define do
     sequence(:email) { |n| "#{n}_#{Faker::Internet.email}" }
     firstname { Faker::Name.first_name }
     lastname { Faker::Name.last_name }
-    status { 1 }
+    status { :active }
     password { Faker::Internet.password(min_length: 10, max_length: 20, special_characters: true) }
   end
 end

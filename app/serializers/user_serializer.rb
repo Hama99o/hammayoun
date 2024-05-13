@@ -26,13 +26,14 @@
 #  job_title              :string           default(""), not null
 #  linkedin               :string           default(""), not null
 #  access_level           :integer          default("employee"), not null
-#  status                 :integer
+#  status                 :integer          default("active"), not null
 #  timezone               :string           default("Europe/Paris")
 #  lang                   :string           default("en")
 #  locked_at              :datetime
 #  strikes_count          :integer          default(0)
 #  agreed_to_terms        :boolean
 #  applications           :jsonb
+#  data                   :jsonb
 #  current_application    :integer          default(0)
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
@@ -44,7 +45,7 @@
 #
 class UserSerializer < ApplicationSerializer
   identifier :id
-  fields :email, :access_level, :lang, :status, :birth_date
+  fields :email, :access_level, :lang, :status, :birth_date, :note_index_type
 
   field :fullname do |object|
     object.fullname.presence
@@ -64,5 +65,12 @@ class UserSerializer < ApplicationSerializer
 
   field :avatar do |object|
     object.get_photo_url.presence if object.photo.attached?
+  end
+
+  view :note_rights do
+    field :note_role do |user, options|
+      note = options[:note]
+      note.shares.find_by(shared_with_user: user)&.role
+    end
   end
 end

@@ -3,7 +3,8 @@
   <div>
     <p class="my-5 text-4xl leading-10 text-center">
       Users
-  </p>
+    </p>
+
     <v-text-field
       v-model="search"
       color="primary"
@@ -12,7 +13,7 @@
       density="compact"
       hide-details
       prepend-inner-icon="mdi-magnify"
-      :label="Search"
+      :label="'Search'"
       @update:model-value="searchUser"
       />
   </div>
@@ -48,7 +49,6 @@ try {
   console.log(error);
 }
 });
-
 
 const fetchNewPage = async(e) => {
   page.value = e

@@ -38,13 +38,14 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       t.string :job_title, null: false, default: ""
       t.string :linkedin, null: false, default: ""
       t.integer :access_level, default: 0, null: false
-      t.integer :status
+      t.integer :status, default: 1, null: false
       t.string :timezone, default: "Europe/Paris"
       t.string :lang, default: "en"
       t.datetime :locked_at
       t.integer :strikes_count, default: 0
       t.boolean :agreed_to_terms
       t.jsonb :applications
+      t.jsonb :data
       t.integer :current_application, default: 0
 
       ## Lockable

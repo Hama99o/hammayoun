@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: lock_app_sensitive_infos
@@ -19,6 +21,5 @@
 #
 FactoryBot.define do
   factory :lock_app_sensitive_info, class: 'LockApp::SensitiveInfo' do
-    
   end
 end

@@ -3,9 +3,11 @@
     <v-navigation-drawer  class="!flex md:!hidden" v-model="sidebar" app>
       <v-list lines="one">
         <v-list-item
-        v-for="item in menuItems"
-        :key="item.title"
-        :to="item.routeName"
+          v-for="item in menuItems"
+          :key="item.title"
+          :to="{
+            name: item.routeName,
+          }"
 
         >
         <v-list-tile-action>
@@ -158,6 +160,7 @@ const menuLogInItems = ref([
   { title: 'Index', routeName: 'index', icon: "mdi-home-circle", allow: true },
   { title: 'About', routeName: 'about', icon: "mdi-face-man-shimmer-outline", allow: true },
   { title: 'Users', routeName: 'users', icon: "mdi-account-group", allow: false },
+  { title: 'Note', routeName: 'notes', icon: "mdi mdi-note", allow: true },
 
 ]);
 

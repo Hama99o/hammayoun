@@ -4,13 +4,18 @@ import AuthService from '@/services/auth.service';
 const Index = () => import('@/views/Home.vue');
 const About = () => import('@/views/AboutPage.vue');
 const Login = () => import('@/views/LoginPage.vue');
+const ForgetPassword = () => import('@/views/ForgetPassword.vue');
+const ResetPassword = () => import('@/views/ResetPassword.vue');
+
 const Logout = () => import('@/views/Logout.vue');
 const Signup = () => import('@/views/SignupPage.vue');
 const Users = () => import('@/views/users/Index.vue');
 const UserShow = () => import('@/views/users/Show.vue');
 const UserEdit = () => import('@/views/users/Edit.vue');
 
-// import PersonalProfile from '@/components/portfolio/PersonalProfile.vue'
+// Note App imports
+const Notes = () => import('@/views/note_app/notes/Index.vue');
+
 
 const routes = [
   {
@@ -32,6 +37,20 @@ const routes = [
     name: 'login',
     components: {
       default: Login,
+    },
+  },
+  {
+    path: '/forget_password',
+    name: 'forget_password',
+    components: {
+      default: ForgetPassword,
+    },
+  },
+  {
+    path: '/reset_password',
+    name: 'reset_password',
+    components: {
+      default: ResetPassword,
     },
   },
   {
@@ -67,6 +86,13 @@ const routes = [
     name: 'logout',
     components: {
       default: Logout,
+    },
+  },
+  {
+    path: "/note_app/notes",
+    name: 'notes',
+    components: {
+      default: Notes
     },
   }
 ];

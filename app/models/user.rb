@@ -26,13 +26,14 @@
 #  job_title              :string           default(""), not null
 #  linkedin               :string           default(""), not null
 #  access_level           :integer          default("employee"), not null
-#  status                 :integer
+#  status                 :integer          default("active"), not null
 #  timezone               :string           default("Europe/Paris")
 #  lang                   :string           default("en")
 #  locked_at              :datetime
 #  strikes_count          :integer          default(0)
 #  agreed_to_terms        :boolean
 #  applications           :jsonb
+#  data                   :jsonb
 #  current_application    :integer          default(0)
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
@@ -43,9 +44,13 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class User < ApplicationRecord
+  has_many :shares, class_name: 'NoteApp::Share', foreign_key: 'shared_with_user_id', dependent: :destroy
+  has_many :shared_notes, through: :shares, source: :note, class_name: 'NoteApp::Note', foreign_key: 'note_id'
+
   include Devise::JWT::RevocationStrategies::Allowlist
   include Rails.application.routes.url_helpers
 
+  acts_as_favoritor
   has_many :notes, class_name: "NoteApp::Note", foreign_key: :owner_id, dependent: :nullify
 
   devise :database_authenticatable, :registerable,
@@ -54,15 +59,24 @@ class User < ApplicationRecord
 
   include PgSearch::Model
 
-  pg_search_scope :search_user,
+  pg_search_scope :search_users,
                   against: [:firstname, :lastname, :email],
                   using: {
                     tsearch: { prefix: true }
                   }
 
+  # Possible values for the note_index_type attribute:
+  # - "table": Display notes in a table format
+  # - "card_grid": Display notes in a grid of cards
+  # - "card_list": Display notes in a list of cards
+  store_accessor :data,
+                 :note_index_type
+
   validates :email, presence: true
   validates :firstname, presence: true
   validates :lastname, presence: true
+
+  before_create :set_default_value_of_data
 
   has_one_attached :photo
 
@@ -77,8 +91,18 @@ class User < ApplicationRecord
     active: 1
   }
 
+  def set_default_value_of_data
+    self.note_index_type ||= 'table'
+  end
+
   def fullname
     "#{firstname&.titleize} #{lastname&.upcase}"
+  end
+
+  def all_notes
+    NoteApp::Note.where(
+      id: shared_notes.ids + notes.ids
+    )
   end
 
   def admin_or_above?
@@ -99,5 +123,12 @@ class User < ApplicationRecord
         "150" => Rails.application.routes.url_helpers.rails_blob_url(photo.variant(resize: "150"))
       }
     end
+  end
+
+  def reset_password!
+    tokens.shift until tokens.empty? if tokens.present?
+    send(:set_reset_password_token)
+
+    UserMailer.reset_password(self).deliver_later
   end
 end

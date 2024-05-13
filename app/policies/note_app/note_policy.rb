@@ -2,29 +2,39 @@ class NoteApp::NotePolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
     def resolve
-      if user.admin_or_above?
-        scope.all
-      else
-        scope.where(owner: user)
-      end
+      scope.all
     end
   end
 
   def show?
-    user == record.owner
+    user == record.owner || record.shared_with_users.where(id: user.id).present?
   end
 
   def create?
-    # user.admin_or_above?
-    true
+    user.present?
   end
 
   def update?
-    show?
+    return true if user == record.owner
+    role = record.shares.find_by(shared_with_user: user).role
+    ['contributor', 'administrator'].include?(role)
   end
 
   def destroy?
-    show?
+    return true if user == record.owner
+    role = record.shares.find_by(shared_with_user: user).role
+    'administrator' == role
   end
 
+  def share_with_user_toggle?
+    destroy?
+  end
+
+  def restore?
+    destroy?
+  end
+
+  def destroy_permanently?
+    destroy?
+  end
 end
